@@ -19,7 +19,7 @@ import it.tsc.interceptor.LoginInterceptor;
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = "it.tsc.controller")
-@Import({ SecurityConfig.class })
+@Import({SecurityConfig.class})
 public class AppConfig extends WebMvcConfigurerAdapter {
 
 	public AppConfig() {
