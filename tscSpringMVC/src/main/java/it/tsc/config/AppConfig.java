@@ -14,7 +14,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
-import it.tsc.interceptor.LoginInterceptor;
+import it.tsc.interceptor.PageRequestInterceptor;
 
 @Configuration
 @EnableWebMvc
@@ -52,7 +52,7 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-	    registry.addInterceptor(new LoginInterceptor());
+	    registry.addInterceptor(new PageRequestInterceptor());
 	} 
 
 }

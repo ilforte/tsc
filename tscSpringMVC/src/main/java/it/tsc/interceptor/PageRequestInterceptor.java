@@ -17,7 +17,7 @@ import it.tsc.controller.LoginController;
  * @author astraservice
  *
  */
-public class LoginInterceptor implements HandlerInterceptor {
+public class PageRequestInterceptor implements HandlerInterceptor {
 	private static Logger logger = LoggerFactory.getLogger(LoginController.class);
 
 	/* (non-Javadoc)
