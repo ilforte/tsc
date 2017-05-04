@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <style>
 #container {
     width:100%;
@@ -24,7 +25,12 @@
 
 </style>
 <div id="container">
-	<div id="left"><h1>default Header Tiles Demo</h1></div>
+	<div id="left"><h1>default Header Tiles Demo</h1>
+		<sec:authorize access="hasRole('ADMIN')">
+			This content will only be visible to users who have
+			the "supervisor" authority in their list of <tt>GrantedAuthority</tt>s.
+		</sec:authorize>
+	</div>
     <div id="center">	
     	<c:if test="${pageContext.request.userPrincipal.name != null}">
 			<h2>User : ${pageContext.request.userPrincipal.name}
