@@ -1,7 +1,7 @@
 /**
  * 
  */
-package it.tsc.authentication;
+package it.tsc.handler;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,10 +22,10 @@ public class AuthSuccessHandler extends SavedRequestAwareAuthenticationSuccessHa
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     String role = auth.getAuthorities().toString();
     String targetUrl = "";
-    if (role.contains("admin")) {
-      targetUrl = "/client/index";
-    } else if (role.contains("dba")) {
-      targetUrl = "/agency/index";
+    if (role.contains("ROLE_ADMIN")) {
+      targetUrl = "/admin";
+    } else if (role.contains("ROLE_USER")) {
+      targetUrl = "/user";
     }
     return targetUrl;
   }

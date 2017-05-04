@@ -13,7 +13,8 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
-import it.tsc.authentication.AuthSuccessHandler;
+import it.tsc.handler.AuthSuccessHandler;
+import it.tsc.handler.CustomAccessDeniedHandler;
 
 /**
  * @author astraservice
@@ -28,6 +29,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   private AuthSuccessHandler authSuccessHandler;
 
   @Autowired
+  private CustomAccessDeniedHandler customAccessDeniedHandler;
+
+  @Autowired
   public void configureGlobal(AuthenticationManagerBuilder auth) {
     try {
       auth.inMemoryAuthentication().withUser("mkyong").password("123456").roles("USER");
@@ -40,19 +44,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Override
   public void configure(WebSecurity web) throws Exception {
-    web.ignoring().antMatchers("/resources/**"); // #3
+    web.ignoring().antMatchers("/resources/**"); // #3login?logout
   }
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
-    // @formatter:off
+    // @formatter:offcustomAccessDeniedHandler
     http.authorizeRequests()
     .antMatchers("/","/welcome").permitAll() // #4
     .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
-    .antMatchers("/dba/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_DBA')")
+    .antMatchers("/user/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     .anyRequest().authenticated() // 7
     .and()
-    .formLogin();  // #8
+    .formLogin()  // #8
+    .successHandler(authSuccessHandler);
+    http.exceptionHandling().accessDeniedHandler(customAccessDeniedHandler);
     // @formatter:on
   }
 

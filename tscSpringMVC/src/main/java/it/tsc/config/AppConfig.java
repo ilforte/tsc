@@ -12,7 +12,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
-import it.tsc.authentication.AuthSuccessHandler;
+import it.tsc.handler.AuthSuccessHandler;
+import it.tsc.handler.CustomAccessDeniedHandler;
 import it.tsc.interceptor.PageRequestInterceptor;
 
 @Configuration
@@ -56,6 +57,13 @@ public class AppConfig extends WebMvcConfigurerAdapter {
   @Bean(name = "authSuccessHandler")
   public AuthSuccessHandler authSuccessHandler() {
     return new AuthSuccessHandler();
+  }
+
+  @Bean(name = "customAccessDeniedHandler")
+  public CustomAccessDeniedHandler customAccessDeniedHandler() {
+    CustomAccessDeniedHandler customAccessDeniedHandler = new CustomAccessDeniedHandler();
+    customAccessDeniedHandler.setErrorPage("403");
+    return customAccessDeniedHandler;
   }
 
 }
