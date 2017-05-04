@@ -15,8 +15,6 @@ import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 
-import it.tsc.handler.AuthSuccessHandler;
-import it.tsc.handler.CustomAccessDeniedHandler;
 import it.tsc.interceptor.PageRequestInterceptor;
 
 @Configuration
@@ -75,18 +73,6 @@ public class AppConfig extends WebMvcConfigurerAdapter {
   @Override
   public void addInterceptors(InterceptorRegistry registry) {
     registry.addInterceptor(new PageRequestInterceptor());
-  }
-
-  @Bean(name = "authSuccessHandler")
-  public AuthSuccessHandler authSuccessHandler() {
-    return new AuthSuccessHandler();
-  }
-
-  @Bean(name = "customAccessDeniedHandler")
-  public CustomAccessDeniedHandler customAccessDeniedHandler() {
-    CustomAccessDeniedHandler customAccessDeniedHandler = new CustomAccessDeniedHandler();
-    customAccessDeniedHandler.setErrorPage("403");
-    return customAccessDeniedHandler;
   }
 
 }

@@ -6,6 +6,7 @@ package it.tsc.config;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -24,12 +25,6 @@ import it.tsc.handler.CustomAccessDeniedHandler;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
   private static Logger logger = LoggerFactory.getLogger(SecurityConfig.class);
-
-  @Autowired
-  private AuthSuccessHandler authSuccessHandler;
-
-  @Autowired
-  private CustomAccessDeniedHandler customAccessDeniedHandler;
 
   @Autowired
   public void configureGlobal(AuthenticationManagerBuilder auth) {
@@ -57,9 +52,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     .anyRequest().authenticated() // 7
     .and()
     .formLogin()  // #8
-    .successHandler(authSuccessHandler);
-    http.exceptionHandling().accessDeniedHandler(customAccessDeniedHandler);
+    .successHandler(authSuccessHandler());
+    http.exceptionHandling().accessDeniedHandler(customAccessDeniedHandler());
     // @formatter:on
+  }
+
+  @Bean(name = "authSuccessHandler")
+  public AuthSuccessHandler authSuccessHandler() {
+    return new AuthSuccessHandler();
+  }
+
+  @Bean(name = "customAccessDeniedHandler")
+  public CustomAccessDeniedHandler customAccessDeniedHandler() {
+    CustomAccessDeniedHandler customAccessDeniedHandler = new CustomAccessDeniedHandler();
+    customAccessDeniedHandler.setErrorPage("403");
+    return customAccessDeniedHandler;
   }
 
 }
