@@ -10,28 +10,39 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class LoginController {
 
-    private static Logger logger = LoggerFactory.getLogger(LoginController.class);
-    
-    @RequestMapping(value = "/login", method = RequestMethod.HEAD)
-    public void login(){
+  private static Logger logger = LoggerFactory.getLogger(LoginController.class);
 
-        logger.trace("trace logging");
-        logger.debug("debug logging");
-        logger.info("info logging");
-        logger.warn("warning logging");
-        logger.error("error logging", new RuntimeException("help"));
+  @RequestMapping(value = {"/", "/welcome**"}, method = RequestMethod.GET)
+  public ModelAndView welcomePage() {
 
-    }
-    
-    @RequestMapping(value = "/logout", method = RequestMethod.HEAD)
-    public void logout(){
+    ModelAndView model = new ModelAndView();
+    model.addObject("title", "Spring Security Hello World");
+    model.addObject("message", "This is welcome page!");
+    model.setViewName("hello");
+    return model;
 
-        logger.trace("trace logging");
-        logger.debug("debug logging");
-        logger.info("info logging");
-        logger.warn("warning logging");
-        logger.error("error logging", new RuntimeException("help"));
+  }
 
-    }
-    
+  @RequestMapping(value = "/admin**", method = RequestMethod.GET)
+  public ModelAndView adminPage() {
+
+    ModelAndView model = new ModelAndView();
+    model.addObject("title", "Spring Security Hello World");
+    model.addObject("message", "This is protected page - Admin Page!");
+    model.setViewName("admin");
+
+    return model;
+
+  }
+
+  @RequestMapping(value = "/dba**", method = RequestMethod.GET)
+  public ModelAndView dbaPage() {
+
+    ModelAndView model = new ModelAndView();
+    model.addObject("title", "Spring Security Hello World");
+    model.addObject("message", "This is protected page - Database Page!");
+    model.setViewName("admin");
+    return model;
+  }
+
 }
