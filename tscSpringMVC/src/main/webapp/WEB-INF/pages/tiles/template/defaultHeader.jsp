@@ -3,26 +3,25 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <style>
-#container {
-    width:100%;
-    text-align:center;
-}
-
-#left {
-    float:left;
-    width:29%;
-}
-
-#center {
-    display: inline-block;
-    margin:0 auto;
-    width:50%;
-}
-
-#right {container
-    float:right;
-}
-
+	#container {
+	    width:100%;
+	    text-align:center;
+	}
+	
+	#left {
+	    float:left;
+	    width:29%;
+	}
+	
+	#center {
+	    display: inline-block;
+	    margin:0 auto;
+	    width:50%;
+	}
+	
+	#right {container
+	    float:right;
+	}
 </style>
 <div id="container">
 	<div id="left"><h1>default Header Tiles Demo</h1>
