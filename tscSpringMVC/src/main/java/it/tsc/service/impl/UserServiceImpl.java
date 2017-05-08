@@ -3,15 +3,26 @@
  */
 package it.tsc.service.impl;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.stereotype.Service;
+
+import it.tsc.dao.UserDao;
+import it.tsc.model.ApplicationUser;
 import it.tsc.model.Role;
-import it.tsc.model.User;
 import it.tsc.service.UserService;
 
 /**
  * @author astraservice
  *
  */
+@Service("userService")
 public class UserServiceImpl implements UserService {
+
+  @Autowired
+  private UserDao userDao;
 
   /**
    * 
@@ -25,9 +36,17 @@ public class UserServiceImpl implements UserService {
    * 
    * @see it.tsc.service.UserService#getUserRole(java.lang.String)
    */
-  public Role getUserRole(String username) {
-    // TODO Auto-generated method stub
-    return null;
+  public ApplicationUser getUser(String username) {
+    return userDao.getUser(username);
+  }
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see it.tsc.service.UserService#getUserRoles(java.lang.String,java.lang.String)
+   */
+  public List<GrantedAuthority> getUserRoles(String username, String password) {
+    return userDao.getUserRoles(username, password);
   }
 
   /*
@@ -35,8 +54,9 @@ public class UserServiceImpl implements UserService {
    * 
    * @see it.tsc.service.UserService#isAdmin(it.tsc.model.Role)
    */
-  public boolean isAdmin(Role role) {
-    return role.equals(Role.ROLE_ADMIN);
+  public boolean isAdmin(ApplicationUser requester) {
+    return requester.getAuthorities() != null
+        && requester.getAuthorities().contains(Role.ROLE_ADMIN) ? true : false;
   }
 
   /*
@@ -45,8 +65,8 @@ public class UserServiceImpl implements UserService {
    * @see it.tsc.service.UserService#addUser(java.lang.String, java.lang.String, it.tsc.model.Role,
    * it.tsc.model.User)
    */
-  public void addUser(String username, String password, Role role, User requester) {
-    if (isPermitted(requester)) {
+  public void addUser(String username, String password, Role role, ApplicationUser requester) {
+    if (isAdmin(requester)) {
 
     } else {
 
@@ -59,8 +79,8 @@ public class UserServiceImpl implements UserService {
    * @see it.tsc.service.UserService#removeUser(java.lang.String, java.lang.String,
    * it.tsc.model.Role, it.tsc.model.User)
    */
-  public void removeUser(String username, String password, Role role, User requester) {
-    if (isPermitted(requester)) {
+  public void removeUser(String username, String password, Role role, ApplicationUser requester) {
+    if (isAdmin(requester)) {
 
     } else {
 
@@ -73,22 +93,16 @@ public class UserServiceImpl implements UserService {
    * @see it.tsc.service.UserService#updateUser(java.lang.String, it.tsc.model.Role,
    * it.tsc.model.User)
    */
-  public void updateUser(String username, Role role, User requester) {
-    if (isPermitted(requester)) {
+  public void updateUser(String username, Role role, ApplicationUser requester) {
+    if (isAdmin(requester)) {
 
     } else {
 
     }
   }
 
-  /**
-   * check if user have permission
-   * 
-   * @param requester
-   * @return
-   */
-  private boolean isPermitted(User requester) {
-    return getUserRole(requester.getUsername()).equals(isAdmin(requester.getRole()));
+  public boolean isAdmin(Role role) {
+    return false;
   }
 
 }

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package it.tsc.service;
+package it.tsc.dao;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import it.tsc.model.Role;
  * @author astraservice
  *
  */
-public interface UserService {
+public interface UserDao {
 
   /**
    * get User Role
@@ -68,5 +68,4 @@ public interface UserService {
    * @param requester (Only admin role is permitted)
    */
   public void updateUser(String username, Role role, ApplicationUser requester);
-
 }

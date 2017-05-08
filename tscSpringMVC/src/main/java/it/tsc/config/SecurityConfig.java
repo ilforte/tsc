@@ -9,13 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
-import it.tsc.handler.AuthSuccessHandler;
-import it.tsc.handler.CustomAccessDeniedHandler;
+import it.tsc.security.handler.AuthSuccessHandler;
+import it.tsc.security.handler.CustomAccessDeniedHandler;
+import it.tsc.security.provider.CustomAuthenticationProvider;
 
 /**
  * @author astraservice
@@ -23,15 +25,21 @@ import it.tsc.handler.CustomAccessDeniedHandler;
  */
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
   private static Logger logger = LoggerFactory.getLogger(SecurityConfig.class);
 
   @Autowired
+  private CustomAuthenticationProvider customAuthenticationProvider;
+
+  @Autowired
   public void configureGlobal(AuthenticationManagerBuilder auth) {
     try {
-      auth.inMemoryAuthentication().withUser("mkyong").password("123456").roles("USER");
-      auth.inMemoryAuthentication().withUser("admin").password("123456").roles("ADMIN");
-      auth.inMemoryAuthentication().withUser("dba").password("123456").roles("DBA");
+      // auth.inMemoryAuthentication().withUser("mkyong").password("123456").roles("USER");
+      // auth.inMemoryAuthentication().withUser("admin").password("123456").roles("ADMIN");
+      // auth.inMemoryAuthentication().withUser("dba").password("123456").roles("DBA");
+      auth.authenticationProvider(customAuthenticationProvider);
+      super.configure(auth);
     } catch (Exception e) {
       logger.error(e.getMessage());
     }
@@ -44,7 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
-    // @formatter:offcustomAccessDeniedHandler
+    // @formatter:off
     http.authorizeRequests()
     .antMatchers("/","/welcome").permitAll() // #4
     .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")

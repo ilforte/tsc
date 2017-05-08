@@ -19,7 +19,7 @@ import it.tsc.interceptor.PageRequestInterceptor;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = "it.tsc.controller")
+@ComponentScan({"it.tsc.service", "it.tsc.dao", "it.tsc.security.provider", "it.tsc.controller"})
 @Import({SecurityConfig.class})
 public class AppConfig extends WebMvcConfigurerAdapter {
 

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package it.tsc.handler;
+package it.tsc.security.handler;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

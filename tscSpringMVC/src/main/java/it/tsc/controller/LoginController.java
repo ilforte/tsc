@@ -28,7 +28,6 @@ public class LoginController {
   // for 403 access denied page
   @RequestMapping(value = "/403", method = RequestMethod.GET)
   public ModelAndView accesssDenied(Principal user) {
-
     ModelAndView model = new ModelAndView();
 
     if (user != null) {
@@ -37,7 +36,7 @@ public class LoginController {
     } else {
       model.addObject("msg", "You do not have permission to access this page!");
     }
-
+    logger.debug("accesssDenied for: {}", user);
     model.setViewName("/errors/403");
     return model;
 
