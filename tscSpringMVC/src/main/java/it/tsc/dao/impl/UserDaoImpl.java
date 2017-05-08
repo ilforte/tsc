@@ -5,9 +5,11 @@ package it.tsc.dao.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Repository;
 
+import it.tsc.dao.CommonDao;
 import it.tsc.dao.UserDao;
 import it.tsc.model.ApplicationUser;
 import it.tsc.model.Role;
@@ -19,7 +21,11 @@ import it.tsc.model.Role;
 @Repository("userDao")
 public class UserDaoImpl implements UserDao {
 
+  @Autowired
+  private CommonDao commonDao;
+
   /**
+   * to convert v
    * 
    */
   public UserDaoImpl() {
@@ -42,6 +48,7 @@ public class UserDaoImpl implements UserDao {
    * @see it.tsc.dao.UserDao#getUserRoles(java.lang.String,java.lang.String)
    */
   public List<GrantedAuthority> getUserRoles(String username, String password) {
+    commonDao.getSession();
     return null;
   }
 

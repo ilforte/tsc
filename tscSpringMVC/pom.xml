@@ -17,6 +17,7 @@
 		<servletapi.version>2.5</servletapi.version>
 		<logback.version>1.2.3</logback.version>
 		<jcl.slf4j.version>1.7.25</jcl.slf4j.version>
+		<cassandra.version>3.2.0</cassandra.version>
 	</properties>
   
   <dependencies>
@@ -66,6 +67,13 @@
 		<artifactId>spring-context</artifactId>
 		<version>${spring.version}</version>
 	</dependency>
+	
+	<dependency>
+	    <groupId>org.springframework</groupId>
+	    <artifactId>spring-test</artifactId>
+	    <version>${spring.version}</version>
+	    <scope>test</scope>
+	</dependency>
     
 	<dependency>
 		<groupId>org.springframework</groupId>
@@ -98,6 +106,26 @@
 		<artifactId>spring-security-taglibs</artifactId>
 		<version>${spring.security.version}</version>
 	</dependency>
+	
+	<!-- Datastax - Cassandra -->
+	<!-- https://mvnrepository.com/artifact/com.datastax.cassandra/cassandra-driver-core -->
+	<dependency>
+	    <groupId>com.datastax.cassandra</groupId>
+	    <artifactId>cassandra-driver-core</artifactId>
+	    <version>${cassandra.version}</version>
+	</dependency>
+	
+	<dependency>
+	  <groupId>com.datastax.cassandra</groupId>
+	  <artifactId>cassandra-driver-mapping</artifactId>
+	  <version>${cassandra.version}</version>
+	</dependency>
+	
+	<dependency>
+  		<groupId>com.datastax.cassandra</groupId>
+  		<artifactId>cassandra-driver-extras</artifactId>
+  		<version>${cassandra.version}</version>
+	</dependency>
 
 	<!-- JSTL -->
 	<dependency>
@@ -114,7 +142,7 @@
 		<scope>provided</scope>
 	</dependency>
 	
-	<!-- tiles --><!--  -->
+	<!-- tiles -->
 	
 	<dependency>
 		<groupId>org.apache.tiles</groupId>
