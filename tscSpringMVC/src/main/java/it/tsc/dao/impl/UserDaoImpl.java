@@ -3,13 +3,19 @@
  */
 package it.tsc.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Repository;
 
-import it.tsc.dao.CommonDao;
+import com.datastax.driver.core.BoundStatement;
+import com.datastax.driver.core.PreparedStatement;
+import com.datastax.driver.core.ResultSet;
+import com.datastax.driver.core.Row;
+
+import it.tsc.dao.AbstractDataAccess;
 import it.tsc.dao.UserDao;
 import it.tsc.model.ApplicationUser;
 import it.tsc.model.Role;
@@ -19,10 +25,7 @@ import it.tsc.model.Role;
  *
  */
 @Repository("userDao")
-public class UserDaoImpl implements UserDao {
-
-  @Autowired
-  private CommonDao commonDao;
+public class UserDaoImpl extends AbstractDataAccess implements UserDao {
 
   /**
    * to convert v
@@ -33,7 +36,7 @@ public class UserDaoImpl implements UserDao {
   }
 
   /*
-   * (non-Javadoc)
+   * extends CommonDao (non-Javadoc)
    * 
    * @see it.tsc.dao.UserDao#getUserRole(java.lang.String)
    */
@@ -43,13 +46,25 @@ public class UserDaoImpl implements UserDao {
   }
 
   /*
-   * (non-Javadoc)
+   * (non-Javadoc) extends CommonDao
    * 
    * @see it.tsc.dao.UserDao#getUserRoles(java.lang.String,java.lang.String)
    */
   public List<GrantedAuthority> getUserRoles(String username, String password) {
-    commonDao.getSession();
-    return null;
+    List<GrantedAuthority> roles = null;
+    PreparedStatement preparedStmt = getSession().prepare(
+        "SELECT * FROM ks_tsc.tb_users WHERE username = ? AND password = ? ALLOW FILTERING;");
+    BoundStatement bound =
+        preparedStmt.bind().setString("username", username).setString("password", password);
+    ResultSet rs = getSession().execute(bound);
+    for (Row row : rs) {
+      if (roles == null) {
+        roles = new ArrayList<GrantedAuthority>();
+      }
+      String role = row.getString("role");
+      roles.add(new SimpleGrantedAuthority(Role.valueOf(role).toString()));
+    }
+    return roles;
   }
 
   /*

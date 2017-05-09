@@ -14,8 +14,8 @@ import com.datastax.driver.core.Session;
  * @author astraservice
  *
  */
-public class CommonDao {
-  private static Logger logger = LoggerFactory.getLogger(CommonDao.class);
+public class GenericDao {
+  private static Logger logger = LoggerFactory.getLogger(GenericDao.class);
 
   private String nodes;
 
@@ -28,7 +28,7 @@ public class CommonDao {
   /** Cassandra Cluster. */
   private Cluster cluster;
 
-  public CommonDao(String nodes, Integer port, String username, String password) {
+  public GenericDao(String nodes, Integer port, String username, String password) {
     super();
     this.nodes = nodes;
     this.port = port;
@@ -48,7 +48,8 @@ public class CommonDao {
 
   /**
    * Connect to Cassandra Cluster specified by provided node IP address and port number.
-   *
+   * AbstractDataAccess
+   * 
    * @param node Cluster node IP address.
    * @param port Port of cluster host.
    */

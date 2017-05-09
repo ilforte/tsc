@@ -13,7 +13,9 @@ import org.springframework.security.core.userdetails.User;
  */
 public class ApplicationUser extends User {
   private static final long serialVersionUID = 4389964117627782934L;
-  private final String email;
+  private String email;
+  private String username;
+  private String password;
 
   /**
    * User Bean
@@ -28,6 +30,10 @@ public class ApplicationUser extends User {
 
   public String getEmail() {
     return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
   }
 
 }

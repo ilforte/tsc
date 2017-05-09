@@ -25,6 +25,23 @@ public class LoginController {
 
   }
 
+  // // Spring Security see this :
+  // @RequestMapping(value = "/login", method = RequestMethod.GET)
+  // public ModelAndView login(@RequestParam(value = "error", required = false) String error,
+  // @RequestParam(value = "logout", required = false) String logout) {
+  //
+  // ModelAndView model = new ModelAndView();
+  // if (error != null) {
+  // model.addObject("error", "Invalid username and password!");
+  // }
+  //
+  // if (logout != null) {
+  // model.addObject("msg", "You've been logged out successfully.");
+  // }
+  // model.setViewName("login");
+  // return model;
+  // }
+
   // for 403 access denied page
   @RequestMapping(value = "/403", method = RequestMethod.GET)
   public ModelAndView accesssDenied(Principal user) {
@@ -39,7 +56,6 @@ public class LoginController {
     logger.debug("accesssDenied for: {}", user);
     model.setViewName("/errors/403");
     return model;
-
   }
 
 }

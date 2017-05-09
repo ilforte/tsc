@@ -18,7 +18,7 @@ import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 
-import it.tsc.dao.CommonDao;
+import it.tsc.dao.GenericDao;
 import it.tsc.interceptor.PageRequestInterceptor;
 
 @Configuration
@@ -89,9 +89,8 @@ public class AppConfig extends WebMvcConfigurerAdapter {
   }
 
   @Bean
-  public CommonDao commonDao() {
-    return new CommonDao(nodes, port, username, password) {};
-
+  public GenericDao commonDao() {
+    return new GenericDao(nodes, port, username, password);
   }
 
   /**

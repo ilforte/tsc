@@ -19,8 +19,8 @@ public class AppController {
     return "admin";
   }
 
-  @RequestMapping(value = {"/contactus"}, method = RequestMethod.GET)
+  @RequestMapping(value = {"/user"}, method = RequestMethod.GET)
   public String contactUsPage(ModelMap model) {
-    return "contactus";
+    return "user";
   }
 }
