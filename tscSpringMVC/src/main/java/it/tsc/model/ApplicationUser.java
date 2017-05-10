@@ -15,11 +15,10 @@ import com.google.gson.annotations.Expose;
  */
 public class ApplicationUser extends User {
   private static final long serialVersionUID = 4389964117627782934L;
+  @Expose
   private String email;
   @Expose
   private String username;
-  @Expose
-  private String password;
 
   /**
    * User Bean
@@ -30,7 +29,6 @@ public class ApplicationUser extends User {
     super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked,
         authorities);
     this.username = username;
-    this.password = password;
     this.email = email;
   }
 
