@@ -23,7 +23,7 @@ import it.tsc.interceptor.PageRequestInterceptor;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan({"it.tsc.service.impl", "it.tsc.dao.impl", "it.tsc.security.provider",
+@ComponentScan({"it.tsc.service.impl", "it.tsc.dao.impl", "it.tsc.authentication.provider",
     "it.tsc.controller"})
 @Import({SecurityConfig.class})
 @PropertySource(value = {"classpath:cassandra.properties"}, ignoreResourceNotFound = false)
@@ -57,6 +57,20 @@ public class AppConfig extends WebMvcConfigurerAdapter {
   public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
     super.configureDefaultServletHandling(configurer);
     configurer.enable();
+  }
+
+  /**
+   * Configure ViewResolvers to deliver preferred views.
+   */
+  @Override
+  public void configureViewResolvers(ViewResolverRegistry registry) {
+    TilesViewResolver viewResolver = new TilesViewResolver();
+    registry.viewResolver(viewResolver);
+  }
+
+  @Override
+  public void addInterceptors(InterceptorRegistry registry) {
+    registry.addInterceptor(new PageRequestInterceptor());
   }
 
   @Bean
@@ -96,20 +110,6 @@ public class AppConfig extends WebMvcConfigurerAdapter {
   @Bean(name = "genericDao")
   public GenericDao genericDao() {
     return new GenericDao(nodes, port, username, password);
-  }
-
-  /**
-   * Configure ViewResolvers to deliver preferred views.
-   */
-  @Override
-  public void configureViewResolvers(ViewResolverRegistry registry) {
-    TilesViewResolver viewResolver = new TilesViewResolver();
-    registry.viewResolver(viewResolver);
-  }
-
-  @Override
-  public void addInterceptors(InterceptorRegistry registry) {
-    registry.addInterceptor(new PageRequestInterceptor());
   }
 
 }

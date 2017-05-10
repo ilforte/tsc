@@ -15,9 +15,9 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
+import it.tsc.authentication.provider.CustomAuthenticationProvider;
 import it.tsc.security.handler.AuthSuccessHandler;
 import it.tsc.security.handler.CustomAccessDeniedHandler;
-import it.tsc.security.provider.CustomAuthenticationProvider;
 
 /**
  * @author astraservice

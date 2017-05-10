@@ -1,11 +1,12 @@
 /**
  * 
  */
-package it.tsc.security.provider;
+package it.tsc.authentication.provider;
 
 import java.util.Collection;
 
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -19,7 +20,7 @@ import it.tsc.service.UserService;
  * @author astraservice
  *
  */
-@Component("authenticationProvider")
+@Component("customAuthenticationProvider")
 public class CustomAuthenticationProvider implements AuthenticationProvider {
   private UserService userService;
 
@@ -41,28 +42,24 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     String username = authentication.getName().toString().trim();
     Authentication auth = null;
 
+    // 2. Check the passwords match (should use a hashed password here).
+    if ("".equals(username) || "".equals(password)) {
+      throw new BadCredentialsException("Bad Credentials, Insert Username and Password!");
+    }
+
     // Authenticate the user based on your custom logic
     Collection<GrantedAuthority> grantedAuths = userService.getUserRoles(username, password);
 
     // TODO remove when service is created
     if (grantedAuths != null) {
+      // TODO add email
       ApplicationUser appUser = new ApplicationUser(username, password, true, true, true, true,
           grantedAuths, "TestEmail");
       auth = new UsernamePasswordAuthenticationToken(appUser, password, grantedAuths);
       return auth;
     } else {
-      return null;
+      throw new BadCredentialsException("Bad Credentials, Wrong Username or Password!");
     }
-
-    // TODO add when service is created
-    // if (grantedAuths != null) {
-    // ApplicationUser appUser = new ApplicationUser(userName, password, true, true, true, true,
-    // grantedAuths, "TestEmail");
-    // auth = new UsernamePasswordAuthenticationToken(appUser, password, grantedAuths);
-    // return auth;
-    // } else {
-    // return null;
-    // }
   }
 
   /*
