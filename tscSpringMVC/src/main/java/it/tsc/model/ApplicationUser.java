@@ -8,13 +8,17 @@ import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
+import com.google.gson.annotations.Expose;
+
 /**
  * @author astraservice
  */
 public class ApplicationUser extends User {
   private static final long serialVersionUID = 4389964117627782934L;
   private String email;
+  @Expose
   private String username;
+  @Expose
   private String password;
 
   /**
@@ -25,6 +29,8 @@ public class ApplicationUser extends User {
       Collection<GrantedAuthority> authorities, String email) {
     super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked,
         authorities);
+    this.username = username;
+    this.password = password;
     this.email = email;
   }
 

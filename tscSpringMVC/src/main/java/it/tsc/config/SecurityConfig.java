@@ -51,7 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
     // @formatter:off
     http.authorizeRequests()
-    .antMatchers("/","/welcome").permitAll() // #4
+    .antMatchers("/","/welcome","/403").permitAll() // #4
     .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
     .antMatchers("/user/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     .anyRequest().authenticated() // 7
@@ -72,7 +72,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   @Bean(name = "customAccessDeniedHandler")
   public CustomAccessDeniedHandler customAccessDeniedHandler() {
     CustomAccessDeniedHandler customAccessDeniedHandler = new CustomAccessDeniedHandler();
-    customAccessDeniedHandler.setErrorPage("403");
+    customAccessDeniedHandler.setErrorPage("/tscSpringMVC/403");
     return customAccessDeniedHandler;
   }
 

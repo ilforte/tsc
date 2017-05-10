@@ -41,8 +41,21 @@ public class UserDaoImpl extends AbstractDataAccess implements UserDao {
    * @see it.tsc.dao.UserDao#getUserRole(java.lang.String)
    */
   public ApplicationUser getUser(String username) {
-
-    return null;
+    ApplicationUser user = null;
+    PreparedStatement preparedStmt =
+        getSession().prepare("SELECT * FROM ks_tsc.tb_users WHERE username = ? ALLOW FILTERING;");
+    BoundStatement bound = preparedStmt.bind().setString("username", username);
+    ResultSet rs = getSession().execute(bound);
+    for (Row row : rs) {
+      if (user == null) {
+        List<GrantedAuthority> roles = new ArrayList<GrantedAuthority>();
+        roles.add(new SimpleGrantedAuthority(Role.valueOf(row.getString("role")).toString()));
+        user = new ApplicationUser(row.getString("username"), row.getString("password"), true, true,
+            true, true, roles, "TestEmail");
+      }
+      return user;
+    }
+    return user;
   }
 
   /*

@@ -41,7 +41,7 @@ public class LoginController {
   // }
 
   // for 403 access denied page
-  @RequestMapping(value = "/403", method = RequestMethod.GET)
+  @RequestMapping(value = {"/403", "/admin/userService/403"}, method = RequestMethod.GET)
   public ModelAndView accesssDenied(Principal user) {
     ModelAndView model = new ModelAndView();
 
