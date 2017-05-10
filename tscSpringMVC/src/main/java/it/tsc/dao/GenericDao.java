@@ -3,6 +3,9 @@
  */
 package it.tsc.dao;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,15 +21,13 @@ public class GenericDao {
   private static Logger logger = LoggerFactory.getLogger(GenericDao.class);
 
   private String nodes;
-
   private Integer port;
-
   private String username;
-
   private String password;
-
   /** Cassandra Cluster. */
   private Cluster cluster;
+  /** Cassandra Session. */
+  private Session session;
 
   public GenericDao(String nodes, Integer port, String username, String password) {
     super();
@@ -41,9 +42,6 @@ public class GenericDao {
       connect();
     }
   }
-
-  /** Cassandra Session. */
-  private Session session;
 
 
   /**
@@ -76,6 +74,17 @@ public class GenericDao {
   public void close() {
     session.close();
     cluster.close();
+  }
+
+  @PostConstruct
+  public void initObject() throws Exception {
+    logger.debug("Init method after properties are set : ");
+  }
+
+  @PreDestroy
+  public void cleanUp() throws Exception {
+    logger.debug("Spring Container is destroy! Customer clean up");
+    this.close();
   }
 
 }

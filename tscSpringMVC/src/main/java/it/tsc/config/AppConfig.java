@@ -88,8 +88,13 @@ public class AppConfig extends WebMvcConfigurerAdapter {
     return new PropertySourcesPlaceholderConfigurer();
   }
 
-  @Bean
-  public GenericDao commonDao() {
+  /**
+   * Generic dao for cassandra
+   * 
+   * @return
+   */
+  @Bean(name = "genericDao")
+  public GenericDao genericDao() {
     return new GenericDao(nodes, port, username, password);
   }
 
