@@ -2,13 +2,10 @@ package it.tsc.config;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
@@ -25,30 +22,16 @@ import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import it.tsc.dao.GenericDao;
 import it.tsc.interceptor.PageRequestInterceptor;
 
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = {"it.tsc.service.impl", "it.tsc.dao.impl",
     "it.tsc.authentication.provider", "it.tsc.controller"})
-@Import({SecurityConfig.class})
-@PropertySource(value = {"classpath:cassandra.properties"}, ignoreResourceNotFound = false)
-public class AppConfig extends WebMvcConfigurerAdapter {
+@Import({ServiceConfig.class, SecurityConfig.class})
+public class WebAppConfig extends WebMvcConfigurerAdapter {
 
-  @Value("${cassandra-nodes}")
-  private String nodes;
-
-  @Value("#{T(java.lang.Integer).valueOf('${cassandra-port}')}")
-  private Integer port;
-
-  @Value("${cassandra-username}")
-  private String username;
-
-  @Value("${cassandra-password}")
-  private String password;
-
-  public AppConfig() {
+  public WebAppConfig() {
 
   }
 
@@ -108,24 +91,6 @@ public class AppConfig extends WebMvcConfigurerAdapter {
     tilesConfigurer.setDefinitions(new String[] {"/WEB-INF/tiles-config/tiles.xml"});
     tilesConfigurer.setCheckRefresh(true);
     return tilesConfigurer;
-  }
-
-  /**
-   * Property placeholder configurer needed to process @Value annotations
-   */
-  @Bean
-  public static PropertySourcesPlaceholderConfigurer propertyConfigurerabstractDao() {
-    return new PropertySourcesPlaceholderConfigurer();
-  }
-
-  /**
-   * Generic dao for cassandra
-   * 
-   * @return
-   */
-  @Bean(name = "genericDao")
-  public GenericDao genericDao() {
-    return new GenericDao(nodes, port, username, password);
   }
 
 }

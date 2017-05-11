@@ -40,4 +40,34 @@ public class ApplicationUser extends User {
     this.email = email;
   }
 
+  @Override
+  public Collection<GrantedAuthority> getAuthorities() {
+    return super.getAuthorities();
+  }
+
+  @Override
+  public String getUsername() {
+    return super.getUsername();
+  }
+
+  @Override
+  public boolean isEnabled() {
+    return super.isEnabled();
+  }
+
+  @Override
+  public boolean isAccountNonExpired() {
+    return super.isAccountNonExpired();
+  }
+
+  @Override
+  public boolean isAccountNonLocked() {
+    return super.isAccountNonLocked();
+  }
+
+  @Override
+  public boolean isCredentialsNonExpired() {
+    return super.isCredentialsNonExpired();
+  }
+
 }

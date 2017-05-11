@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.Cluster.Builder;
+import com.datastax.driver.core.QueryOptions;
 import com.datastax.driver.core.Session;
 
 /**
@@ -56,6 +57,7 @@ public class GenericDao {
     b.addContactPoints(nodes.split(","));
     b.withPort(port);
     b.withCredentials(username, password);
+    b.withQueryOptions(new QueryOptions());
     cluster = b.build();
     session = cluster.connect();
     logger.debug("Cluster name {} metadata: {}", cluster.getClusterName(), cluster.getMetadata());

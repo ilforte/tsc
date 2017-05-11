@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import it.tsc.dao.UserDao;
 import it.tsc.model.ApplicationUser;
 import it.tsc.model.Role;
+import it.tsc.model.TscUser;
 import it.tsc.service.UserService;
 
 /**
@@ -36,7 +37,7 @@ public class UserServiceImpl implements UserService {
    * 
    * @see it.tsc.service.UserService#getUserRole(java.lang.String)
    */
-  public ApplicationUser getUser(String username) {
+  public TscUser getUser(String username) {
     return userDao.getUser(username);
   }
 
@@ -65,12 +66,8 @@ public class UserServiceImpl implements UserService {
    * @see it.tsc.service.UserService#addUser(java.lang.String, java.lang.String, it.tsc.model.Role,
    * it.tsc.model.User)
    */
-  public void addUser(String username, String password, Role role, ApplicationUser requester) {
-    if (isAdmin(requester)) {
-
-    } else {
-
-    }
+  public void addUser(String username, String password, String email, Role role) {
+    userDao.addUser(username, password, email, role);
   }
 
   /*
@@ -79,12 +76,8 @@ public class UserServiceImpl implements UserService {
    * @see it.tsc.service.UserService#removeUser(java.lang.String, java.lang.String,
    * it.tsc.model.Role, it.tsc.model.User)
    */
-  public void removeUser(String username, String password, Role role, ApplicationUser requester) {
-    if (isAdmin(requester)) {
-
-    } else {
-
-    }
+  public void removeUser(String username) {
+    userDao.removeUser(username);
   }
 
   /*
@@ -93,16 +86,16 @@ public class UserServiceImpl implements UserService {
    * @see it.tsc.service.UserService#updateUser(java.lang.String, it.tsc.model.Role,
    * it.tsc.model.User)
    */
-  public void updateUser(String username, Role role, ApplicationUser requester) {
-    if (isAdmin(requester)) {
-
-    } else {
-
-    }
+  public void updateUser(String username, String password, String email, Role role) {
+    userDao.updateUser(username, password, email, role);
   }
 
   public boolean isAdmin(Role role) {
-    return false;
+    return role.equals(Role.ROLE_ADMIN);
+  }
+
+  public boolean isAdmin(TscUser user) {
+    return getUser(user.getUsername()).getRoles().contains(Role.ROLE_ADMIN.toString());
   }
 
 }

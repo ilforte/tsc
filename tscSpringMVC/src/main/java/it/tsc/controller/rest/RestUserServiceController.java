@@ -4,8 +4,6 @@
 package it.tsc.controller.rest;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import it.tsc.model.ApplicationUser;
+import it.tsc.model.TscUser;
 import it.tsc.service.UserService;
 
 /**
@@ -35,12 +33,10 @@ public class RestUserServiceController {
   @PreAuthorize("hasAuthority('ROLE_ADMIN')")
   @RequestMapping(value = "/admin/userService/getUsers", method = RequestMethod.GET,
       produces = "application/json")
-  public @ResponseBody List<ApplicationUser> getUsers(@AuthenticationPrincipal Principal user) {
-    List<ApplicationUser> list = new ArrayList<ApplicationUser>();
+  public @ResponseBody TscUser getUsers(@AuthenticationPrincipal Principal user) {
     // TODO return rest json service get user
     logger.debug("/admin/userService/getUsers");
-    list.add(userService.getUser(user.getName()));
-    return list;
+    return userService.getUser(user.getName());
   }
 
 }

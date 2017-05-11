@@ -7,8 +7,8 @@ import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 
-import it.tsc.model.ApplicationUser;
 import it.tsc.model.Role;
+import it.tsc.model.TscUser;
 
 /**
  * @author astraservice
@@ -22,7 +22,7 @@ public interface UserDao {
    * @param username
    * @return
    */
-  public ApplicationUser getUser(String username);
+  public TscUser getUser(String username);
 
   /**
    * Return Roles for user
@@ -43,29 +43,27 @@ public interface UserDao {
   /**
    * Add user
    * 
-   * @param username
+   * @param username (Only admin role is permitted)
    * @param password
+   * @param email
    * @param role
-   * @param requester (Only admin role is permitted)
    */
-  public void addUser(String username, String password, Role role, ApplicationUser requester);
+  public void addUser(String username, String password, String email, Role role);
 
   /**
    * Remove user
    * 
-   * @param username
-   * @param password
-   * @param role
-   * @param requester (Only admin role is permitted)
+   * @param username (Only admin role is permitted)
    */
-  public void removeUser(String username, String password, Role role, ApplicationUser requester);
+  public void removeUser(String username);
 
   /**
    * update user
    * 
-   * @param username
+   * @param username (Only admin role is permitted)
+   * @param password
+   * @param email
    * @param role
-   * @param requester (Only admin role is permitted)
    */
-  public void updateUser(String username, Role role, ApplicationUser requester);
+  public void updateUser(String username, String password, String email, Role role);
 }
