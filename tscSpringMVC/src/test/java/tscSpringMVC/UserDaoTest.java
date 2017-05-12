@@ -26,8 +26,8 @@ import it.tsc.service.UserService;
 @RunWith(SpringJUnit4ClassRunner.class)
 // ApplicationContext will be loaded from the OrderServiceConfig class
 @ContextConfiguration(classes = ServiceConfig.class, loader = AnnotationConfigContextLoader.class)
-public class DaoTest {
-  private static Logger logger = LoggerFactory.getLogger(DaoTest.class);
+public class UserDaoTest {
+  private static Logger logger = LoggerFactory.getLogger(UserDaoTest.class);
   @Autowired
   private UserService userService;
   private Gson gson = new Gson();
@@ -35,13 +35,13 @@ public class DaoTest {
   /**
    * 
    */
-  public DaoTest() {
+  public UserDaoTest() {
     // TODO Auto-generated constructor stub
   }
 
   @Test
   public void testUserDao() {
-    logger.info("userService user {}", gson.toJson(userService.getUser("ivan")));
+    logger.info("userService user {}", gson.toJson(userService.getUser("matteo")));
   }
 
   @Test
