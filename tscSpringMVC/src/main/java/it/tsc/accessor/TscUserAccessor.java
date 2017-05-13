@@ -11,8 +11,7 @@ import com.datastax.driver.mapping.annotations.Query;
 import it.tsc.model.TscUser;
 
 /**
- * @author astraservice
- *
+ * @author astraservice TscUser map using @Accessor
  */
 @Accessor
 public interface TscUserAccessor {
