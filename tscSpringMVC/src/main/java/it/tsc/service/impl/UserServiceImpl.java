@@ -41,6 +41,10 @@ public class UserServiceImpl implements UserService {
     return userDao.getUser(username);
   }
 
+  public List<TscUser> getAllUsers() {
+    return userDao.getAllUsers();
+  }
+
   /*
    * (non-Javadoc)
    * 

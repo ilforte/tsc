@@ -8,17 +8,34 @@ import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 
+import com.datastax.driver.mapping.annotations.Column;
+import com.datastax.driver.mapping.annotations.PartitionKey;
+import com.datastax.driver.mapping.annotations.Table;
+import com.datastax.driver.mapping.annotations.Transient;
 import com.google.gson.annotations.Expose;
 
 /**
  * @author astraservice POJO TSC User
  */
+@Table(keyspace = "ks_tsc", name = "tb_users", readConsistency = "QUORUM",
+    writeConsistency = "QUORUM", caseSensitiveKeyspace = false, caseSensitiveTable = false)
 public class TscUser {
   @Expose
+  @PartitionKey(0)
+  @Column(name = "username")
   private String username;
+
+  @Expose
+  @PartitionKey(1)
+  @Column(name = "role")
+  private String role;
+
+  @Transient
   @Expose
   private List<String> roles;
+
   @Expose
+  @Column(name = "email")
   private String email;
 
   /**
@@ -69,6 +86,14 @@ public class TscUser {
 
   public void setEmail(String email) {
     this.email = email;
+  }
+
+  public String getRole() {
+    return role;
+  }
+
+  public void setRole(String role) {
+    this.role = role;
   }
 
 }

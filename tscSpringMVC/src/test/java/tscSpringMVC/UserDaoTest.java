@@ -36,12 +36,17 @@ public class UserDaoTest {
    * 
    */
   public UserDaoTest() {
-    // TODO Auto-generated constructor stub
+
   }
 
   @Test
   public void testUserDao() {
     logger.info("userService user {}", gson.toJson(userService.getUser("matteo")));
+  }
+
+  @Test
+  public void testAllUsersDao() {
+    logger.info("userService user {}", gson.toJson(userService.getAllUsers()));
   }
 
   @Test

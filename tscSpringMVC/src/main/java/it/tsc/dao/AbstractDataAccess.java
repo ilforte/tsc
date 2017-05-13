@@ -6,6 +6,7 @@ package it.tsc.dao;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.datastax.driver.core.Session;
+import com.datastax.driver.mapping.MappingManager;
 
 /**
  * @author astraservice AbstractDataAccess for cassandra
@@ -34,6 +35,15 @@ public abstract class AbstractDataAccess {
   /** Close cluster. */
   public void close() {
     genericDao.close();
+  }
+
+  /**
+   * return mapping manager
+   * 
+   * @return
+   */
+  public MappingManager getMappingManager() {
+    return new MappingManager(genericDao.getSession());
   }
 
 }

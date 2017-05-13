@@ -25,6 +25,13 @@ public interface UserDao {
   public TscUser getUser(String username);
 
   /**
+   * get All Users
+   * 
+   * @return (Only for admin role is permitted)
+   */
+  public List<TscUser> getAllUsers();
+
+  /**
    * Return Roles for user
    * 
    * @param username
