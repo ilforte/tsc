@@ -25,7 +25,7 @@ public interface TscUserAccessor {
    * @return
    */
   @Query("INSERT INTO ks_tsc.tb_users (username, password, email,role) VALUES (:username, :password, :email,:role) IF NOT EXISTS;")
-  Result<TscUser> addUser(@Param("username") String username, @Param("password") String password,
+  public void addUser(@Param("username") String username, @Param("password") String password,
       @Param("email") String email, @Param("role") String role);
 
   /**
@@ -35,7 +35,7 @@ public interface TscUserAccessor {
    * @return
    */
   @Query("DELETE FROM ks_tsc.tb_users WHERE username = :username;")
-  Result<TscUser> removeUser(@Param("username") String username);
+  public void removeUser(@Param("username") String username);
 
   /**
    * update User using @Accessor
@@ -47,7 +47,7 @@ public interface TscUserAccessor {
    * @return
    */
   @Query("UPDATE ks_tsc.tb_users SET password=:password,email=:email WHERE username = :username AND role = :role IF EXISTS;")
-  Result<TscUser> updateUser(@Param("username") String username, @Param("password") String password,
+  public void updateUser(@Param("username") String username, @Param("password") String password,
       @Param("email") String email, @Param("role") String role);
 
   /**
@@ -56,7 +56,7 @@ public interface TscUserAccessor {
    * @return
    */
   @Query("SELECT * FROM ks_tsc.tb_users;")
-  Result<TscUser> getAllUsers();
+  public Result<TscUser> getAllUsers();
 
   /**
    * return Role giving username and password using @Accessor
@@ -66,6 +66,10 @@ public interface TscUserAccessor {
    * @return
    */
   @Query("SELECT * FROM ks_tsc.tb_users WHERE username = :username AND password = :password ALLOW FILTERING;")
-  Result<TscUser> getUserRoles(@Param("username") String username,
+  public Result<TscUser> getUserRoles(@Param("username") String username,
       @Param("password") String password);
+
+  @Query("SELECT * FROM ks_tsc.tb_users WHERE username = ? ALLOW FILTERING;")
+  public Result<TscUser> getUser(@Param("username") String username);
+
 }

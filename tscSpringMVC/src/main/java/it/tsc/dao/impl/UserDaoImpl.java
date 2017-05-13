@@ -12,10 +12,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Repository;
 
-import com.datastax.driver.core.BoundStatement;
-import com.datastax.driver.core.PreparedStatement;
-import com.datastax.driver.core.ResultSet;
-import com.datastax.driver.core.Row;
 import com.datastax.driver.mapping.MappingManager;
 import com.datastax.driver.mapping.Result;
 
@@ -48,21 +44,28 @@ public class UserDaoImpl extends AbstractDataAccess implements UserDao {
    * @see it.tsc.dao.UserDao#getUserRole(java.lang.String)
    */
   public TscUser getUser(String username) {
-    TscUser user = null;
-    PreparedStatement preparedStmt =
-        getSession().prepare("SELECT * FROM ks_tsc.tb_users WHERE username = ? ALLOW FILTERING;");
-    BoundStatement bound = preparedStmt.bind().setString("username", username);
-    ResultSet rs = getSession().execute(bound);
+    /*
+     * TscUser user = null; PreparedStatement preparedStmt =
+     * getSession().prepare("SELECT * FROM ks_tsc.tb_users WHERE username = ? ALLOW FILTERING;");
+     * BoundStatement bound = preparedStmt.bind().setString("username", username); ResultSet rs =
+     * getSession().execute(bound); List<String> roles = new ArrayList<String>(); String email = "";
+     * for (Row row : rs) { email = row.getString("email"); roles.add(row.getString("role")); } if
+     * (roles.size() > 0) { user = new TscUser(username, roles, email); } return user;
+     */
+    TscUser tscUser = null;
+    MappingManager manager = getMappingManager();
+    TscUserAccessor userAccessor = manager.createAccessor(TscUserAccessor.class);
+    Result<TscUser> rs = userAccessor.getUser(username);
     List<String> roles = new ArrayList<String>();
     String email = "";
-    for (Row row : rs) {
-      email = row.getString("email");
-      roles.add(row.getString("role"));
+    for (TscUser user : rs.all()) {
+      email = user.getEmail();
+      roles.add(user.getRole());
     }
     if (roles.size() > 0) {
-      user = new TscUser(username, roles, email);
+      tscUser = new TscUser(username, roles, email);
     }
-    return user;
+    return tscUser;
   }
 
   public List<TscUser> getAllUsers() {
@@ -136,8 +139,7 @@ public class UserDaoImpl extends AbstractDataAccess implements UserDao {
      */
     MappingManager manager = getMappingManager();
     TscUserAccessor userAccessor = manager.createAccessor(TscUserAccessor.class);
-    Result<TscUser> rs = userAccessor.addUser(username, password, email, role.value(role));
-    logger.debug("addUser ExecutionInfo {}", rs);
+    userAccessor.addUser(username, password, email, role.value(role));
   }
 
   /*
@@ -155,8 +157,7 @@ public class UserDaoImpl extends AbstractDataAccess implements UserDao {
      */
     MappingManager manager = getMappingManager();
     TscUserAccessor userAccessor = manager.createAccessor(TscUserAccessor.class);
-    Result<TscUser> rs = userAccessor.removeUser(username);
-    logger.debug("removeUser ExecutionInfo {}", rs);
+    userAccessor.removeUser(username);
   }
 
   /*
@@ -183,8 +184,7 @@ public class UserDaoImpl extends AbstractDataAccess implements UserDao {
      */
     MappingManager manager = getMappingManager();
     TscUserAccessor userAccessor = manager.createAccessor(TscUserAccessor.class);
-    Result<TscUser> rs = userAccessor.updateUser(username, password, email, role.value(role));
-    logger.debug("updateUser ExecutionInfo {}", rs);
+    userAccessor.updateUser(username, password, email, role.value(role));
   }
 
 }
