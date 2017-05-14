@@ -88,7 +88,7 @@ public class BaseDao implements InitializingBean {
 
   @PreDestroy
   public void cleanUp() throws Exception {
-    logger.debug("Spring Container is destroy! Customer clean up");
+    logger.debug("Spring Container is destroy");
     this.close();
   }
 
