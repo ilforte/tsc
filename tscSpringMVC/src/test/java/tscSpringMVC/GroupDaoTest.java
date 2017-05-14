@@ -49,4 +49,14 @@ public class GroupDaoTest {
   public void testRemoveGroup() {
     groupService.removeGroup("MILANO");
   }
+
+  @Test
+  public void testAddUserToGroup() {
+    groupService.addUserToGroup("matteo", "MILANO");
+  }
+
+  @Test
+  public void testRemoveUserFromGroup() {
+    groupService.removeUserFromGroup("matteo", "MILANO");
+  }
 }

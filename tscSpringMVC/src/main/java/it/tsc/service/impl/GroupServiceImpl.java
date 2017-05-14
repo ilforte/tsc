@@ -56,4 +56,12 @@ public class GroupServiceImpl implements GroupService {
     groupDao.removeGroup(groupname);
   }
 
+  public void addUserToGroup(String username, String groupname) {
+    groupDao.addUserToGroup(username, groupname);
+  }
+
+  public void removeUserFromGroup(String username, String groupname) {
+    groupDao.removeUserFromGroup(username, groupname);
+  }
+
 }

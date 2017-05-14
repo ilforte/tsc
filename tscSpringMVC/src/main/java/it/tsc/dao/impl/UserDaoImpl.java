@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Repository;
@@ -16,7 +17,7 @@ import com.datastax.driver.mapping.MappingManager;
 import com.datastax.driver.mapping.Result;
 
 import it.tsc.accessor.TscUserAccessor;
-import it.tsc.dao.AbstractDataAccess;
+import it.tsc.dao.BaseDao;
 import it.tsc.dao.UserDao;
 import it.tsc.model.Role;
 import it.tsc.model.TscUser;
@@ -27,8 +28,10 @@ import it.tsc.util.UserTransform;
  *
  */
 @Repository("userDao")
-public class UserDaoImpl extends AbstractDataAccess implements UserDao {
+public class UserDaoImpl implements UserDao {
   private static Logger logger = LoggerFactory.getLogger(UserDaoImpl.class);
+  @Autowired
+  private BaseDao baseDao;
 
   /**
    * to convert v
@@ -53,7 +56,7 @@ public class UserDaoImpl extends AbstractDataAccess implements UserDao {
      * (roles.size() > 0) { user = new TscUser(username, roles, email); } return user;
      */
     TscUser tscUser = null;
-    MappingManager manager = getMappingManager();
+    MappingManager manager = baseDao.getMappingManager();
     TscUserAccessor userAccessor = manager.createAccessor(TscUserAccessor.class);
     Result<TscUser> rs = userAccessor.getUser(username);
     List<String> roles = new ArrayList<String>();
@@ -69,7 +72,7 @@ public class UserDaoImpl extends AbstractDataAccess implements UserDao {
   }
 
   public List<TscUser> getAllUsers() {
-    MappingManager manager = getMappingManager();
+    MappingManager manager = baseDao.getMappingManager();
     TscUserAccessor userAccessor = manager.createAccessor(TscUserAccessor.class);
     Result<TscUser> rs = userAccessor.getAllUsers();
     UserTransform t = new UserTransform();
@@ -96,7 +99,7 @@ public class UserDaoImpl extends AbstractDataAccess implements UserDao {
      * logger.debug("getUserRoles ExecutionInfo {}", rs.getExecutionInfo());
      */
     List<GrantedAuthority> roles = null;
-    MappingManager manager = getMappingManager();
+    MappingManager manager = baseDao.getMappingManager();
     TscUserAccessor userAccessor = manager.createAccessor(TscUserAccessor.class);
     Result<TscUser> rs = userAccessor.getUserRoles(username, password);
     for (TscUser user : rs.all()) {
@@ -137,7 +140,7 @@ public class UserDaoImpl extends AbstractDataAccess implements UserDao {
     // @formatter:on
      ResultSet rs = getSession().execute(bound);
      */
-    MappingManager manager = getMappingManager();
+    MappingManager manager = baseDao.getMappingManager();
     TscUserAccessor userAccessor = manager.createAccessor(TscUserAccessor.class);
     userAccessor.addUser(username, password, email, role.value(role));
   }
@@ -155,7 +158,7 @@ public class UserDaoImpl extends AbstractDataAccess implements UserDao {
      * getSession().execute(bound); logger.debug("removeUser ExecutionInfo {}",
      * rs.getExecutionInfo());
      */
-    MappingManager manager = getMappingManager();
+    MappingManager manager = baseDao.getMappingManager();
     TscUserAccessor userAccessor = manager.createAccessor(TscUserAccessor.class);
     userAccessor.removeUser(username);
   }
@@ -182,7 +185,7 @@ public class UserDaoImpl extends AbstractDataAccess implements UserDao {
      ResultSet rs = getSession().execute(bound);
      logger.debug("addUser ExecutionInfo {}", rs.getExecutionInfo());
      */
-    MappingManager manager = getMappingManager();
+    MappingManager manager = baseDao.getMappingManager();
     TscUserAccessor userAccessor = manager.createAccessor(TscUserAccessor.class);
     userAccessor.updateUser(username, password, email, role.value(role));
   }

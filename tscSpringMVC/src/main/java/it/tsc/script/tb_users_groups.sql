@@ -5,3 +5,5 @@ CREATE TABLE ks_tsc.tb_users_groups(
 );
 
 DROP TABLE IF EXISTS ks_tsc.tb_users_groups;
+
+

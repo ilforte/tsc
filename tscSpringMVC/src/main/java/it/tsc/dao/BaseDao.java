@@ -3,45 +3,49 @@
  */
 package it.tsc.dao;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Repository;
 
 import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.Cluster.Builder;
 import com.datastax.driver.core.QueryOptions;
 import com.datastax.driver.core.Session;
+import com.datastax.driver.mapping.MappingManager;
 
 /**
  * @author astraservice
  *
  */
-public class GenericDao {
-  private static Logger logger = LoggerFactory.getLogger(GenericDao.class);
+@Repository
+public class BaseDao implements InitializingBean {
+  private static Logger logger = LoggerFactory.getLogger(BaseDao.class);
 
+  @Value("${cassandra-nodes}")
   private String nodes;
+
+  @Value("#{T(java.lang.Integer).valueOf('${cassandra-port}')}")
   private Integer port;
+
+  @Value("${cassandra-username}")
   private String username;
+
+  @Value("${cassandra-password}")
   private String password;
+
   /** Cassandra Cluster. */
   private Cluster cluster;
   /** Cassandra Session. */
   private Session session;
+  /** Cassandra MappingManager. */
+  private MappingManager manager;
 
-  public GenericDao(String nodes, Integer port, String username, String password) {
+  public BaseDao() {
     super();
-    this.nodes = nodes;
-    this.port = port;
-    this.username = username;
-    this.password = password;
-    /**
-     * connect to cassandra
-     */
-    if (cluster == null || session == null) {
-      connect();
-    }
   }
 
 
@@ -60,7 +64,11 @@ public class GenericDao {
     b.withQueryOptions(new QueryOptions());
     cluster = b.build();
     session = cluster.connect();
-    logger.debug("Cluster name {} metadata: {}", cluster.getClusterName(), cluster.getMetadata());
+    /**
+     * prepare mapping manager
+     */
+    manager = new MappingManager(session);
+    logger.debug("Cluster name {} metadata: {}", cluster.getMetadata());
   }
 
   /**
@@ -78,15 +86,20 @@ public class GenericDao {
     cluster.close();
   }
 
-  @PostConstruct
-  public void initObject() throws Exception {
-    logger.debug("Init method after properties are set : ");
-  }
-
   @PreDestroy
   public void cleanUp() throws Exception {
     logger.debug("Spring Container is destroy! Customer clean up");
     this.close();
+  }
+
+  public MappingManager getMappingManager() {
+    return manager;
+  }
+
+
+  public void afterPropertiesSet() throws Exception {
+    logger.debug("Init method after properties are set and connect ");
+    this.connect();
   }
 
 }
