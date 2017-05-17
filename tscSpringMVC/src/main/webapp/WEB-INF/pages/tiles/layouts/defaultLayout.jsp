@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
  
 <html>
  
@@ -28,7 +29,12 @@ Current Locale : ${pageContext.response.locale} --%>
     <li class="active"><a href="#"><spring:message code="label.allarms" /></a></li>
     <li><a href="#"><spring:message code="label.anagrafic" /></a></li>
     <li><a href="#"><spring:message code="label.rescuers" /></a></li>
-    <li><a href="#"><spring:message code="label.password" text="n.d."/></a></li>        
+    <li><a href="#"><spring:message code="label.password" text="n.d."/></a></li>    
+    <li><a href="#"><spring:message code="label.password" text="n.d."/></a></li>  
+    <li><a href="#"><spring:message code="label.password" text="n.d."/></a></li>  
+    <sec:authorize access="hasRole('ADMIN')">
+		<li><a href="#"><spring:message code="label.password" text="Amministrazione"/></a></li> 
+	</sec:authorize>
   </ul>
   
    <header id="header">

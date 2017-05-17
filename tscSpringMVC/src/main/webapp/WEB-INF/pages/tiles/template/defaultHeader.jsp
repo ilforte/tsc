@@ -10,7 +10,10 @@
 	
 	#left {
 	    float:left;
-	    width:29%;
+	    width:29%;<sec:authorize access="hasRole('ADMIN')">
+			This content will only be visible to users who have
+			the "supervisor" authority in their list of <tt>GrantedAuthority</tt>s.
+		</sec:authorize>
 	}
 	
 	#center {
