@@ -45,6 +45,10 @@ public class UserServiceImpl implements UserService {
     return userDao.getAllUsers();
   }
 
+  public String jsonGetAllUsers() {
+    return userDao.jsonGetAllUsers();
+  }
+
   /*
    * (non-Javadoc)
    * 

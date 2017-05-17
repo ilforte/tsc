@@ -25,10 +25,10 @@
 </style>
 <div id="container">
 	<div id="left"><h1>default Header Tiles Demo</h1>
-		<sec:authorize access="hasRole('ADMIN')">
+<%-- 		<sec:authorize access="hasRole('ADMIN')">
 			This content will only be visible to users who have
 			the "supervisor" authority in their list of <tt>GrantedAuthority</tt>s.
-		</sec:authorize>
+		</sec:authorize> --%>
 	</div>
     <div id="center">	
     	<c:if test="${pageContext.request.userPrincipal.name != null}">

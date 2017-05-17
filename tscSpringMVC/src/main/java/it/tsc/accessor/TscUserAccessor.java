@@ -69,6 +69,12 @@ public interface TscUserAccessor {
   public Result<TscUser> getUserRoles(@Param("username") String username,
       @Param("password") String password);
 
+  /**
+   * return single user
+   * 
+   * @param username
+   * @return
+   */
   @Query("SELECT * FROM ks_tsc.tb_users WHERE username = ? ALLOW FILTERING;")
   public Result<TscUser> getUser(@Param("username") String username);
 

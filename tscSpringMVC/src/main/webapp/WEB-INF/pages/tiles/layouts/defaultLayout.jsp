@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ page isELIgnored="false" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
  
 <html>
  
@@ -13,25 +14,41 @@
 	<!-- ... -->
 	
     <title><tiles:getAsString name="title" /></title>
-<%--     <link href="<c:url value='/static/css/bootstrap.css' />"  rel="stylesheet"></link>
-    <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link> --%>
+    <link href="<c:url value='/resources/css/bootstrap.min.css' />"  rel="stylesheet"></link>
+    <link href="<c:url value='/resources/css/bootstrap-theme.min.css' />"  rel="stylesheet"></link>
+    <script src="<c:url value='/resources/js/bootstrap.min.js' />"></script>
 </head>
   
 <body>
-        <header id="header">
-            <tiles:insertAttribute name="header" />
-        </header>
-     
-        <section id="sidemenu">
-            <tiles:insertAttribute name="menu" />
-        </section>
-             
-        <section id="site-content">
-            <tiles:insertAttribute name="body" />
-        </section>
-         
-        <footer id="footer">
-            <tiles:insertAttribute name="footer" />
-        </footer>
+<%-- 
+Current Locale : ${pageContext.response.locale} --%>
+
+<div class="container">             
+  <ul class="nav nav-tabs" role="tablist">
+    <li class="active"><a href="#"><spring:message code="label.allarms" /></a></li>
+    <li><a href="#"><spring:message code="label.anagrafic" /></a></li>
+    <li><a href="#"><spring:message code="label.rescuers" /></a></li>
+    <li><a href="#"><spring:message code="label.password" text="n.d."/></a></li>        
+  </ul>
+  
+   <header id="header">
+       <tiles:insertAttribute name="header" />
+   </header>
+
+   <section id="sidemenu">
+       <tiles:insertAttribute name="menu" />
+   </section>
+        
+   <section id="site-content">
+       <tiles:insertAttribute name="body" />
+   </section>
+    
+   <footer id="footer">
+       <tiles:insertAttribute name="footer" />
+   </footer>
+  
+</div>
+
+
 </body>
 </html>

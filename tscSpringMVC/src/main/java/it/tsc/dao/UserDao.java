@@ -25,6 +25,13 @@ public interface UserDao {
   public TscUser getUser(String username);
 
   /**
+   * get All Users in JSON format
+   * 
+   * @return (Only for admin role is permitted)
+   */
+  public String jsonGetAllUsers();
+
+  /**
    * get All Users
    * 
    * @return (Only for admin role is permitted)

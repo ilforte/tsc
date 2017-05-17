@@ -39,4 +39,13 @@ public class RestUserServiceController {
     return userService.getUser(user.getName());
   }
 
+  @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+  @RequestMapping(value = "/admin/userService/jsonGetAllUsers", method = RequestMethod.GET,
+      produces = "application/json")
+  public @ResponseBody String jsonGetAllUsers(@AuthenticationPrincipal Principal user) {
+    // TODO return rest json service get user
+    logger.debug("/admin/userService/jsonGetAllUsers");
+    return userService.jsonGetAllUsers();
+  }
+
 }

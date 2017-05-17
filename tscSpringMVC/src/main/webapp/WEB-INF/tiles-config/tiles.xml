@@ -15,19 +15,19 @@
    <!-- Home Page -->
    <definition name="home" extends="base-definition">  
        <put-attribute name="title" value="Welcome" />  
-       <put-attribute name="body" value="/WEB-INF/pages/allarms/home.jsp" />  
+       <put-attribute name="body" value="/WEB-INF/pages/site/allarms/home.jsp" />  
    </definition>  
    
    <!-- Admin Page -->
    <definition name="admin" extends="base-definition">  
        <put-attribute name="title" value="Welcome" />  
-       <put-attribute name="body" value="/WEB-INF/pages/admin/home.jsp" />  
+       <put-attribute name="body" value="/WEB-INF/pages/site/admin/home.jsp" />  
    </definition>  
  
    <!-- Allarm Page -->
    <definition name="user" extends="base-definition">  
        <put-attribute name="title" value="Welcome" />  
-       <put-attribute name="body" value="/WEB-INF/pages/allarms/home.jsp" />  
+       <put-attribute name="body" value="/WEB-INF/pages/site/allarms/home.jsp" />  
    </definition>  
   
 </tiles-definitions>

@@ -32,6 +32,13 @@ public interface UserService {
   public List<TscUser> getAllUsers();
 
   /**
+   * get All Users in JSON format
+   * 
+   * @return (Only for admin role is permitted)
+   */
+  public String jsonGetAllUsers();
+
+  /**
    * Return Roles for user
    * 
    * @param username

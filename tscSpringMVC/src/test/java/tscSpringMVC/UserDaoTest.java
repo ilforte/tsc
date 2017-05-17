@@ -50,6 +50,11 @@ public class UserDaoTest {
   }
 
   @Test
+  public void testJsonAllUsersDao() {
+    logger.info("userService user {}", userService.jsonGetAllUsers());
+  }
+
+  @Test
   public void testAdmin() {
     TscUser user = new TscUser();
     user.setUsername("ivan");

@@ -13,8 +13,13 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Repository;
 
+import com.datastax.driver.core.ResultSet;
+import com.datastax.driver.core.Row;
 import com.datastax.driver.mapping.MappingManager;
 import com.datastax.driver.mapping.Result;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import it.tsc.accessor.TscUserAccessor;
 import it.tsc.dao.BaseDao;
@@ -80,6 +85,14 @@ public class UserDaoImpl implements UserDao {
       t.addUser(user.getUsername(), user.getRole(), user.getEmail());
     }
     return t.getUsers();
+  }
+
+  public String jsonGetAllUsers() {
+    String sql = "SELECT JSON username,role,email FROM ks_tsc.tb_users;";
+    ResultSet resultSet = baseDao.getSession().execute(sql);
+    String result = returnJson(resultSet.all());
+    logger.debug("jsonGetAllUsers {}", result);
+    return result;
   }
 
   /*
@@ -188,6 +201,31 @@ public class UserDaoImpl implements UserDao {
     MappingManager manager = baseDao.getMappingManager();
     TscUserAccessor userAccessor = manager.createAccessor(TscUserAccessor.class);
     userAccessor.updateUser(username, password, email, role.value(role));
+  }
+
+  /**
+   * map return result to JSON
+   * 
+   * @return
+   */
+  @SuppressWarnings("unused")
+  private String returnJson(Row row) {
+    return row.getString("[json]");
+  }
+
+  /**
+   * return array of JSON object
+   * 
+   * @param rows
+   * @return
+   */
+  private String returnJson(List<Row> rows) {
+    JsonArray array = new JsonArray();
+    for (Row row : rows) {
+      JsonObject json = (JsonObject) new JsonParser().parse(row.getString("[json]"));
+      array.add(json);
+    }
+    return array.toString();
   }
 
 }
