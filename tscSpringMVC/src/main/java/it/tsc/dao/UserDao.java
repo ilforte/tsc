@@ -15,9 +15,16 @@ import it.tsc.model.TscUser;
  *
  */
 public interface UserDao {
+  /**
+   * get User in JSON format
+   * 
+   * @param username
+   * @return
+   */
+  public String jsonGetUser(String username);
 
   /**
-   * get User Role
+   * get User Object
    * 
    * @param username
    * @return

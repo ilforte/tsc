@@ -31,9 +31,8 @@ import it.tsc.interceptor.PageRequestInterceptor;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = {"it.tsc.service.impl", "it.tsc.dao.impl",
-    "it.tsc.authentication.provider", "it.tsc.controller"})
-@Import({ServiceConfig.class, SecurityConfig.class})
+@ComponentScan(basePackages = {"it.tsc.service.impl", "it.tsc.dao.impl", "it.tsc.controller"})
+@Import({ServiceConfig.class})
 public class WebAppConfig extends WebMvcConfigurerAdapter {
 
   public WebAppConfig() {
@@ -119,7 +118,9 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
   public MessageSource messageSource() {
     ReloadableResourceBundleMessageSource messageSource =
         new ReloadableResourceBundleMessageSource();
-    messageSource.setBasename("/WEB-INF/classes/messages");
+    String[] resources =
+        {"/WEB-INF/classes/messages", "/WEB-INF/classes/errors", "/WEB-INF/classes/labels"};
+    messageSource.setBasenames(resources);
     return messageSource;
   }
 

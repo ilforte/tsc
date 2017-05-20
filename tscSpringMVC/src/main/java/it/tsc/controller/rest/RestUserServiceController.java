@@ -48,4 +48,22 @@ public class RestUserServiceController {
     return userService.jsonGetAllUsers();
   }
 
+  @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+  @RequestMapping(value = "/admin/userService/jsonInsertUser", method = RequestMethod.GET,
+      produces = "application/json")
+  public @ResponseBody String jsonInsertUser(@AuthenticationPrincipal Principal user) {
+    // TODO return rest json service get user
+    logger.debug("/admin/userService/jsonInsertUser");
+    return null;
+  }
+
+  @PreAuthorize("hasAuthority('ROLE_USER')")
+  @RequestMapping(value = "/user/userService/jsonGetUser", method = RequestMethod.GET,
+      produces = "application/json")
+  public @ResponseBody String jsonGetUser(@AuthenticationPrincipal Principal user) {
+    // TODO return rest json service get user
+    logger.debug("/admin/userService/jsonGetUser");
+    return userService.jsonGetUser(user.getName());
+  }
+
 }

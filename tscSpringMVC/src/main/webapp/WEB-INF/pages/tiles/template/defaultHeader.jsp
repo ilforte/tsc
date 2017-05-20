@@ -1,55 +1,35 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<style>
-	#container {
-	    width:100%;
-	    text-align:center;
-	}
+<%@include file="/WEB-INF/pages/jspf/include.jspf" %>
+
+<ul class="nav nav-tabs" role="tablist" id="tabContainer">
+  <li class="active"><a href="#anagrafic" data-toggle="tab" ><spring:message code="label.anagrafic" /></a></li>
+  <li><a href="#rescuers" data-toggle="tab" ><spring:message code="label.rescuers" />        </a></li> 
+  <c:if test="${pageContext.request.userPrincipal.name != null}">
+  	<li><a href="#user" data-toggle="tab" >profili:${pageContext.request.userPrincipal.name}</a></li>
+  </c:if>
+  <sec:authorize access="hasRole('ADMIN')">
+<li>
+	<a href="#list-group" data-toggle="tab">
+	<spring:message code="label.list-group" text="Gruppi"/>
+	</a>
+</li>
+<li>
+	<a href="#add-user" data-toggle="tab">
+	<spring:message code="label.add-user" text="Aggiungi Utente"/>
+	</a>
+</li> 
+<li>
+	<a href="#remove-user" data-toggle="tab">
+	<spring:message code="label.remove-user" text="Rimuovi Utente"/>
+	</a>
+</li> 
+</sec:authorize>
+<li>
+	<c:set var="image" >
+		<c:url value='/resources/img/logout.png' />
+	</c:set>
+	<a href="#logout" style="background:url('${image}') left no-repeat;display:block;" data-toggle="tab">
+	<spring:message code="label.logout" text="Logout"/>
+	</a>
+</li>     
+</ul>
 	
-	#left {
-	    float:left;
-	    width:29%;<sec:authorize access="hasRole('ADMIN')">
-			This content will only be visible to users who have
-			the "supervisor" authority in their list of <tt>GrantedAuthority</tt>s.
-		</sec:authorize>
-	}
-	
-	#center {
-	    display: inline-block;
-	    margin:0 auto;
-	    width:50%;
-	}
-	
-	#right {container
-	    float:right;
-	}
-</style>
-<div id="container">
-	<div id="left"><h1>default Header Tiles Demo</h1>
-<%-- 		<sec:authorize access="hasRole('ADMIN')">
-			This content will only be visible to users who have
-			the "supervisor" authority in their list of <tt>GrantedAuthority</tt>s.
-		</sec:authorize> --%>
-	</div>
-    <div id="center">	
-    	<c:if test="${pageContext.request.userPrincipal.name != null}">
-			<h2>User : ${pageContext.request.userPrincipal.name}
-	        </h2>
-		</c:if>
-	</div> 
-    <div id="right">	
-    	<c:if test="${pageContext.request.userPrincipal.name != null}">
-			<c:url var="logoutUrl" value="/logout"/>
-			<form action="${logoutUrl}"
-				method="post">
-			<input type="submit"
-				value="Log out" />
-			<input type="hidden"
-				name="${_csrf.parameterName}"
-				value="${_csrf.token}"/>
-			</form>
-		</c:if>
-	</div>  
-</div>

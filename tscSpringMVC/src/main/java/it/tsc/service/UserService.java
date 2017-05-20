@@ -17,12 +17,20 @@ import it.tsc.model.TscUser;
 public interface UserService {
 
   /**
-   * get User Role
+   * get User object
    * 
    * @param username
    * @return
    */
   public TscUser getUser(String username);
+
+  /**
+   * get User in JSON format
+   * 
+   * @param username
+   * @return
+   */
+  public String jsonGetUser(String username);
 
   /**
    * get All Users

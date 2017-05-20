@@ -13,6 +13,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Repository;
 
+import com.datastax.driver.core.BoundStatement;
+import com.datastax.driver.core.PreparedStatement;
 import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.Row;
 import com.datastax.driver.mapping.MappingManager;
@@ -44,6 +46,17 @@ public class UserDaoImpl implements UserDao {
    */
   public UserDaoImpl() {
 
+  }
+
+  public String jsonGetUser(String username) {
+    String sql =
+        "SELECT JSON username,role,email FROM ks_tsc.tb_users WHERE username = ? ALLOW FILTERING;";
+    PreparedStatement preparedStmt = baseDao.getSession().prepare(sql);
+    BoundStatement bound = preparedStmt.bind().setString("username", username);
+    ResultSet resultSet = baseDao.getSession().execute(bound);
+    String result = returnJson(resultSet.all());
+    logger.debug("jsonGetAllUsers {}", result);
+    return result;
   }
 
   /*
