@@ -6,27 +6,6 @@
 
 	  <div id="anagrafic" class="tab-pane fade in active">
 	    <h3>Anagrafica</h3>
-<%-- 			<div id="left"><h1>default Header Tiles Demo</h1>
-			</div>
-		    <div id="center">	
-		    	<c:if test="${pageContext.request.userPrincipal.name != null}">
-					<h2>User:${pageContext.request.userPrincipal.name}
-			        </h2>
-				</c:if>
-			</div> 
-		    <div id="right">	
-		    	<c:if test="${pageContext.request.userPrincipal.name != null}">
-					<c:url var="logoutUrl" value="/logout"/>
-					<form action="${logoutUrl}"
-						method="post">
-					<input type="submit"
-						value="Log out" />
-					<input type="hidden"
-						name="${_csrf.parameterName}"
-						value="${_csrf.token}"/>
-					</form>
-				</c:if>
-			</div>  --%>
 	  </div>
 	  
 	  <div id="rescuers" class="tab-pane fade">
@@ -58,13 +37,16 @@
 		  	data_url="${pageContext.request.contextPath}/admin/userService/jsonGetAllUsers" >
 				columns: [{
 			        field: 'username',
-			        title: 'Nome utente'
+			        title: 'Nome utente',
+			        class:'col-sm-2'
 			    }, {
 			        field: 'role',
-			        title: 'Ruolo'
+			        title: 'Ruolo',
+			        class:'col-sm-2'
 			    }, {
 			        field: 'email',
-			        title: 'email'
+			        title: 'email',
+			        class:'col-sm-2'
 			    }]
 		  	</tables:tables>
 		    <h3>Utente/Permessi</h3>
