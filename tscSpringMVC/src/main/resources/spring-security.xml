@@ -12,7 +12,7 @@
    
    <context:property-placeholder location="classpath:cassandra.properties" />
    
-   <context:component-scan base-package="it.tsc.authentication.provider,it.tsc.service,it.tsc.dao" />
+   <context:component-scan base-package="it.tsc.authentication.provider,it.tsc.service.impl,it.tsc.dao" />
    
    <!-- annotated methods with security -->
    <security:global-method-security pre-post-annotations="enabled"/>

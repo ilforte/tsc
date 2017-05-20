@@ -118,8 +118,7 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
   public MessageSource messageSource() {
     ReloadableResourceBundleMessageSource messageSource =
         new ReloadableResourceBundleMessageSource();
-    String[] resources =
-        {"/WEB-INF/classes/messages", "/WEB-INF/classes/errors", "/WEB-INF/classes/labels"};
+    String[] resources = {"/WEB-INF/classes/messages"};
     messageSource.setBasenames(resources);
     return messageSource;
   }
