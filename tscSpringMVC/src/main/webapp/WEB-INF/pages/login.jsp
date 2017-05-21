@@ -1,7 +1,6 @@
 <%@include file="/WEB-INF/pages/jspf/include.jspf" %>
 
 <div id="login-box">
-
 	<h2>Login with Username and Password</h2>
 
 	<c:if test="${not empty error}">

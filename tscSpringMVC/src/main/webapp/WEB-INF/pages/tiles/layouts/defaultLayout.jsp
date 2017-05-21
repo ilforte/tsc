@@ -9,38 +9,35 @@
 	<meta name="_csrf_header" content="${_csrf.headerName}"/>
 	<!-- ... -->
     <title><tiles:getAsString name="title" /></title>
-    <link href="<c:url value='/resources/css/bootstrap.min.css' />"  rel="stylesheet"></link>
-    <link href="<c:url value='/resources/css/bootstrap-theme.min.css' />"  rel="stylesheet"></link>
-    <link href="<c:url value='/resources/css/bootstrap-table.min.css' />"  rel="stylesheet"></link>
-    <script src="<c:url value='/resources/js/jquery-3.2.1.min.js' />"></script>
-    <script src="<c:url value='/resources/js/bootstrap.min.js' />"></script>
-    <script src="<c:url value='/resources/js/bootstrap-table.min.js' />"></script>
+    <tiles:insertAttribute name="dependency" />
 </head>
   
 <body>
 <%-- 
 Current Locale : ${pageContext.response.locale} --%>
 
-<div class="container">             
-  
-   <header id="header">
-       <tiles:insertAttribute name="header" />
-   </header>
-
-   <section id="sidemenu">
-       <tiles:insertAttribute name="menu" />
-   </section>
-        
-   <section id="site-content"class="active">
-       <tiles:insertAttribute name="body" />
-   </section>
-    
-   <footer id="footer">
-       <tiles:insertAttribute name="footer" />
-   </footer>
-  
+<div class="panel panel-default">
+	<div class="panel-heading">
+			<tiles:insertAttribute name="header" />
+	</div>
+	<div class="panel-body">
+	
+	<div id="container">
+	  <div id="left">
+	  	<tiles:insertAttribute name="left-body" />
+	  </div>
+	  <div id="center">
+	  	<tiles:insertAttribute name="center-body" />
+	  </div>
+	  <div id="right">
+	  	<tiles:insertAttribute name="right-body" />
+	  </div>
+	</div>
+		
+	</div>
+	<div class="panel-footer align-text-bottom">
+		<tiles:insertAttribute name="footer" />
+	</div>
 </div>
-
-
 </body>
 </html>

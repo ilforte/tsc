@@ -1,4 +1,5 @@
 <%@include file="/WEB-INF/pages/jspf/include.jspf" %>
+<%@ taglib tagdir="/WEB-INF/tags/modal" prefix="modal" %>
 
 <ul class="nav nav-tabs" role="tablist" id="tabContainer">
   <li class="active"><a href="#anagrafic" data-toggle="tab" ><spring:message code="label.anagrafic" /></a></li>
@@ -24,12 +25,33 @@
 </li> 
 </sec:authorize>
 <li>
-	<c:set var="image" >
+	<c:set var="image" >modalBody
 		<c:url value='/resources/img/logout.png' />
 	</c:set>
-	<a href="#logout" style="background:url('${image}') left no-repeat;display:block;" data-toggle="tab">
-	<spring:message code="label.logout" text="Logout"/>
+	<a href="#logout" style="background:url('${image}') left no-repeat;display:block;" 
+		data-toggle="modal" data-target="#logoutModal" >
+			<spring:message code="label.logout" text="Logout"/>
+			<!-- modal window -->
+			<modal:modal button_close="Chiudi" button_send="Logout" 
+				text="Si vuole effettuare il logout?" title="Logout" id="logoutModal"
+				callback_function="$('#logoutForm').submit();">
+				
+					<!-- logout form -->
+					<c:if test="${pageContext.request.userPrincipal.name != null}">
+						<div id="logoutFormDiv" style="display: none;">
+							<c:url var="logoutUrl" value="/logout"/>
+							<form action="${logoutUrl}" method="post" id="logoutForm" >
+								<input type="hidden"
+									name="${_csrf.parameterName}"
+									value="${_csrf.token}"/>
+							</form>
+						</div>
+					</c:if>
+					
+			</modal:modal>
 	</a>
 </li>     
 </ul>
+
+
 	
