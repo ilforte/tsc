@@ -9,7 +9,7 @@
 	<meta name="_csrf_header" content="${_csrf.headerName}"/>
 	<!-- ... -->
     <title><tiles:getAsString name="title" /></title>
-    <tiles:insertAttribute name="dependency" />
+    <tiles:insertAttribute name="css-scripts" />
 </head>
   
 <body>

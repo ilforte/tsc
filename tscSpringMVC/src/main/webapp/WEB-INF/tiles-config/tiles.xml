@@ -5,7 +5,7 @@
   <!-- base template -->
    <definition name="base-template"
        template="/WEB-INF/pages/tiles/layouts/defaultLayout.jsp">  
-       <put-attribute name="dependency" value="/WEB-INF/pages/tiles/layouts/script-dependency.jsp" />
+       <put-attribute name="css-scripts" value="/WEB-INF/pages/tiles/layouts/css-scripts.jsp" />
    </definition> 
   
    <!-- Profiled page Base Definition -->
