@@ -5,7 +5,9 @@
 <%@ attribute name="button_close" required="true"  type="java.lang.String"%>
 <%@ attribute name="button_send" required="true"  type="java.lang.String"%>
 <%@ attribute name="callback_function" required="true"  type="java.lang.String"%>
+
 <jsp:doBody var="modalBody"/>
+
 <div id="${id}" class="modal fade">
  <div class="modal-dialog">
   <div class="modal-content">

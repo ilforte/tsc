@@ -12,15 +12,12 @@
    <definition name="base-definition" extends="base-template">  
        <put-attribute name="title" value="" />  
        <put-attribute name="header" value="/WEB-INF/pages/tiles/template/defaultHeader.jsp" />  
-       <put-attribute name="left-body" value="" />  
-       <put-attribute name="center-body" value="" />
-       <put-attribute name="right-body" value="" />
        <put-attribute name="footer" value="/WEB-INF/pages/tiles/template/defaultFooter.jsp" />  
    </definition>  
    
    <!-- Not profiled page Base Definition  -->
    <definition name="notprofiled-base-definition" template="/WEB-INF/pages/tiles/layouts/baseLayout.jsp">  
-   	   <put-attribute name="dependency" value="/WEB-INF/pages/tiles/layouts/script-dependency.jsp" />
+   	   <put-attribute name="css-scripts" value="/WEB-INF/pages/tiles/layouts/css-scripts.jsp" />
        <put-attribute name="title" value="" />  
        <put-attribute name="body" value="" />
    </definition> 
@@ -28,21 +25,19 @@
    <!-- Home Page -->
    <definition name="home" extends="base-definition">  
        <put-attribute name="title" value="Welcome" />  
-       <put-attribute name="center-body" value="/WEB-INF/pages/site/allarms/home.jsp" />  
+       <put-attribute name="center-body" value="/WEB-INF/pages/site/user/body.jsp" />  
    </definition>  
    
    <!-- Admin Page -->
    <definition name="admin" extends="base-definition">  
        <put-attribute name="title" value="Welcome Admin page" />  
-       <put-attribute name="left-body" value="/WEB-INF/pages/site/admin/left-body.jsp" /> 
-       <put-attribute name="center-body" value="/WEB-INF/pages/site/admin/home.jsp" /> 
-       <put-attribute name="right-body" value="/WEB-INF/pages/site/admin/right-body.jsp" />  
+       <put-attribute name="body" value="/WEB-INF/pages/site/admin/body.jsp" /> 
    </definition>  
  
    <!-- Allarm Page -->
    <definition name="user" extends="base-definition">  
        <put-attribute name="title" value="Welcome User page" />  
-       <put-attribute name="body" value="/WEB-INF/pages/site/allarms/home.jsp" />  
+       <put-attribute name="body" value="/WEB-INF/pages/site/user/body.jsp" />
    </definition>  
    
    <!-- NOT PROFILED -->
