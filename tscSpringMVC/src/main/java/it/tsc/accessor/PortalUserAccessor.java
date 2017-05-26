@@ -8,13 +8,13 @@ import com.datastax.driver.mapping.annotations.Accessor;
 import com.datastax.driver.mapping.annotations.Param;
 import com.datastax.driver.mapping.annotations.Query;
 
-import it.tsc.model.TscUser;
+import it.tsc.model.PortalUser;
 
 /**
- * @author astraservice TscUser map using @Accessor
+ * @author astraservice PortalUser map using @Accessor
  */
 @Accessor
-public interface TscUserAccessor {
+public interface PortalUserAccessor {
   /**
    * add User using @Accessor
    * 
@@ -56,7 +56,7 @@ public interface TscUserAccessor {
    * @return
    */
   @Query("SELECT * FROM ks_tsc.tb_users;")
-  public Result<TscUser> getAllUsers();
+  public Result<PortalUser> getAllUsers();
 
   /**
    * return Role giving username and password using @Accessor
@@ -66,7 +66,7 @@ public interface TscUserAccessor {
    * @return
    */
   @Query("SELECT * FROM ks_tsc.tb_users WHERE username = :username AND password = :password ALLOW FILTERING;")
-  public Result<TscUser> getUserRoles(@Param("username") String username,
+  public Result<PortalUser> getUserRoles(@Param("username") String username,
       @Param("password") String password);
 
   /**
@@ -76,6 +76,6 @@ public interface TscUserAccessor {
    * @return
    */
   @Query("SELECT * FROM ks_tsc.tb_users WHERE username = ? ALLOW FILTERING;")
-  public Result<TscUser> getUser(@Param("username") String username);
+  public Result<PortalUser> getUser(@Param("username") String username);
 
 }

@@ -34,7 +34,7 @@ public interface GroupService {
   public void removeGroup(String groupname);
 
   /**
-   * add TscUser to Group
+   * add PortalUser to Group
    * 
    * @param username
    * @param groupname
@@ -42,7 +42,7 @@ public interface GroupService {
   public void addUserToGroup(String username, String groupname);
 
   /**
-   * remove TscUser from Group
+   * remove PortalUser from Group
    * 
    * @param username
    * @param groupname

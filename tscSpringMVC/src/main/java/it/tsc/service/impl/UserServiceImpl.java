@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import it.tsc.dao.UserDao;
 import it.tsc.model.ApplicationUser;
 import it.tsc.model.Role;
-import it.tsc.model.TscUser;
+import it.tsc.model.PortalUser;
 import it.tsc.service.UserService;
 
 /**
@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
    * 
    * @see it.tsc.service.UserService#getUserRole(java.lang.String)
    */
-  public TscUser getUser(String username) {
+  public PortalUser getUser(String username) {
     return userDao.getUser(username);
   }
 
@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
     return userDao.jsonGetUser(username);
   }
 
-  public List<TscUser> getAllUsers() {
+  public List<PortalUser> getAllUsers() {
     return userDao.getAllUsers();
   }
 
@@ -106,7 +106,7 @@ public class UserServiceImpl implements UserService {
     return role.equals(Role.ROLE_ADMIN);
   }
 
-  public boolean isAdmin(TscUser user) {
+  public boolean isAdmin(PortalUser user) {
     return getUser(user.getUsername()).getRoles().contains(Role.ROLE_ADMIN.toString());
   }
 

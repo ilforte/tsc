@@ -15,15 +15,35 @@
 
 <script>
 $(function() {
-	 
     $("#${id}").jsGrid({
-        height: "auto",
         width: "100%",
         height: "50%",
         sorting: true,
         paging: false,
-        autoload: false,
-        fields:[${fields}]
+        heading: true,
+        filtering: false,
+        inserting: false,
+        editing: false,
+        selecting: true,
+        autoload: true,
+        controller: {
+            loadData: function() {
+                var d = $.Deferred();
+ 
+                $.ajax({
+                    url: "http://services.odata.org/V3/(S(3mnweai3qldmghnzfshavfok))/OData/OData.svc/Products",
+                    dataType: "json"
+                }).done(function(response) {
+                    d.resolve(response.value);
+                });
+ 
+                return d.promise();
+            }
+        },
+        fields:[${fields}],
+        rowClick: function(args) {
+        	console.log(JSON.stringify(args));
+        }
     });
  
 });

@@ -8,14 +8,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
-import it.tsc.model.TscUser;
+import it.tsc.model.PortalUser;
 
 /**
  * @author astraservice
  *
  */
 public class UserTransform {
-  HashMap<String, TscUser> keys = new HashMap<String, TscUser>();
+  HashMap<String, PortalUser> keys = new HashMap<String, PortalUser>();
 
   /**
    * 
@@ -26,7 +26,7 @@ public class UserTransform {
 
   public void addUser(String username, String role, String email) {
     if (!keys.containsKey(username)) {
-      TscUser user = new TscUser();
+      PortalUser user = new PortalUser();
       user.setUsername(username);
       user.setEmail(email);
       List<String> roles = new ArrayList<String>();
@@ -38,9 +38,9 @@ public class UserTransform {
     }
   }
 
-  public List<TscUser> getUsers() {
-    List<TscUser> users = new ArrayList<TscUser>();
-    for (Entry<String, TscUser> entry : keys.entrySet()) {
+  public List<PortalUser> getUsers() {
+    List<PortalUser> users = new ArrayList<PortalUser>();
+    for (Entry<String, PortalUser> entry : keys.entrySet()) {
       users.add(entry.getValue());
     }
     return users;

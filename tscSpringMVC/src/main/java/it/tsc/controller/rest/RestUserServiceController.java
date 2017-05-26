@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import it.tsc.model.TscUser;
+import it.tsc.model.PortalUser;
 import it.tsc.service.UserService;
 
 /**
@@ -33,7 +33,7 @@ public class RestUserServiceController {
   @PreAuthorize("hasAuthority('ROLE_ADMIN')")
   @RequestMapping(value = "/admin/userService/getUsers", method = RequestMethod.GET,
       produces = "application/json")
-  public @ResponseBody TscUser getUsers(@AuthenticationPrincipal Principal user) {
+  public @ResponseBody PortalUser getUsers(@AuthenticationPrincipal Principal user) {
     // TODO return rest json service get user
     logger.debug("/admin/userService/getUsers");
     return userService.getUser(user.getName());

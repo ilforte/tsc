@@ -8,7 +8,7 @@ import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
 
 import it.tsc.model.Role;
-import it.tsc.model.TscUser;
+import it.tsc.model.PortalUser;
 
 /**
  * @author astraservice
@@ -22,7 +22,7 @@ public interface UserService {
    * @param username
    * @return
    */
-  public TscUser getUser(String username);
+  public PortalUser getUser(String username);
 
   /**
    * get User in JSON format
@@ -37,7 +37,7 @@ public interface UserService {
    * 
    * @return (Only for admin role is permitted)
    */
-  public List<TscUser> getAllUsers();
+  public List<PortalUser> getAllUsers();
 
   /**
    * get All Users in JSON format
@@ -68,7 +68,7 @@ public interface UserService {
    * @param user
    * @return
    */
-  public boolean isAdmin(TscUser user);
+  public boolean isAdmin(PortalUser user);
 
   /**
    * Add user

@@ -31,9 +31,7 @@ Current Locale : ${pageContext.response.locale} --%>
 		<!-- body -->
 		<div class="panel-body">
 			<div id="container">
-			<div id="left">left</div>
-			
-<%-- 				<panel:resizable height="100%" minWidth="200px" 
+ 				<panel:resizable height="100%" minWidth="200px" 
 					width="25%" maxWidth="600px%" maxHeight="100%" minHeight="200px" id="left-panel" 
 					style="float:left;top: 0;left: 0;z-index: 999;" >
  					<grid:grid
@@ -43,9 +41,17 @@ Current Locale : ${pageContext.response.locale} --%>
 							    position: absolute;
 							    right: 0;
 							    top: 0;">
-					    { name: "AB CODI", type: "text", width: 40 },
-					    { name: "Nominativo", type: "text", width: 75 },
-					    { name: "Allarme", width: 25,type: "text"}
+							{ name: "Name", type: "text" },
+							            { name: "Description", type: "textarea", width: 150 },
+							            { name: "Rating", type: "number", width: 50, align: "center",
+							                itemTemplate: function(value) {
+							                    return $("<div>").addClass("rating").append(Array(value + 1).join("&#9733;"));
+							                }
+							            },
+				            { name: "Price", type: "number", width: 50,
+				                itemTemplate: function(value) {
+				                    return value.toFixed(2) + "$"; }
+				            }
 					</grid:grid>
  					<grid:grid
 					    height="50%" width="100%" id="testGrid"
@@ -53,11 +59,11 @@ Current Locale : ${pageContext.response.locale} --%>
 							    width: 100%;
 							    right: 0;
 							    top: 0;inline-block;">
-					    { name: "AB CODI", type: "text", width: 40 },
-					    { name: "Nominativo", type: "text", width: 75 },
-					    { name: "Allarme", width: 25,type: "text"}
+					    { name: "AB CODI", type: "text", width: 30 },
+					    { name: "Allarme", width: 25,type: "text"},
+					    { name: "Data", width: 25,type: "text"}
 					</grid:grid>
-				</panel:resizable> --%>
+				</panel:resizable>
 				
 				<div id="center">
 					<tiles:insertAttribute name="body" />

@@ -23,11 +23,11 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import it.tsc.accessor.TscUserAccessor;
+import it.tsc.accessor.PortalUserAccessor;
 import it.tsc.dao.BaseDao;
 import it.tsc.dao.UserDao;
 import it.tsc.model.Role;
-import it.tsc.model.TscUser;
+import it.tsc.model.PortalUser;
 import it.tsc.util.UserTransform;
 
 /**
@@ -64,37 +64,37 @@ public class UserDaoImpl implements UserDao {
    * 
    * @see it.tsc.dao.UserDao#getUserRole(java.lang.String)
    */
-  public TscUser getUser(String username) {
+  public PortalUser getUser(String username) {
     /*
-     * TscUser user = null; PreparedStatement preparedStmt =
+     * PortalUser user = null; PreparedStatement preparedStmt =
      * getSession().prepare("SELECT * FROM ks_tsc.tb_users WHERE username = ? ALLOW FILTERING;");
      * BoundStatement bound = preparedStmt.bind().setString("username", username); ResultSet rs =
      * getSession().execute(bound); List<String> roles = new ArrayList<String>(); String email = "";
      * for (Row row : rs) { email = row.getString("email"); roles.add(row.getString("role")); } if
-     * (roles.size() > 0) { user = new TscUser(username, roles, email); } return user;
+     * (roles.size() > 0) { user = new PortalUser(username, roles, email); } return user;
      */
-    TscUser tscUser = null;
+    PortalUser PortalUser = null;
     MappingManager manager = baseDao.getMappingManager();
-    TscUserAccessor userAccessor = manager.createAccessor(TscUserAccessor.class);
-    Result<TscUser> rs = userAccessor.getUser(username);
+    PortalUserAccessor userAccessor = manager.createAccessor(PortalUserAccessor.class);
+    Result<PortalUser> rs = userAccessor.getUser(username);
     List<String> roles = new ArrayList<String>();
     String email = "";
-    for (TscUser user : rs.all()) {
+    for (PortalUser user : rs.all()) {
       email = user.getEmail();
       roles.add(user.getRole());
     }
     if (roles.size() > 0) {
-      tscUser = new TscUser(username, roles, email);
+      PortalUser = new PortalUser(username, roles, email);
     }
-    return tscUser;
+    return PortalUser;
   }
 
-  public List<TscUser> getAllUsers() {
+  public List<PortalUser> getAllUsers() {
     MappingManager manager = baseDao.getMappingManager();
-    TscUserAccessor userAccessor = manager.createAccessor(TscUserAccessor.class);
-    Result<TscUser> rs = userAccessor.getAllUsers();
+    PortalUserAccessor userAccessor = manager.createAccessor(PortalUserAccessor.class);
+    Result<PortalUser> rs = userAccessor.getAllUsers();
     UserTransform t = new UserTransform();
-    for (TscUser user : rs.all()) {
+    for (PortalUser user : rs.all()) {
       t.addUser(user.getUsername(), user.getRole(), user.getEmail());
     }
     return t.getUsers();
@@ -126,9 +126,9 @@ public class UserDaoImpl implements UserDao {
      */
     List<GrantedAuthority> roles = null;
     MappingManager manager = baseDao.getMappingManager();
-    TscUserAccessor userAccessor = manager.createAccessor(TscUserAccessor.class);
-    Result<TscUser> rs = userAccessor.getUserRoles(username, password);
-    for (TscUser user : rs.all()) {
+    PortalUserAccessor userAccessor = manager.createAccessor(PortalUserAccessor.class);
+    Result<PortalUser> rs = userAccessor.getUserRoles(username, password);
+    for (PortalUser user : rs.all()) {
       if (roles == null) {
         roles = new ArrayList<GrantedAuthority>();
       }
@@ -167,7 +167,7 @@ public class UserDaoImpl implements UserDao {
      ResultSet rs = getSession().execute(bound);
      */
     MappingManager manager = baseDao.getMappingManager();
-    TscUserAccessor userAccessor = manager.createAccessor(TscUserAccessor.class);
+    PortalUserAccessor userAccessor = manager.createAccessor(PortalUserAccessor.class);
     userAccessor.addUser(username, password, email, role.value(role));
   }
 
@@ -185,7 +185,7 @@ public class UserDaoImpl implements UserDao {
      * rs.getExecutionInfo());
      */
     MappingManager manager = baseDao.getMappingManager();
-    TscUserAccessor userAccessor = manager.createAccessor(TscUserAccessor.class);
+    PortalUserAccessor userAccessor = manager.createAccessor(PortalUserAccessor.class);
     userAccessor.removeUser(username);
   }
 
@@ -212,7 +212,7 @@ public class UserDaoImpl implements UserDao {
      logger.debug("addUser ExecutionInfo {}", rs.getExecutionInfo());
      */
     MappingManager manager = baseDao.getMappingManager();
-    TscUserAccessor userAccessor = manager.createAccessor(TscUserAccessor.class);
+    PortalUserAccessor userAccessor = manager.createAccessor(PortalUserAccessor.class);
     userAccessor.updateUser(username, password, email, role.value(role));
   }
 

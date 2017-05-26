@@ -20,7 +20,7 @@ import com.sun.istack.internal.NotNull;
  */
 @Table(keyspace = "ks_tsc", name = "tb_users", readConsistency = "QUORUM",
     writeConsistency = "QUORUM", caseSensitiveKeyspace = false, caseSensitiveTable = false)
-public class TscUser {
+public class PortalUser {
   @Expose
   @NotNull
   @PartitionKey(0)
@@ -45,11 +45,11 @@ public class TscUser {
   /**
    * 
    */
-  public TscUser() {
+  public PortalUser() {
 
   }
 
-  public TscUser(ApplicationUser user) {
+  public PortalUser(ApplicationUser user) {
     super();
     if (user != null) {
       this.username = user.getUsername();
@@ -61,7 +61,7 @@ public class TscUser {
     }
   }
 
-  public TscUser(String username, List<String> roles, String email) {
+  public PortalUser(String username, List<String> roles, String email) {
     super();
     this.username = username;
     this.roles = roles;

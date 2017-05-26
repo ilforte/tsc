@@ -16,7 +16,7 @@ import com.google.gson.Gson;
 
 import it.tsc.config.ServiceConfig;
 import it.tsc.model.Role;
-import it.tsc.model.TscUser;
+import it.tsc.model.PortalUser;
 import it.tsc.service.UserService;
 
 /**
@@ -56,14 +56,14 @@ public class UserDaoTest {
 
   @Test
   public void testAdmin() {
-    TscUser user = new TscUser();
+    PortalUser user = new PortalUser();
     user.setUsername("ivan");
     logger.info("test user {} Admin role: {}", user.getUsername(), userService.isAdmin(user));
   }
 
   @Test
   public void testAdmin2() {
-    TscUser user = new TscUser();
+    PortalUser user = new PortalUser();
     user.setUsername("matteo");
     logger.info("test user {} Admin role: {}", user.getUsername(), userService.isAdmin(user));
   }
