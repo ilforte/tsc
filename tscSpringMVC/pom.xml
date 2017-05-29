@@ -18,6 +18,7 @@
 		<logback.version>1.2.3</logback.version>
 		<jcl.slf4j.version>1.7.25</jcl.slf4j.version>
 		<cassandra.version>3.2.0</cassandra.version>
+		<quartz.version>2.2.1</quartz.version>
 	</properties>
   
   <dependencies>
@@ -157,9 +158,7 @@
 	    <version>21.0</version>
 	</dependency>
 
-	
 	<!-- tiles -->
-	
 	<dependency>
 		<groupId>org.apache.tiles</groupId>
 		<artifactId>tiles-jsp</artifactId>
@@ -180,9 +179,29 @@
 		<artifactId>tiles-el</artifactId>
 		<version>${tiles.version}</version>
 	</dependency>
+	
+	<!-- Quartz framework -->
+    <dependency>
+        <groupId>org.quartz-scheduler</groupId>
+        <artifactId>quartz</artifactId>
+        <version>${quartz.version}</version>
+    </dependency>
     
   </dependencies>
   <build>
     <finalName>tscSpringMVC</finalName>
+	<plugins>
+	    <plugin>
+	      <artifactId>maven-compiler-plugin</artifactId>
+	        <configuration>
+	          <source>1.8</source>
+	          <target>1.8</target>
+          	  <verbose>true</verbose>
+          	  <fork>true</fork>
+          	   <executable>/usr/lib/jvm/java-8-oracle/bin/javac</executable>
+          	   <compilerVersion>1.8</compilerVersion>
+	        </configuration>
+	    </plugin>
+	  </plugins>
   </build>
 </project>

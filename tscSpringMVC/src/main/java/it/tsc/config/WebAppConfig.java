@@ -32,7 +32,7 @@ import it.tsc.interceptor.PageRequestInterceptor;
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = {"it.tsc.service.impl", "it.tsc.dao.impl", "it.tsc.controller"})
-@Import({ServiceConfig.class})
+@Import({ServiceConfig.class, SchedulerConfig.class})
 public class WebAppConfig extends WebMvcConfigurerAdapter {
 
   public WebAppConfig() {

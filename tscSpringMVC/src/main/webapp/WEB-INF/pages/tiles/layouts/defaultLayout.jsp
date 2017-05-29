@@ -17,89 +17,150 @@
 <%-- 
 Current Locale : ${pageContext.response.locale} --%>
 
-<script type="text/javascript">
+<style>
 
+/* Tooltip */
+.test + .tooltip > .tooltip-inner {
+    background-color: #73AD21; 
+    color: #FFFFFF; 
+    border: 1px solid red; 
+    padding: 15px;
+    font-size: 20px;
+}
+/* Tooltip on top */
+.test + .tooltip.top > .tooltip-arrow {
+    border-top: 5px solid yellow;
+}
+/* Tooltip on bottom */
+.test + .tooltip.bottom > .tooltip-arrow {
+    border-bottom: 5px solid yellow;
+}
+/* Tooltip on left */
+.test + .tooltip.left > .tooltip-arrow {
+    border-left: 5px solid yellow;
+}
+/* Tooltip on right */
+.test + .tooltip.right > .tooltip-arrow {
+    border-right: 5px solid yellow;
+}
+</style>
+
+<script type="text/javascript">
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+});
 </script>
 
 <body>
-
-	<div class="panel panel-default">
-		<!-- header -->
-		<div class="panel-heading">
-				<tiles:insertAttribute name="header" />
-		</div>
-		<!-- body -->
-		<div class="panel-body">
-			<div id="container">
- 				<panel:resizable height="100%" minWidth="200px" 
-					width="25%" maxWidth="600px%" maxHeight="100%" minHeight="200px" id="left-panel" 
-					style="float:left;top: 0;left: 0;z-index: 999;" >
- 					<grid:grid
-						height="50%" width="100%" id="allarmsGrid"
-						style=" height: 50%;
-							    width: 100%;
-							    position: absolute;
-							    right: 0;
-							    top: 0;">
-							{ name: "Name", type: "text" },
-							            { name: "Description", type: "textarea", width: 150 },
-							            { name: "Rating", type: "number", width: 50, align: "center",
-							                itemTemplate: function(value) {
-							                    return $("<div>").addClass("rating").append(Array(value + 1).join("&#9733;"));
-							                }
-							            },
-				            { name: "Price", type: "number", width: 50,
-				                itemTemplate: function(value) {
-				                    return value.toFixed(2) + "$"; }
-				            }
-					</grid:grid>
- 					<grid:grid
-					    height="50%" width="100%" id="testGrid"
-						style=" height: 50%;
-							    width: 100%;
-							    right: 0;
-							    top: 0;inline-block;">
-					    { name: "AB CODI", type: "text", width: 30 },
-					    { name: "Allarme", width: 25,type: "text"},
-					    { name: "Data", width: 25,type: "text"}
-					</grid:grid>
-				</panel:resizable>
-				
-				<div id="center">
-					<tiles:insertAttribute name="body" />
-					<!-- footer -->
-					<div class="panel-footer align-text-bottom">
-						<tiles:insertAttribute name="footer" />
-					</div>
-				</div>
-				
-				<div id="right">
- 					<grid:grid
-						height="50%" width="100%" id="testDayGrid"
-						style=" height: 50%;
-							    width: 100%;
-							    position: absolute;
-							    right: 0;
-							    top: 0;">
-					    { name: "AB CODI", type: "text", width: 40 },
-					    { name: "Nominativo", type: "text", width: 40 },
-					    { name: "Allarme", width: 25,type: "text"},
-					    { name: "Data", width: 25,type: "text"}
-					</grid:grid>
- 					<grid:grid
-					    height="50%" width="100%" id="esitGrid"
-						style=" height: 50%;
-							    width: 100%;
-							    right: 0;
-							    top: 0;inline-block;">
-					    { name: "AB CODI", type: "text", width: 40 },
-					    { name: "Nominativo", type: "text", width: 75 },
-					    { name: "Allarme", width: 25,type: "text"}
-					</grid:grid>
-				</div>
-			</div>
-		</div>
+	<!-- header -->
+	<div class="panel-heading">
+		<tiles:insertAttribute name="header" />
 	</div>
+	
+	<div class="container-fluid">
+		<div class="row">
+     		<div class="col-md-3">
+     			<div class="row">
+					<grid:grid
+						height="100%" width="100%" id="allarmGrid" style="height: 50%;width: 100%;">
+					    <jsp:attribute name="header">
+							<thead>
+							    <tr>
+							        <th>ab_codi</th>
+							        <th>nominativo</th>
+							        <th>data</th>
+							        <th>user</th>
+							    </tr>
+							</thead>
+					    </jsp:attribute>
+					    <jsp:attribute name="fields">
+							{ data: 'ab_codi',
+								render:function(data,type,row) 
+								{
+									return "<a href='#' data-toggle='tooltip'  data-placement='right' title='" +row.nominativo+"'>"+row.ab_codi+"</a>";
+								}},
+					        { data: 'nominativo'},
+					        { data: 'data' },
+					        { data: 'user' }
+					    </jsp:attribute>
+					</grid:grid>
+     			</div>
+     			<div class="row">
+					<grid:grid
+						height="100%" width="100%" id="testGrid" style="height: 50%;width: 100%;">
+					    <jsp:attribute name="header">
+							<thead>
+							    <tr>
+							        <th>ab_codi</th>
+							        <th>nominativo</th>
+							        <th>data</th>
+							        <th>user</th>
+							    </tr>
+							</thead>
+					    </jsp:attribute>
+					    <jsp:attribute name="fields">
+							{ data: 'ab_codi' },
+					        { data: 'nominativo' },
+					        { data: 'data' },
+					        { data: 'user' }
+					    </jsp:attribute>
+					</grid:grid>
+     			</div>
+			</div>
+    		<div class="col-md-6">
+    			<div class="row">
+    				<tiles:insertAttribute name="body" />
+    			</div>
+    			<div class="row">
+    				<tiles:insertAttribute name="footer" />
+    			</div>
+    		</div>
+    		<div class="col-md-3">
+     			<div class="row">
+					<grid:grid
+						height="100%" width="100%" id="callGrid" style="height: 50%;width: 100%;">
+					    <jsp:attribute name="header">
+							<thead>
+							    <tr>
+							        <th>ab_codi</th>
+							        <th>nominativo</th>
+							        <th>data</th>
+							        <th>user</th>
+							    </tr>
+							</thead>
+					    </jsp:attribute>
+					    <jsp:attribute name="fields">
+							{ data: 'ab_codi' },
+					        { data: 'nominativo' },
+					        { data: 'data' },
+					        { data: 'user' }
+					    </jsp:attribute>
+					</grid:grid>
+     			</div>
+     			<div class="row">
+					<grid:grid
+						height="100%" width="100%" id="dontDoGrid" style="height: 50%;width: 100%;">
+					    <jsp:attribute name="header">
+							<thead>
+							    <tr>
+							        <th>ab_codi</th>
+							        <th>nominativo</th>
+							        <th>data</th>
+							        <th>user</th>
+							    </tr>
+							</thead>
+					    </jsp:attribute>
+					    <jsp:attribute name="fields">
+							{ data: 'ab_codi' },
+					        { data: 'nominativo' },
+					        { data: 'data' },
+					        { data: 'user' }
+					    </jsp:attribute>
+					</grid:grid>
+     			</div>
+    		</div>
+		</div>
+	 </div>
 
 </body>
 </html>

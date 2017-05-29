@@ -8,6 +8,8 @@
 <link href="<c:url value='/resources/css/jsgrid.min.css' />"  rel="stylesheet"></link>
 <link href="<c:url value='/resources/css/jsgrid-theme.min.css' />"  rel="stylesheet"></link>
 <link href="<c:url value='/resources/css/jquery-ui.min.css' />"  rel="stylesheet"></link>
+<link href="<c:url value='/resources/css/dataTables.bootstrap.min.css' />"  rel="stylesheet"></link>
+<link href="<c:url value='/resources/css/jquery.dataTables.min.css' />"  rel="stylesheet"></link>
 <!-- javascript lib -->
 <script src="<c:url value='/resources/js/jquery-3.2.1.min.js' />"></script>
 <script src="<c:url value='/resources/js/bootstrap.min.js' />"></script>
@@ -15,6 +17,8 @@
 <script src="<c:url value='/resources/js/jsgrid.min.js' />"></script>
 <script src="<c:url value='/resources/js/jquery-ui.min.js' />"></script>
 <script src="<c:url value='/resources/js/jquery.cookie.js' />"></script>
+<script src="<c:url value='/resources/js/jquery.dataTables.min.js' />"></script>
+<script src="<c:url value='/resources/js/dataTables.bootstrap.min.js' />"></script>
 
 <!-- spring Error - Message -->
 
@@ -46,35 +50,6 @@
 	background: #fff;
 	-webkit-border-radius: 2px;
 	-moz-border-radius: 2px;
-}
-
-#container {
-    width:100%;
-    height:100%;
-    text-align:center;
-  	display: flex;                  /* establish flex container */
-  	flex-direction: row;            /* default value; can be omitted */
-  	flex-wrap: nowrap;              /* default value; can be omitted */
-}
-
-#center {
-    display: inline-block;
-    margin:0 auto;
-    width:50%;
-    height:100%;
-}
-
-#right {
-    float:right;
-    width:30%;
-    height:100%;
-}
-
-.panel-footer {
-    position: float;
-    right: 0;
-    bottom: 0;
-    left: 0;
 }
 
 .jsgrid-header-cell{

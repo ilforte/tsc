@@ -13,7 +13,6 @@ import com.datastax.driver.mapping.annotations.PartitionKey;
 import com.datastax.driver.mapping.annotations.Table;
 import com.datastax.driver.mapping.annotations.Transient;
 import com.google.gson.annotations.Expose;
-import com.sun.istack.internal.NotNull;
 
 /**
  * @author astraservice POJO TSC User
@@ -22,7 +21,6 @@ import com.sun.istack.internal.NotNull;
     writeConsistency = "QUORUM", caseSensitiveKeyspace = false, caseSensitiveTable = false)
 public class PortalUser {
   @Expose
-  @NotNull
   @PartitionKey(0)
   @Column(name = "username")
   private String username;
@@ -30,7 +28,6 @@ public class PortalUser {
   @Expose
   @PartitionKey(1)
   @Column(name = "role")
-  @NotNull
   private String role;
 
   @Transient
@@ -39,7 +36,6 @@ public class PortalUser {
 
   @Expose
   @Column(name = "email")
-  @NotNull
   private String email;
 
   /**

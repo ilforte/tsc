@@ -51,7 +51,7 @@ public class BaseDao implements InitializingBean {
 
   /**
    * Connect to Cassandra Cluster specified by provided node IP address and port number.
-   * AbstractDataAccess
+   * AbstractDataAccessWatcherJob
    * 
    * @param node Cluster node IP address.
    * @param port Port of cluster host.
@@ -88,14 +88,13 @@ public class BaseDao implements InitializingBean {
 
   @PreDestroy
   public void cleanUp() throws Exception {
-    logger.debug("Spring Container is destroy");
+    logger.debug("BaseDao Spring Container is destroy");
     this.close();
   }
 
   public MappingManager getMappingManager() {
     return manager;
   }
-
 
   public void afterPropertiesSet() throws Exception {
     logger.debug("Init method after properties are set and connect ");
