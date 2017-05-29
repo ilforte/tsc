@@ -8,8 +8,8 @@
 <link href="<c:url value='/resources/css/jsgrid.min.css' />"  rel="stylesheet"></link>
 <link href="<c:url value='/resources/css/jsgrid-theme.min.css' />"  rel="stylesheet"></link>
 <link href="<c:url value='/resources/css/jquery-ui.min.css' />"  rel="stylesheet"></link>
-<link href="<c:url value='/resources/css/dataTables.bootstrap.min.css' />"  rel="stylesheet"></link>
-<link href="<c:url value='/resources/css/jquery.dataTables.min.css' />"  rel="stylesheet"></link>
+<link href="<c:url value='/resources/css/jsgrid.min.css' />"  rel="stylesheet"></link>
+<link href="<c:url value='/resources/css/jsgrid-theme.min.css' />"  rel="stylesheet"></link>
 <!-- javascript lib -->
 <script src="<c:url value='/resources/js/jquery-3.2.1.min.js' />"></script>
 <script src="<c:url value='/resources/js/bootstrap.min.js' />"></script>
@@ -17,8 +17,7 @@
 <script src="<c:url value='/resources/js/jsgrid.min.js' />"></script>
 <script src="<c:url value='/resources/js/jquery-ui.min.js' />"></script>
 <script src="<c:url value='/resources/js/jquery.cookie.js' />"></script>
-<script src="<c:url value='/resources/js/jquery.dataTables.min.js' />"></script>
-<script src="<c:url value='/resources/js/dataTables.bootstrap.min.js' />"></script>
+<script src="<c:url value='/resources/js/jsgrid.min.js' />"></script>
 
 <!-- spring Error - Message -->
 

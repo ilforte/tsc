@@ -63,46 +63,27 @@ $(document).ready(function(){
      			<div class="row">
 					<grid:grid
 						height="100%" width="100%" id="allarmGrid" style="height: 50%;width: 100%;">
-					    <jsp:attribute name="header">
-							<thead>
-							    <tr>
-							        <th>ab_codi</th>
-							        <th>nominativo</th>
-							        <th>data</th>
-							        <th>user</th>
-							    </tr>
-							</thead>
-					    </jsp:attribute>
 					    <jsp:attribute name="fields">
-							{ data: 'ab_codi',
-								render:function(data,type,row) 
-								{
-									return "<a href='#' data-toggle='tooltip'  data-placement='right' title='" +row.nominativo+"'>"+row.ab_codi+"</a>";
-								}},
-					        { data: 'nominativo'},
-					        { data: 'data' },
-					        { data: 'user' }
+							{name: "ab_codi",type: "text",width:50,
+							    itemTemplate: function(value,item) {
+							    	var tooltip = $('<div>' + value + '</div>').attr("title",item.nominativo);
+							        return tooltip;
+							    }
+							},
+            				{name: "nominativo",type:"text",visible:false,width:50},
+            				{name: "data",type:"text",width:45},
+            				{name: "user",type:"text",width: 50}
 					    </jsp:attribute>
 					</grid:grid>
      			</div>
      			<div class="row">
 					<grid:grid
 						height="100%" width="100%" id="testGrid" style="height: 50%;width: 100%;">
-					    <jsp:attribute name="header">
-							<thead>
-							    <tr>
-							        <th>ab_codi</th>
-							        <th>nominativo</th>
-							        <th>data</th>
-							        <th>user</th>
-							    </tr>
-							</thead>
-					    </jsp:attribute>
 					    <jsp:attribute name="fields">
-							{ data: 'ab_codi' },
-					        { data: 'nominativo' },
-					        { data: 'data' },
-					        { data: 'user' }
+							{name: "ab_codi",type: "text",width:50},
+            				{name: "nominativo",type: "text",width:50},
+            				{name: "data",type:"text",width:45},
+            				{name: "user",type:"text",width: 50}
 					    </jsp:attribute>
 					</grid:grid>
      			</div>
@@ -119,42 +100,22 @@ $(document).ready(function(){
      			<div class="row">
 					<grid:grid
 						height="100%" width="100%" id="callGrid" style="height: 50%;width: 100%;">
-					    <jsp:attribute name="header">
-							<thead>
-							    <tr>
-							        <th>ab_codi</th>
-							        <th>nominativo</th>
-							        <th>data</th>
-							        <th>user</th>
-							    </tr>
-							</thead>
-					    </jsp:attribute>
 					    <jsp:attribute name="fields">
-							{ data: 'ab_codi' },
-					        { data: 'nominativo' },
-					        { data: 'data' },
-					        { data: 'user' }
+							{name: "ab_codi",type: "text",width:50},
+            				{name: "nominativo",type: "text",width:50},
+            				{name: "data",type:"text",width:45},
+            				{name: "user",type:"text",width: 50}
 					    </jsp:attribute>
 					</grid:grid>
      			</div>
      			<div class="row">
 					<grid:grid
 						height="100%" width="100%" id="dontDoGrid" style="height: 50%;width: 100%;">
-					    <jsp:attribute name="header">
-							<thead>
-							    <tr>
-							        <th>ab_codi</th>
-							        <th>nominativo</th>
-							        <th>data</th>
-							        <th>user</th>
-							    </tr>
-							</thead>
-					    </jsp:attribute>
 					    <jsp:attribute name="fields">
-							{ data: 'ab_codi' },
-					        { data: 'nominativo' },
-					        { data: 'data' },
-					        { data: 'user' }
+							{name: "ab_codi",type: "text",width:50},
+            				{name: "nominativo",type: "text",width:50},
+            				{name: "data",type:"text",width:45},
+            				{name: "user",type:"text",width: 50}
 					    </jsp:attribute>
 					</grid:grid>
      			</div>

@@ -8,21 +8,50 @@
 <%@attribute  name="fields" fragment="true" %>
 
 <style>
-table
-{
-	table-layout:fixed;
-    width:100%;
-}
-
-th {
-    text-align: right;
-    font-size:small;
-}
-
-td {
-    text-align: right;
-    font-size:small;
-}
+  .ui-tooltip, .arrow:after {
+    background: blue;
+    border: 1px solid white;
+  }
+  .ui-tooltip {
+    padding: 10px 20px;
+    color: white;
+    border-radius: 20px;
+    font: bold 14px "Helvetica Neue", Sans-Serif;
+    text-transform: uppercase;
+    box-shadow: 0 0 7px black;
+  }
+  .arrow {
+    width: 70px;
+    height: 16px;
+    overflow: hidden;
+    position: absolute;
+    left: 50%;
+    margin-left: -35px;
+    bottom: -16px;
+  }
+  .arrow.top {
+    top: -16px;
+    bottom: auto;
+  }
+  .arrow.left {
+    left: 20%;
+  }
+  .arrow:after {
+    content: "";
+    position: absolute;
+    left: 20px;
+    top: -20px;
+    width: 25px;
+    height: 25px;
+    box-shadow: 6px 5px 9px -9px black;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+  .arrow.top:after {
+    bottom: -20px;
+    top: auto;
+  }
 </style>
 
 <script>
@@ -31,37 +60,49 @@ var dataset = [
     { "ab_codi": "N00002","nominativo":"Connor", "data": "2", "user": "matteo"},
     { "ab_codi": "N00003","nominativo":"Lacey","data": "3", "user": ""},
     { "ab_codi": "N00004","nominativo":"Timothy","data": "1", "user": ""},
+    { "ab_codi": "N00005","nominativo":"Ramona","data": "3", "user": ""},
+    { "ab_codi": "N00001","nominativo":"Otto","data": "1", "user": ""},
+    { "ab_codi": "N00002","nominativo":"Connor", "data": "2", "user": "matteo"},
+    { "ab_codi": "N00003","nominativo":"Lacey","data": "3", "user": ""},
+    { "ab_codi": "N00004","nominativo":"Timothy","data": "1", "user": ""},
+    { "ab_codi": "N00005","nominativo":"Ramona","data": "3", "user": ""},
+    { "ab_codi": "N00001","nominativo":"Otto","data": "1", "user": ""},
+    { "ab_codi": "N00002","nominativo":"Connor", "data": "2", "user": "matteo"},
+    { "ab_codi": "N00003","nominativo":"Lacey","data": "3", "user": ""},
+    { "ab_codi": "N00004","nominativo":"Timothy","data": "1", "user": ""},
     { "ab_codi": "N00005","nominativo":"Ramona","data": "3", "user": ""}
+    
 ];
 
-$(document).ready(function() {
-    var table = $("#${id}").DataTable({
-    	"columnDefs": [
-            {
-                "targets": [1],
-                "visible": false,
-                "searchable": false
-            }],
-    	"bPaginate": false,
-        "bFilter": false,
-        "bInfo": false,
-    	"paging":   false,
-        "ordering": false,
-        "info":     false,
-        "scrollY":        "200px",
-        "scrollCollapse": true,
-        "paging":         false,
-        pageResize: true,
-        "dom": '<"${adapt_to}"flipt>',
-    	data:dataset,
-        columns:[<jsp:invoke fragment="fields"/>]
-    });
-    $('#${id} tbody').on('click', 'tr', function () {
-        var data = table.row( this ).data();
-        console.log('click on ' + JSON.stringify(data));
-    });
+$(document).ready(function(){
+	$( function() {
+	    $(document ).tooltip({
+	      position: {
+	        my: "center bottom-20",
+	        at: "center top",
+	        using: function( position, feedback ) {
+	          $( this ).css( position );
+	          $( "<div>" )
+	            .addClass( "arrow" )
+	            .addClass( feedback.vertical )
+	            .addClass( feedback.horizontal )
+	            .appendTo( this );
+	        }
+	      }
+	    });
+	  });
+	$("#${id}").jsGrid({
+		height: "50%",
+		width: "100%",
+	    filtering: false,
+	    editing: false,
+	    sorting: true,
+	    selecting:true,
+		data:dataset,
+		fields:[<jsp:invoke fragment="fields"/>],
+		rowClick: function(args){console.log(JSON.stringify(args))}
+	});
 });
 </script>
-<table id="${id}" class="display compact row-border hover" >
-	<jsp:invoke fragment="header"/>
-</table>
+<div id="${id}" >
+</div>
