@@ -41,8 +41,30 @@ public class AllarmsDaoTest {
   }
 
   @Test
-  public void testAllarmDao() throws ParseException {
-    allarmService.insertAllarmeMatricola("064795", TimeUtil.getCurrentTimeStamp(), "1", "1234");
+  public void testInsertAllarmeMatricola() throws ParseException {
+    allarmService.insertAllarmeMatricola("064795", "000000", TimeUtil.getCurrentTimeStamp(), "1",
+        "1234", "matteo");
+  }
+
+  @Test
+  public void testAllarmDao2() throws ParseException {
+    allarmService.insertAllarmeMatricola("064795", "000000", TimeUtil.getCurrentTimeStamp(), "1",
+        "1235", "");
+  }
+
+  @Test
+  public void removeAllarmDao() throws ParseException {
+    allarmService.removeAllarme("1234");
+  }
+
+  @Test
+  public void removeAllarmPlaying() throws ParseException {
+    allarmService.removeAllarme("1235");
+  }
+
+  @Test
+  public void getJsonAllarms() throws ParseException {
+    logger.debug(allarmService.jsonGetAllarms());
   }
 
   @Test

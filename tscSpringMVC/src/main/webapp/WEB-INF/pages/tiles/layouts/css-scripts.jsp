@@ -18,6 +18,9 @@
 <script src="<c:url value='/resources/js/jquery-ui.min.js' />"></script>
 <script src="<c:url value='/resources/js/jquery.cookie.js' />"></script>
 <script src="<c:url value='/resources/js/jsgrid.min.js' />"></script>
+<!-- audio lib -->
+<script src="<c:url value='/resources/js/howler.core.js' />"></script>
+
 
 <!-- spring Error - Message -->
 

@@ -80,9 +80,32 @@ $(document).ready(function(){
         };
 
         webSocket.onmessage = function(event){
-        	console.log(JSON.parse(event.data));
         	// loadData with custom filter
         	$("#allarmGrid").jsGrid({data:JSON.parse(event.data)});
+        	/**
+        	* Play allarm 
+        	**/
+        	var arr = JSON.parse(event.data);
+        	var totalSoundDuration;
+        	if(userExists(arr,'')){
+        		/* sound config */
+        		var sound = new Howl({
+        		      src: ["<c:url value='/resources/sound/beep-beep.mp3' />"],
+        		      autoplay: true,
+        		      loop: false,
+        		      volume: 1,
+        		      onload: function() {
+        		          totalSoundDuration = sound.duration();
+        		      },
+        		      onplay: function(getSoundId) {
+        		          //sound playing
+        		      },
+        		      onend: function() {
+        		          //sound play finished
+        		      }
+        		    });
+        		sound.play();
+        	};
         };
         
         webSocket.onclose = function(event){
@@ -93,6 +116,15 @@ $(document).ready(function(){
     function closeSocket(){
         webSocket.close();
     }
+    
+    /**
+    * check id user is empty
+    */
+    function userExists(arr,user) {
+    	  return arr.some(function(el) {
+    	    return el.user === user;
+    	  }); 
+    	}
 
 	$(document).ready(function(){
 		openSocket();

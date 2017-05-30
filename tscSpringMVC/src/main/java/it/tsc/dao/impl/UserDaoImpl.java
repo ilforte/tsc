@@ -19,15 +19,13 @@ import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.Row;
 import com.datastax.driver.mapping.MappingManager;
 import com.datastax.driver.mapping.Result;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 import it.tsc.accessor.PortalUserAccessor;
 import it.tsc.dao.BaseDao;
 import it.tsc.dao.UserDao;
-import it.tsc.model.Role;
 import it.tsc.model.PortalUser;
+import it.tsc.model.Role;
+import it.tsc.util.ConversionUtil;
 import it.tsc.util.UserTransform;
 
 /**
@@ -48,13 +46,14 @@ public class UserDaoImpl implements UserDao {
 
   }
 
+  @Override
   public String jsonGetUser(String username) {
     String sql =
         "SELECT JSON username,role,email FROM ks_tsc.tb_users WHERE username = ? ALLOW FILTERING;";
     PreparedStatement preparedStmt = baseDao.getSession().prepare(sql);
     BoundStatement bound = preparedStmt.bind().setString("username", username);
     ResultSet resultSet = baseDao.getSession().execute(bound);
-    String result = returnJson(resultSet.all());
+    String result = ConversionUtil.returnJson(resultSet.all());
     logger.debug("jsonGetAllUsers {}", result);
     return result;
   }
@@ -64,6 +63,7 @@ public class UserDaoImpl implements UserDao {
    * 
    * @see it.tsc.dao.UserDao#getUserRole(java.lang.String)
    */
+  @Override
   public PortalUser getUser(String username) {
     /*
      * PortalUser user = null; PreparedStatement preparedStmt =
@@ -89,6 +89,7 @@ public class UserDaoImpl implements UserDao {
     return PortalUser;
   }
 
+  @Override
   public List<PortalUser> getAllUsers() {
     MappingManager manager = baseDao.getMappingManager();
     PortalUserAccessor userAccessor = manager.createAccessor(PortalUserAccessor.class);
@@ -100,10 +101,11 @@ public class UserDaoImpl implements UserDao {
     return t.getUsers();
   }
 
+  @Override
   public String jsonGetAllUsers() {
     String sql = "SELECT JSON username,role,email FROM ks_tsc.tb_users;";
     ResultSet resultSet = baseDao.getSession().execute(sql);
-    String result = returnJson(resultSet.all());
+    String result = ConversionUtil.returnJson(resultSet.all());
     logger.debug("jsonGetAllUsers {}", result);
     return result;
   }
@@ -113,6 +115,7 @@ public class UserDaoImpl implements UserDao {
    * 
    * @see it.tsc.dao.UserDao#getUserRoles(java.lang.String,java.lang.String)
    */
+  @Override
   public List<GrantedAuthority> getUserRoles(String username, String password) {
     /*
      * List<GrantedAuthority> roles = null; PreparedStatement preparedStmt = getSession().prepare(
@@ -142,6 +145,7 @@ public class UserDaoImpl implements UserDao {
    * 
    * @see it.tsc.dao.UserDao#isAdmin(it.tsc.model.Role)
    */
+  @Override
   public boolean isAdmin(Role role) {
     return role.equals(Role.ROLE_ADMIN);
   }
@@ -152,6 +156,7 @@ public class UserDaoImpl implements UserDao {
    * @see it.tsc.dao.UserDao#addUser(java.lang.String, java.lang.String,, java.lang.String
    * it.tsc.model.Role)
    */
+  @Override
   public void addUser(String username, String password, String email, Role role) {
     /*
      PreparedStatement preparedStmt = getSession().prepare(
@@ -176,6 +181,7 @@ public class UserDaoImpl implements UserDao {
    * 
    * @see it.tsc.dao.UserDao#removeUser(java.lang.String)
    */
+  @Override
   public void removeUser(String username) {
     /*
      * PreparedStatement preparedStmt =
@@ -196,6 +202,7 @@ public class UserDaoImpl implements UserDao {
    * it.tsc.dao.UserDao#updateUser(java.lang.String,java.lang.String,java.lang.String,it.tsc.model.
    * Role)
    */
+  @Override
   public void updateUser(String username, String password, String email, Role role) {
     /*
      PreparedStatement preparedStmt =
@@ -224,21 +231,6 @@ public class UserDaoImpl implements UserDao {
   @SuppressWarnings("unused")
   private String returnJson(Row row) {
     return row.getString("[json]");
-  }
-
-  /**
-   * return array of JSON object
-   * 
-   * @param rows
-   * @return
-   */
-  private String returnJson(List<Row> rows) {
-    JsonArray array = new JsonArray();
-    for (Row row : rows) {
-      JsonObject json = (JsonObject) new JsonParser().parse(row.getString("[json]"));
-      array.add(json);
-    }
-    return array.toString();
   }
 
 }

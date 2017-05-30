@@ -15,6 +15,10 @@
 	<logger name="it.tsc" level="debug" additivity="false">
 		<appender-ref ref="STDOUT" />
 	</logger>
+	
+	<logger name="com.datastax.driver.core.QueryLogger.NORMAL" level="debug" >
+		<appender-ref ref="STDOUT" />
+	</logger>
 
 	<root level="info">
 		<appender-ref ref="STDOUT" />

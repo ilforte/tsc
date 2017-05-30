@@ -23,7 +23,6 @@ public class Result {
     // TODO Auto-generated constructor stub
   }
 
-  @SuppressWarnings("rawtypes")
   public List getData() {
     return data;
   }
