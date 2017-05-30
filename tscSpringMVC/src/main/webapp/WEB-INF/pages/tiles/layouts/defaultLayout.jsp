@@ -51,6 +51,49 @@ $(document).ready(function(){
 });
 </script>
 
+<!-- Script to utilise the WebSocket -->
+<script type="text/javascript">   
+    var webSocket;
+    function openSocket(){
+    	console.log('open socket');
+        // Ensures only one connection is open at a time
+        if(webSocket !== undefined && webSocket.readyState !== WebSocket.CLOSED){
+            console.log("WebSocket is already opened.");
+            return;
+        }
+        // Create a new instance of the websocket
+        webSocket = new WebSocket("ws://localhost:8080/tscSpringMVC/admin/allarmEndpoint");
+         
+        /**
+         * Binds functions to the listeners for the websocket.
+         */
+        webSocket.onopen = function(event){
+            // For reasons I can't determine, onopen gets called twice
+            // and the first time event.data is undefined.
+            // Leave a comment if you know the answer.
+            if(event.data === undefined)
+                return;
+            console.log(JSON.stringify(event));
+        };
+
+        webSocket.onmessage = function(event){
+        	console.log(event.data);
+        };
+
+        webSocket.onclose = function(event){
+            console.log("Connection closed");
+        };
+    }
+   
+    function closeSocket(){
+        webSocket.close();
+    }
+
+$(document).ready(function(){
+	openSocket();
+});
+ </script>
+
 <body>
 	<!-- header -->
 	<div class="panel-heading">

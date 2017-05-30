@@ -12,7 +12,7 @@
    
    <context:property-placeholder location="classpath:cassandra.properties" />
    
-   <context:component-scan base-package="it.tsc.authentication.provider,it.tsc.service.impl,it.tsc.dao" />
+   <context:component-scan base-package="it.tsc.component,it.tsc.service.impl,it.tsc.dao" />
    
    <!-- annotated methods with security -->
    <security:global-method-security pre-post-annotations="enabled"/>
@@ -45,7 +45,7 @@
     		<security:authentication-provider ref="customAuthenticationProvider" />
 		</security:authentication-manager>
 	    
-	    <beans:bean id="customAuthenticationProvider"  class="it.tsc.authentication.provider.CustomAuthenticationProvider"/>
+	    <beans:bean id="customAuthenticationProvider"  class="it.tsc.component.authentication.provider.CustomAuthenticationProvider"/>
 	    <beans:bean id="authSuccessHandler"  class="it.tsc.security.handler.AuthSuccessHandler"/>
 	    
 		<beans:bean id="customAccessDeniedHandler"

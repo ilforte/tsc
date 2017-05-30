@@ -1,7 +1,7 @@
 /**
  * 
  */
-package it.tsc.authentication.provider;
+package it.tsc.component.authentication.provider;
 
 import java.util.Collection;
 

@@ -29,7 +29,7 @@ public class ServiceConfig {
    * Property placeholder configurer needed to process @Value annotations
    */
   @Bean
-  public static PropertySourcesPlaceholderConfigurer propertyConfigurerabstractDao() {
+  public static PropertySourcesPlaceholderConfigurer propertyConfigurerAbstractDao() {
     return new PropertySourcesPlaceholderConfigurer();
   }
 
