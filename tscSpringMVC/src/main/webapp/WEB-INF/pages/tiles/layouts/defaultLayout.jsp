@@ -73,13 +73,18 @@ $(document).ready(function(){
             // Leave a comment if you know the answer.
             if(event.data === undefined)
                 return;
+            /**
+            * fire event versus grid
+            **/
             console.log(JSON.stringify(event));
         };
 
         webSocket.onmessage = function(event){
-        	console.log(event.data);
+        	console.log(JSON.parse(event.data));
+        	// loadData with custom filter
+        	$("#allarmGrid").jsGrid({data:JSON.parse(event.data)});
         };
-
+        
         webSocket.onclose = function(event){
             console.log("Connection closed");
         };
@@ -89,9 +94,9 @@ $(document).ready(function(){
         webSocket.close();
     }
 
-$(document).ready(function(){
-	openSocket();
-});
+	$(document).ready(function(){
+		openSocket();
+	});
  </script>
 
 <body>
@@ -107,14 +112,15 @@ $(document).ready(function(){
 					<grid:grid
 						height="100%" width="100%" id="allarmGrid" style="height: 50%;width: 100%;">
 					    <jsp:attribute name="fields">
-							{name: "ab_codi",type: "text",width:50,
+							{name: "ab_codi",type: "text",width:30,
 							    itemTemplate: function(value,item) {
-							    	var tooltip = $('<div>' + value + '</div>').attr("title",item.nominativo);
+							    	var tooltip = $('<div>' + value + '</div>').attr("title",item.ab_codi);
 							        return tooltip;
 							    }
 							},
             				{name: "nominativo",type:"text",visible:false,width:50},
-            				{name: "data",type:"text",width:45},
+            				{name: "data_arrivo",type:"text",width:45},
+            				{name: "evento",type:"text",width:45},
             				{name: "user",type:"text",width: 50}
 					    </jsp:attribute>
 					</grid:grid>
@@ -125,7 +131,7 @@ $(document).ready(function(){
 					    <jsp:attribute name="fields">
 							{name: "ab_codi",type: "text",width:50},
             				{name: "nominativo",type: "text",width:50},
-            				{name: "data",type:"text",width:45},
+            				{name: "data_arrivo",type:"text",width:45},
             				{name: "user",type:"text",width: 50}
 					    </jsp:attribute>
 					</grid:grid>
@@ -146,7 +152,7 @@ $(document).ready(function(){
 					    <jsp:attribute name="fields">
 							{name: "ab_codi",type: "text",width:50},
             				{name: "nominativo",type: "text",width:50},
-            				{name: "data",type:"text",width:45},
+            				{name: "data_arrivo",type:"text",width:45},
             				{name: "user",type:"text",width: 50}
 					    </jsp:attribute>
 					</grid:grid>
@@ -157,7 +163,7 @@ $(document).ready(function(){
 					    <jsp:attribute name="fields">
 							{name: "ab_codi",type: "text",width:50},
             				{name: "nominativo",type: "text",width:50},
-            				{name: "data",type:"text",width:45},
+            				{name: "data_arrivo",type:"text",width:45},
             				{name: "user",type:"text",width: 50}
 					    </jsp:attribute>
 					</grid:grid>

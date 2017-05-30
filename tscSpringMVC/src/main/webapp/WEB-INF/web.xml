@@ -26,8 +26,7 @@ id="WebApp_ID" version="2.5">
     <url-pattern>/</url-pattern>
   </servlet-mapping>
   <listener>
-    <listener-class>org.springframework.web.context.ContextLoaderListener
-		</listener-class>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
   <context-param>
     <param-name>contextConfigLocation</param-name>
@@ -35,6 +34,11 @@ id="WebApp_ID" version="2.5">
 			/WEB-INF/classes/spring-security.xml
 		</param-value>
   </context-param>
+  <!-- app listener -->
+  <listener>
+    <listener-class>it.tsc.listener.AppSessionListener</listener-class>
+  </listener>
+  
   <filter>
     <filter-name>springSecurityFilterChain</filter-name>
     <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
@@ -52,4 +56,7 @@ id="WebApp_ID" version="2.5">
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  <session-config>
+    <session-timeout>30</session-timeout>
+  </session-config>
 </web-app>

@@ -56,22 +56,6 @@
 
 <script>
 var dataset = [
-    { "ab_codi": "N00001","nominativo":"Otto","data": "1", "user": ""},
-    { "ab_codi": "N00002","nominativo":"Connor", "data": "2", "user": "matteo"},
-    { "ab_codi": "N00003","nominativo":"Lacey","data": "3", "user": ""},
-    { "ab_codi": "N00004","nominativo":"Timothy","data": "1", "user": ""},
-    { "ab_codi": "N00005","nominativo":"Ramona","data": "3", "user": ""},
-    { "ab_codi": "N00001","nominativo":"Otto","data": "1", "user": ""},
-    { "ab_codi": "N00002","nominativo":"Connor", "data": "2", "user": "matteo"},
-    { "ab_codi": "N00003","nominativo":"Lacey","data": "3", "user": ""},
-    { "ab_codi": "N00004","nominativo":"Timothy","data": "1", "user": ""},
-    { "ab_codi": "N00005","nominativo":"Ramona","data": "3", "user": ""},
-    { "ab_codi": "N00001","nominativo":"Otto","data": "1", "user": ""},
-    { "ab_codi": "N00002","nominativo":"Connor", "data": "2", "user": "matteo"},
-    { "ab_codi": "N00003","nominativo":"Lacey","data": "3", "user": ""},
-    { "ab_codi": "N00004","nominativo":"Timothy","data": "1", "user": ""},
-    { "ab_codi": "N00005","nominativo":"Ramona","data": "3", "user": ""}
-    
 ];
 
 $(document).ready(function(){
@@ -95,6 +79,7 @@ $(document).ready(function(){
 		height: "50%",
 		width: "100%",
 	    filtering: false,
+	    autoload: true,
 	    editing: false,
 	    sorting: true,
 	    selecting:true,
