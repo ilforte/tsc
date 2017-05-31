@@ -29,19 +29,19 @@ Current Locale : ${pageContext.response.locale} --%>
 }
 /* Tooltip on top */
 .test + .tooltip.top > .tooltip-arrow {
-    border-top: 5px solid yellow;
+    border-top: 2px solid yellow;
 }
 /* Tooltip on bottom */
 .test + .tooltip.bottom > .tooltip-arrow {
-    border-bottom: 5px solid yellow;
+    border-bottom: 2px solid yellow;
 }
 /* Tooltip on left */
 .test + .tooltip.left > .tooltip-arrow {
-    border-left: 5px solid yellow;
+    border-left: 2px solid yellow;
 }
 /* Tooltip on right */
 .test + .tooltip.right > .tooltip-arrow {
-    border-right: 5px solid yellow;
+    border-right: 2px solid yellow;
 }
 </style>
 
@@ -52,7 +52,10 @@ $(document).ready(function(){
 </script>
 
 <!-- Script to utilise the WebSocket -->
-<script type="text/javascript">   
+<script type="text/javascript">
+/**
+ * WebSocket js file
+ */
     var webSocket;
     function openSocket(){
     	console.log('open socket');
@@ -82,6 +85,7 @@ $(document).ready(function(){
         webSocket.onmessage = function(event){
         	// loadData with custom filter
         	$("#allarmGrid").jsGrid({data:JSON.parse(event.data)});
+        	//console.log(JSON.stringify(event.data));
         	/**
         	* Play allarm 
         	**/
@@ -129,7 +133,7 @@ $(document).ready(function(){
 	$(document).ready(function(){
 		openSocket();
 	});
- </script>
+</script>
 
 <body>
 	<!-- header -->
@@ -144,16 +148,22 @@ $(document).ready(function(){
 					<grid:grid
 						height="100%" width="100%" id="allarmGrid" style="height: 50%;width: 100%;">
 					    <jsp:attribute name="fields">
-							{name: "ab_codi",type: "text",width:30,
+							{name: "ab_codi",type: "text",width:20,
 							    itemTemplate: function(value,item) {
 							    	var tooltip = $('<div>' + value + '</div>').attr("title",item.ab_codi);
 							        return tooltip;
 							    }
 							},
-            				{name: "nominativo",type:"text",visible:false,width:50},
-            				{name: "data_arrivo",type:"text",width:45},
-            				{name: "evento",type:"text",width:45},
-            				{name: "user",type:"text",width: 50}
+            				{name: "nominativo",type:"text",visible:false,width:0},
+            				{name: "serial_uuid",type:"text",visible:false,width:0},
+            				{name: "data_arrivo",type:"text",width:45,
+							    itemTemplate: function(value,item) {
+							    	var tooltip = $('<div>' + value + '</div>').attr("title",item.ab_codi);
+							        return tooltip;
+							    }
+            				},
+            				{name: "evento",type:"text",width:15},
+            				{name: "user",type:"text",width: 25}
 					    </jsp:attribute>
 					</grid:grid>
      			</div>
