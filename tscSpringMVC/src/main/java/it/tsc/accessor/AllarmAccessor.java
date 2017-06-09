@@ -22,4 +22,7 @@ public interface AllarmAccessor {
 
   @Query("DELETE FROM ks_tsc.tb_allarms WHERE serial_uuid = :serial_uuid;")
   public void removeAllarme(@Param("serial_uuid") String serial_uuid);
+
+  @Query("UPDATE ks_tsc.tb_allarms SET user=:user WHERE serial_uuid = :serial_uuid IF EXISTS;")
+  public void updateAllarme(@Param("serial_uuid") String serial_uuid, @Param("user") String user);
 }

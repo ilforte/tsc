@@ -73,6 +73,12 @@ public class AllarmDaoImpl implements AllarmDao {
     allarmAccessor.removeAllarme(serial_uuid);
   }
 
+  @Override
+  public void updateAllarme(String serial_uuid, String user) {
+    AllarmAccessor allarmAccessor = createAccessor(AllarmAccessor.class);
+    allarmAccessor.updateAllarme(serial_uuid, user);
+  }
+
   /**
    * Return properly groupAccessor
    * 
@@ -90,10 +96,10 @@ public class AllarmDaoImpl implements AllarmDao {
 
   @Override
   public String jsonGetAllarms() {
-    String sql = "SELECT JSON matricola,ab_codi,data_arrivo,evento,user FROM ks_tsc.tb_allarms";
+    String sql =
+        "SELECT JSON matricola,ab_codi,data_arrivo,evento,user,serial_uuid FROM ks_tsc.tb_allarms";
     ResultSet resultSet = baseDao.getSession().execute(sql);
     String result = ConversionUtil.returnJson(resultSet.all());
-    logger.debug("jsonGetAllUsers {}", result);
     return result;
   }
 

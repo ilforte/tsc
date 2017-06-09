@@ -3,7 +3,7 @@
  */
 package it.tsc.service;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * @author astraservice Manage Allarm in TSC
@@ -18,7 +18,7 @@ public interface AllarmService {
    * @param serial_uuid
    * @param user
    */
-  public void insertAllarmeMatricola(String matricola, String ab_codi, Timestamp data_arrivo,
+  public void insertAllarmeMatricola(String matricola, String ab_codi, Date data_arrivo,
       String evento, String serial_uuid, String user);
 
   /**
@@ -30,7 +30,7 @@ public interface AllarmService {
    * @param serial_uuid
    * @param user
    */
-  public void insertAllarmeTel(String tel, String ab_codi, Timestamp data_arrivo, String evento,
+  public void insertAllarmeTel(String tel, String ab_codi, Date data_arrivo, String evento,
       String serial_uuid, String user);
 
   /**
@@ -39,6 +39,14 @@ public interface AllarmService {
    * @param serial_uuid
    */
   public void removeAllarme(String serial_uuid);
+
+  /**
+   * update Allarme
+   * 
+   * @param serial_uuid
+   * @param user
+   */
+  public void updateAllarme(String serial_uuid, String user);
 
   /**
    * get allarms in json format

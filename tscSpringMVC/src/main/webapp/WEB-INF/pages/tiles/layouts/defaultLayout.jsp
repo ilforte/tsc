@@ -24,24 +24,40 @@ Current Locale : ${pageContext.response.locale} --%>
     background-color: #73AD21; 
     color: #FFFFFF; 
     border: 1px solid red; 
-    padding: 15px;
-    font-size: 20px;
+    padding: 5px;
+    font-size: 10px;
 }
 /* Tooltip on top */
 .test + .tooltip.top > .tooltip-arrow {
-    border-top: 2px solid yellow;
+    border-top: 1px solid yellow;
 }
 /* Tooltip on bottom */
 .test + .tooltip.bottom > .tooltip-arrow {
-    border-bottom: 2px solid yellow;
+    border-bottom: 1px solid yellow;
 }
 /* Tooltip on left */
 .test + .tooltip.left > .tooltip-arrow {
-    border-left: 2px solid yellow;
+    border-left: 1px solid yellow;
 }
 /* Tooltip on right */
 .test + .tooltip.right > .tooltip-arrow {
-    border-right: 2px solid yellow;
+    border-right: 1px solid yellow;
+}
+/* grid */
+.jsgrid-row {
+    border-left: 1px solid yellow;
+} 
+
+/*  */
+#gradient {
+    height: 100px;
+    background: red; /* For browsers that do not support gradients */        
+    background: -webkit-linear-gradient(90deg, #ccffe6, #66ffb5); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(90deg, #ccffe6, #66ffb5); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(90deg, #ccffe6, #66ffb5); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(90deg, #ccffe6, #66ffb5); /* Standard syntax (must be last) */
+    height: 20px;
+    font-size: 14px;
 }
 </style>
 
@@ -64,8 +80,20 @@ $(document).ready(function(){
             console.log("WebSocket is already opened.");
             return;
         }
-        // Create a new instance of the websocket
-        webSocket = new WebSocket("ws://localhost:8080/tscSpringMVC/admin/allarmEndpoint");
+        /* server-data
+        	${pageContext.request.requestURI} 
+			${pageContext.request.requestURL} 
+			${pageContext.request.serverPort}
+			${pageContext.request.getServerName()}
+			${pageContext.request.contextPath}
+        */
+        // Create a new instance of the websocket/tscSpringMVC/
+        var webSocketurl = 'ws://';
+        webSocketurl += '${pageContext.request.getServerName()}' + ':';
+        webSocketurl += '${pageContext.request.serverPort}';
+        webSocketurl += '${pageContext.request.contextPath}';
+        webSocketurl += '/admin/allarmEndpoint';
+        webSocket = new WebSocket(webSocketurl);
          
         /**
          * Binds functions to the listeners for the websocket.
@@ -113,6 +141,9 @@ $(document).ready(function(){
         };
         
         webSocket.onclose = function(event){
+        	/**
+        	* close then reopen url
+        	**/
             console.log("Connection closed");
         };
     }
@@ -125,10 +156,10 @@ $(document).ready(function(){
     * check id user is empty
     */
     function userExists(arr,user) {
-    	  return arr.some(function(el) {
-    	    return el.user === user;
-    	  }); 
-    	}
+   	  return arr.some(function(el) {
+   	    return el.user === user;
+   	  }); 
+   	}
 
 	$(document).ready(function(){
 		openSocket();
@@ -144,40 +175,7 @@ $(document).ready(function(){
 	<div class="container-fluid">
 		<div class="row">
      		<div class="col-md-3">
-     			<div class="row">
-					<grid:grid
-						height="100%" width="100%" id="allarmGrid" style="height: 50%;width: 100%;">
-					    <jsp:attribute name="fields">
-							{name: "ab_codi",type: "text",width:20,
-							    itemTemplate: function(value,item) {
-							    	var tooltip = $('<div>' + value + '</div>').attr("title",item.ab_codi);
-							        return tooltip;
-							    }
-							},
-            				{name: "nominativo",type:"text",visible:false,width:0},
-            				{name: "serial_uuid",type:"text",visible:false,width:0},
-            				{name: "data_arrivo",type:"text",width:45,
-							    itemTemplate: function(value,item) {
-							    	var tooltip = $('<div>' + value + '</div>').attr("title",item.ab_codi);
-							        return tooltip;
-							    }
-            				},
-            				{name: "evento",type:"text",width:15},
-            				{name: "user",type:"text",width: 25}
-					    </jsp:attribute>
-					</grid:grid>
-     			</div>
-     			<div class="row">
-					<grid:grid
-						height="100%" width="100%" id="testGrid" style="height: 50%;width: 100%;">
-					    <jsp:attribute name="fields">
-							{name: "ab_codi",type: "text",width:50},
-            				{name: "nominativo",type: "text",width:50},
-            				{name: "data_arrivo",type:"text",width:45},
-            				{name: "user",type:"text",width: 50}
-					    </jsp:attribute>
-					</grid:grid>
-     			</div>
+				<tiles:insertAttribute name="leftLayout" />
 			</div>
     		<div class="col-md-6">
     			<div class="row">
@@ -188,28 +186,7 @@ $(document).ready(function(){
     			</div>
     		</div>
     		<div class="col-md-3">
-     			<div class="row">
-					<grid:grid
-						height="100%" width="100%" id="callGrid" style="height: 50%;width: 100%;">
-					    <jsp:attribute name="fields">
-							{name: "ab_codi",type: "text",width:50},
-            				{name: "nominativo",type: "text",width:50},
-            				{name: "data_arrivo",type:"text",width:45},
-            				{name: "user",type:"text",width: 50}
-					    </jsp:attribute>
-					</grid:grid>
-     			</div>
-     			<div class="row">
-					<grid:grid
-						height="100%" width="100%" id="dontDoGrid" style="height: 50%;width: 100%;">
-					    <jsp:attribute name="fields">
-							{name: "ab_codi",type: "text",width:50},
-            				{name: "nominativo",type: "text",width:50},
-            				{name: "data_arrivo",type:"text",width:45},
-            				{name: "user",type:"text",width: 50}
-					    </jsp:attribute>
-					</grid:grid>
-     			</div>
+    			<tiles:insertAttribute name="rightLayout" />
     		</div>
 		</div>
 	 </div>

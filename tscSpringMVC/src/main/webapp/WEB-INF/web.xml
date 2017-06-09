@@ -38,7 +38,6 @@ id="WebApp_ID" version="2.5">
   <listener>
     <listener-class>it.tsc.listener.AppSessionListener</listener-class>
   </listener>
-  
   <filter>
     <filter-name>springSecurityFilterChain</filter-name>
     <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>

@@ -101,8 +101,6 @@ public class WebSocketAllarmController {
         if (sess.isOpen()) {
           try {
             String result = allarmService.jsonGetAllarms();
-            logger.debug("size: {}  client: {} send message: {}", clients.size(), sess.getId(),
-                result);
             sess.getBasicRemote().sendText(result);
           } catch (IOException ex) {
             logger.error(ex.getMessage());

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package tscSpringMVC;
+package it.tsc.test.dao;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

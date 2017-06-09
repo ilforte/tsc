@@ -35,6 +35,14 @@ public interface AllarmDao {
   public void removeAllarme(String serial_uuid);
 
   /**
+   * update Allarme
+   * 
+   * @param serial_uuid
+   * @param user
+   */
+  public void updateAllarme(String serial_uuid, String user);
+
+  /**
    * get allarms in json format
    * 
    * @return

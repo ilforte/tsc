@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import com.datastax.driver.core.BoundStatement;
@@ -37,6 +38,8 @@ public class UserDaoImpl implements UserDao {
   private static Logger logger = LoggerFactory.getLogger(UserDaoImpl.class);
   @Autowired
   private BaseDao baseDao;
+  @Autowired
+  private BCryptPasswordEncoder bcryptEncoder;
 
   /**
    * to convert v
@@ -79,12 +82,14 @@ public class UserDaoImpl implements UserDao {
     Result<PortalUser> rs = userAccessor.getUser(username);
     List<String> roles = new ArrayList<String>();
     String email = "";
+    String password = "";
     for (PortalUser user : rs.all()) {
       email = user.getEmail();
+      password = user.getPassword();
       roles.add(user.getRole());
     }
     if (roles.size() > 0) {
-      PortalUser = new PortalUser(username, roles, email);
+      PortalUser = new PortalUser(username, password, roles, email);
     }
     return PortalUser;
   }
@@ -116,7 +121,7 @@ public class UserDaoImpl implements UserDao {
    * @see it.tsc.dao.UserDao#getUserRoles(java.lang.String,java.lang.String)
    */
   @Override
-  public List<GrantedAuthority> getUserRoles(String username, String password) {
+  public List<GrantedAuthority> getUserRoles(String username) {
     /*
      * List<GrantedAuthority> roles = null; PreparedStatement preparedStmt = getSession().prepare(
      * "SELECT * FROM ks_tsc.tb_users WHERE username = ? AND password = ? ALLOW FILTERING;");
@@ -130,7 +135,7 @@ public class UserDaoImpl implements UserDao {
     List<GrantedAuthority> roles = null;
     MappingManager manager = baseDao.getMappingManager();
     PortalUserAccessor userAccessor = manager.createAccessor(PortalUserAccessor.class);
-    Result<PortalUser> rs = userAccessor.getUserRoles(username, password);
+    Result<PortalUser> rs = userAccessor.getUserRoles(username);
     for (PortalUser user : rs.all()) {
       if (roles == null) {
         roles = new ArrayList<GrantedAuthority>();
@@ -173,7 +178,7 @@ public class UserDaoImpl implements UserDao {
      */
     MappingManager manager = baseDao.getMappingManager();
     PortalUserAccessor userAccessor = manager.createAccessor(PortalUserAccessor.class);
-    userAccessor.addUser(username, password, email, role.value(role));
+    userAccessor.addUser(username, bcryptEncoder.encode(password), email, role.value(role));
   }
 
   /*

@@ -1,11 +1,8 @@
 <%@ tag language="java" pageEncoding="UTF-8"%>
-<%@ attribute name="id" required="true"  type="java.lang.String"%>
-<%@ attribute name="width" required="true"  type="java.lang.String"%>
-<%@ attribute name="height" required="true"  type="java.lang.String"%>
-<%@ attribute name="style" required="false"  type="java.lang.String"%>
-
-<%@attribute  name="header" fragment="true" %>
+<%@ attribute name="id" 				required="true"  type="java.lang.String"%>
+<%@ attribute name="callbackFunction" 	required="false"  type="java.lang.String"%>
 <%@attribute  name="fields" fragment="true" %>
+<%@attribute  name="options" fragment="true" %>
 
 <style>
   .ui-tooltip, .arrow:after {
@@ -14,7 +11,7 @@
   }
   .ui-tooltip {
     padding: 10px 20px;
-    color: white;
+    color: white;fields
     border-radius: 20px;
     font: bold 14px "Helvetica Neue", Sans-Serif;
     text-transform: uppercase;
@@ -27,7 +24,7 @@
     position: absolute;
     left: 50%;
     margin-left: -35px;
-    bottom: -16px;
+    bottom: -16px;fields
   }
   .arrow.top {
     top: -16px;
@@ -39,8 +36,9 @@
   .arrow:after {
     content: "";
     position: absolute;
+    
     left: 20px;
-    top: -20px;
+    top: -20px;fields
     width: 25px;
     height: 25px;
     box-shadow: 6px 5px 9px -9px black;
@@ -55,15 +53,13 @@
 </style>
 
 <script>
-var dataset = [
-];
-
 $(document).ready(function(){
 	$( function() {
 	    $(document ).tooltip({
 	      position: {
 	        my: "center bottom-20",
 	        at: "center top",
+	        
 	        using: function( position, feedback ) {
 	          $( this ).css( position );
 	          $( "<div>" )
@@ -75,18 +71,26 @@ $(document).ready(function(){
 	      }
 	    });
 	  });
+	
+	var TitleField = function(config) {
+	    jsGrid.Field.call(this, config);
+	};
+    
+    TitleField.prototype = new jsGrid.Field({
+    	itemTemplate: function(value,item) {
+            return value;
+        }
+    });
+    
+    jsGrid.fields.title = TitleField;
+	
 	$("#${id}").jsGrid({
-		height: "50%",
-		width: "100%",
-	    filtering: false,
-	    autoload: true,
-	    editing: false,
-	    sorting: true,
-	    selecting:true,
-		data:dataset,
 		fields:[<jsp:invoke fragment="fields"/>],
-		rowClick: function(args){console.log(JSON.stringify(args))}
+		rowClick: function(args){${callbackFunction}},
+		<jsp:invoke fragment="options"/>
 	});
+	
+
 });
 </script>
 <div id="${id}" >

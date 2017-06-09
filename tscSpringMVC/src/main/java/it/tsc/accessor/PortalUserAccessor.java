@@ -65,9 +65,8 @@ public interface PortalUserAccessor {
    * @param password
    * @return
    */
-  @Query("SELECT * FROM ks_tsc.tb_users WHERE username = :username AND password = :password ALLOW FILTERING;")
-  public Result<PortalUser> getUserRoles(@Param("username") String username,
-      @Param("password") String password);
+  @Query("SELECT * FROM ks_tsc.tb_users WHERE username = :username ALLOW FILTERING;")
+  public Result<PortalUser> getUserRoles(@Param("username") String username);
 
   /**
    * return single user
@@ -75,7 +74,7 @@ public interface PortalUserAccessor {
    * @param username
    * @return
    */
-  @Query("SELECT * FROM ks_tsc.tb_users WHERE username = ? ALLOW FILTERING;")
+  @Query("SELECT username,role,email,password FROM ks_tsc.tb_users WHERE username = ? ALLOW FILTERING;")
   public Result<PortalUser> getUser(@Param("username") String username);
 
 }

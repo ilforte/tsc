@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.GsonHttpMessageConverter;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -85,7 +86,7 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
   }
 
   /**
-   * Resolver
+   * JSP Resolver
    * 
    * @return
    */
@@ -124,6 +125,11 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
     return messageSource;
   }
 
+  /**
+   * i18N Locale
+   * 
+   * @return
+   */
   @Bean
   public LocaleChangeInterceptor localeChangeInterceptor() {
     LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
@@ -131,9 +137,19 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
     return localeChangeInterceptor;
   }
 
+  /**
+   * i18N Locale Resolver
+   * 
+   * @return
+   */
   @Bean(name = "localeResolver")
   public LocaleResolver getLocaleResolver() {
     return new CookieLocaleResolver();
+  }
+
+  @Bean
+  public LocalValidatorFactoryBean validator() {
+    return new LocalValidatorFactoryBean();
   }
 
 }

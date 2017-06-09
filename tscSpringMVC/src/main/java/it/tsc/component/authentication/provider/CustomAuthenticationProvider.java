@@ -5,15 +5,18 @@ package it.tsc.component.authentication.provider;
 
 import java.util.Collection;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import it.tsc.model.ApplicationUser;
+import it.tsc.model.PortalUser;
 import it.tsc.service.UserService;
 
 /**
@@ -22,6 +25,8 @@ import it.tsc.service.UserService;
  */
 @Component("customAuthenticationProvider")
 public class CustomAuthenticationProvider implements AuthenticationProvider {
+  @Autowired
+  private BCryptPasswordEncoder bcryptEncoder;
   private UserService userService;
 
   /**
@@ -37,7 +42,9 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
    * @see org.springframework.security.authentication.AuthenticationProvider#authenticate(org.
    * springframework.security.core.Authentication)
    */
+  @Override
   public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+    Collection<GrantedAuthority> grantedAuths = null;
     String password = authentication.getCredentials().toString().trim();
     String username = authentication.getName().toString().trim();
     Authentication auth = null;
@@ -46,9 +53,17 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     if ("".equals(username) || "".equals(password)) {
       throw new BadCredentialsException("Bad Credentials, Insert Username and Password!");
     }
-
-    // Authenticate the user based on your custom logic
-    Collection<GrantedAuthority> grantedAuths = userService.getUserRoles(username, password);
+    // get user
+    PortalUser currentUser = userService.getUser(username);
+    /**
+     * check password
+     */
+    if (bcryptEncoder.matches(password, currentUser.getPassword())) {
+      // Authenticate the user based on your custom logic
+      grantedAuths = userService.getUserRoles(username);
+    } else {
+      throw new BadCredentialsException("Bad Credentials, Wrong Username or Password!");
+    }
 
     // TODO remove when service is created
     if (grantedAuths != null) {
@@ -68,6 +83,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
    * @see
    * org.springframework.security.authentication.AuthenticationProvider#supports(java.lang.Class)
    */
+  @Override
   public boolean supports(Class<?> authentication) {
     return UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication);
   }

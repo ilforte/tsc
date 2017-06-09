@@ -19,6 +19,7 @@
 		<jcl.slf4j.version>1.7.25</jcl.slf4j.version>
 		<cassandra.version>3.2.0</cassandra.version>
 		<quartz.version>2.2.1</quartz.version>
+		<hibernate.validation.version>5.4.1.Final</hibernate.validation.version>
 	</properties>
   
   <dependencies>
@@ -100,6 +101,12 @@
 		<artifactId>spring-security-config</artifactId>
 		<version>${spring.security.version}</version>
 	</dependency>
+	
+	<dependency>
+	    <groupId>org.springframework.security</groupId>
+	    <artifactId>spring-security-test</artifactId>
+	    <version>${spring.security.version}</version>
+	</dependency>
 
 	<!-- Spring Security JSP Taglib -->
 	<dependency>
@@ -155,6 +162,13 @@
 		<version>${servletapi.version}</version>
 		<scope>provided</scope>
 	</dependency>
+	
+	<!-- Hibernate validations -->
+	<dependency>                                           
+	    <groupId>org.hibernate</groupId>                   
+	    <artifactId>hibernate-validator</artifactId>       
+	    <version>${hibernate.validation.version}</version> 
+	</dependency> 
 	
 	<!-- Gson JSON Mapper -->
 	<dependency>

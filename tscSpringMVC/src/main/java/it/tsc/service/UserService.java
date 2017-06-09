@@ -7,8 +7,8 @@ import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 
-import it.tsc.model.Role;
 import it.tsc.model.PortalUser;
+import it.tsc.model.Role;
 
 /**
  * @author astraservice
@@ -52,7 +52,7 @@ public interface UserService {
    * @param username
    * @return
    */
-  public List<GrantedAuthority> getUserRoles(String username, String password);
+  public List<GrantedAuthority> getUserRoles(String username);
 
   /**
    * Determines if User have Admin role

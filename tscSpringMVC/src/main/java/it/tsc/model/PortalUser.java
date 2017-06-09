@@ -6,6 +6,9 @@ package it.tsc.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Email;
 import org.springframework.security.core.GrantedAuthority;
 
 import com.datastax.driver.mapping.annotations.Column;
@@ -20,6 +23,7 @@ import com.google.gson.annotations.Expose;
 @Table(keyspace = "ks_tsc", name = "tb_users", readConsistency = "QUORUM",
     writeConsistency = "QUORUM", caseSensitiveKeyspace = false, caseSensitiveTable = false)
 public class PortalUser {
+  @NotNull
   @Expose
   @PartitionKey(0)
   @Column(name = "username")
@@ -34,9 +38,14 @@ public class PortalUser {
   @Expose
   private List<String> roles;
 
+  @Email
   @Expose
   @Column(name = "email")
   private String email;
+
+  @Expose
+  @Column(name = "password")
+  private String password;
 
   /**
    * 
@@ -94,6 +103,22 @@ public class PortalUser {
 
   public void setRole(String role) {
     this.role = role;
+  }
+
+  public String getPassword() {
+    return password;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
+  }
+
+  public PortalUser(String username, String password, List<String> roles, String email) {
+    super();
+    this.username = username;
+    this.roles = roles;
+    this.email = email;
+    this.password = password;
   }
 
 }

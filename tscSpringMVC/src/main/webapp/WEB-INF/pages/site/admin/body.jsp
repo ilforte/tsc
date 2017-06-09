@@ -1,65 +1,126 @@
 <%@include file="/WEB-INF/pages/jspf/include.jspf" %>
 
-<%@ taglib tagdir="/WEB-INF/tags/table" prefix="tables" %>
 <%@ taglib tagdir="/WEB-INF/tags/modal" prefix="modal" %>
+<%@ taglib tagdir="/WEB-INF/tags/grid" prefix="grid" %>
+
+<script type="text/javascript">
+$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+	  var target = $(e.target).attr("href") // activated tab
+	  console.log(target);
+	  if (target=='user') {
+		
+	}
+	  switch (target) {
+		case '#user':
+			/* load grid with user data */
+				var data = {name:PORTAL_USER};
+				$.ajax({ 
+				    url:addContextPath('/user/userService/jsonGetUser'),  
+				    type:"GET", 
+				    contentType: "application/json; charset=utf-8",
+			        beforeSend: function(xhr) {
+			            xhr.setRequestHeader("Accept", "application/json");
+			            xhr.setRequestHeader("Content-Type", "application/json");
+			            xhr.setRequestHeader(HEADER, TOKEN);
+			        },
+				    success: function(resposeJsonObject){
+				        // Success Message Handler
+				        $("#userGrid").jsGrid({data:JSON.parse(resposeJsonObject)});
+				    }
+				});
+			break;
+			
+			case '#list-group':
+			/* load grid for all access data */
+				var data = {name:PORTAL_USER};
+				$.ajax({ 
+				    url:addContextPath('/admin/userService/jsonGetAllUsers'),  
+				    type:"GET", 
+				    contentType: "application/json; charset=utf-8",
+			        beforeSend: function(xhr) {
+			            xhr.setRequestHeader("Accept", "application/json");
+			            xhr.setRequestHeader("Content-Type", "application/json");
+			            xhr.setRequestHeader(HEADER, TOKEN);
+			        },
+				    success: function(resposeJsonObject){
+				        // Success Message Handler
+				        $("#allUserGrid").jsGrid({data:JSON.parse(resposeJsonObject)});
+				    },
+				    error: function(XMLHttpRequest, textStatus, errorThrown) { 
+				    	var message = "Status: " + textStatus + "<br>";
+				    	message += "Error: " + errorThrown+ "<br>";
+				    	toastr.error(message);
+				    }       
+				});
+			break;
+		default:
+			break;
+		}
+	});
+</script>
 
 
 <div class="tab-content">
 	  <div id="anagrafic" class="tab-pane fade mh-100">
-		<h3>Anagrafica</h3>
+		<h5>Anagrafica</h5>
 	  </div>	  
 	  <div id="rescuers" class="tab-pane fade mh-100">
-	    <h3>Soccorritori</h3>
+	    <h5>Soccorritori</h5>
 	  </div>
 	  
 	  <div id="user" class="tab-pane fade mh-100">
-	    <h3>Utente</h3>
-		  	<tables:tables id="user-table" 
-		  	data_toggle="tab" 
-		  	data_url="${pageContext.request.contextPath}/user/userService/jsonGetUser" >
-				columns: [{
-			        field: 'username',
-			        title: 'Nome utente'
-			    }, {
-			        field: 'role',
-			        title: 'Ruolo'
-			    }, {
-			        field: 'email',
-			        title: 'email'
-			    }]
-		  	</tables:tables>
+	    <h5>Profilo utente</h5>
+			<grid:grid
+				id="userGrid">
+				<jsp:attribute name="options">
+					height:"100%",
+					width: "100%",
+				    filtering: false,
+				    autoload: true,
+				    editing: false,
+				    sorting: false,
+				    selecting:false
+				</jsp:attribute>
+			    <jsp:attribute name="fields">
+					{name: "username",type:"text",width:30,title:"nome"},
+			       	{name: "role",type:"text",width:30,title:"ruolo"},
+			       	{name: "email",type:"text",width: 30,title:"email"}
+			    </jsp:attribute>
+			</grid:grid>
 	  </div>
+	  
+	  <!-- profile admin -->
 	  
 	  <sec:authorize access="hasRole('ADMIN')">
 		  <div id="list-group" class="tab-pane fade mh-100">
-		    <h3>Utente/Permessi</h3>
-		  	<tables:tables id="all-user-table" 
-		  	data_toggle="tab" 
-		  	data_url="${pageContext.request.contextPath}/admin/userService/jsonGetAllUsers" >
-				columns: [{
-			        field: 'username',
-			        title: 'Nome utente',
-			        class:'col-sm-2'
-			    }, {
-			        field: 'role',
-			        title: 'Ruolo',
-			        class:'col-sm-2'
-			    }, {
-			        field: 'email',
-			        title: 'email',
-			        class:'col-sm-2'
-			    }]
-		  	</tables:tables>
-		  </div>
-		  
-		  <div id="add-user" class="tab-pane fade mh-100">
-		  	<h3>Aggiungi Utente</h3>
-	  		<tiles:insertTemplate template="addUser.jsp" />
-		  </div>
-		  
-		  <div id="remove-user" class="tab-pane fade mh-100">
-		  	<h3>Rimuovi Utente</h3>
-		  </div>
+		    <h5>Permessi utente</h5>
+				<grid:grid
+					id="allUserGrid">
+					<jsp:attribute name="options">
+						height:"100%",
+						width: "100%",
+					    filtering: false,
+					    autoload: true,
+					    editing: false,
+					    sorting: false,
+					    selecting:false
+					</jsp:attribute>
+				    <jsp:attribute name="fields">
+						{name: "username",type:"text",width:30,title:"nome"},
+				       	{name: "role",type:"text",width:30,title:"ruolo"},
+				       	{name: "email",type:"text",width: 30,title:"email"}
+				    </jsp:attribute>
+				</grid:grid>
+			  </div>
+			  
+			  <div id="add-user" class="tab-pane fade mh-100">
+			  	<h5>Aggiungi Utente</h5>
+		  		<tiles:insertTemplate template="addUser.jsp" />
+			  </div>
+			  
+			  <div id="remove-user" class="tab-pane fade mh-100">
+			  	<h5>Rimuovi Utente</h5>
+			  </div>
 	  </sec:authorize>	  
 	  
 	  <!-- logout -->

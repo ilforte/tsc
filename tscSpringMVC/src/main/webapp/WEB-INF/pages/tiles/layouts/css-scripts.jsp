@@ -5,21 +5,25 @@
 <link href="<c:url value='/resources/css/bootstrap.min.css' />"  rel="stylesheet" media="screen"></link>
 <link href="<c:url value='/resources/css/bootstrap-theme.min.css' />"  rel="stylesheet"></link>
 <link href="<c:url value='/resources/css/bootstrap-table.min.css' />"  rel="stylesheet"></link>
-<link href="<c:url value='/resources/css/jsgrid.min.css' />"  rel="stylesheet"></link>
-<link href="<c:url value='/resources/css/jsgrid-theme.min.css' />"  rel="stylesheet"></link>
 <link href="<c:url value='/resources/css/jquery-ui.min.css' />"  rel="stylesheet"></link>
+<link href="<c:url value='/resources/css/toastr.min.css' />"  rel="stylesheet"></link>
+<!-- grid -->
 <link href="<c:url value='/resources/css/jsgrid.min.css' />"  rel="stylesheet"></link>
 <link href="<c:url value='/resources/css/jsgrid-theme.min.css' />"  rel="stylesheet"></link>
-<!-- javascript lib -->
+<link href="<c:url value='/resources/css/jsgrid-custom-theme.css' />"  rel="stylesheet"></link>
+
+<!-- js library -->
 <script src="<c:url value='/resources/js/jquery-3.2.1.min.js' />"></script>
 <script src="<c:url value='/resources/js/bootstrap.min.js' />"></script>
 <script src="<c:url value='/resources/js/bootstrap-table.min.js' />"></script>
-<script src="<c:url value='/resources/js/jsgrid.min.js' />"></script>
 <script src="<c:url value='/resources/js/jquery-ui.min.js' />"></script>
 <script src="<c:url value='/resources/js/jquery.cookie.js' />"></script>
-<script src="<c:url value='/resources/js/jsgrid.min.js' />"></script>
+<!-- notifcation  lib -->
+<script src="<c:url value='/resources/js/toastr.min.js' />"></script>
 <!-- audio lib -->
 <script src="<c:url value='/resources/js/howler.core.js' />"></script>
+<!-- grid -->
+<script src="<c:url value='/resources/js/jsgrid.min.js' />"></script>
 
 
 <!-- spring Error - Message -->
@@ -35,7 +39,7 @@
 	border-color: #ebccd1;
 }
 
-.msg {
+.msg {$.noConflict();
 	padding: 15px;
 	margin-bottom: 20px;
 	border: 1px solid transparent;
@@ -53,15 +57,24 @@
 	-webkit-border-radius: 2px;
 	-moz-border-radius: 2px;
 }
-
 .jsgrid-header-cell{
-	position: relative; 
-	font-size:11px;
-	border:1px solid #e9e9e9;
+	font-size:10px;
 }
 .jsgrid-cell{
-	position: relative; 
-	font-size:11px;
-	border:1px solid #e9e9e9;
+	font-size:10px;
 }
 </style>
+
+<!-- Global Scripts -->
+<script type="text/javascript">
+	var PORTAL_USER = '${pageContext.request.userPrincipal.name}';
+	var CONTEXT_PATH = '${pageContext.request.contextPath}';
+	var TOKEN = $("meta[name='_csrf']").attr("content");
+	var HEADER = $("meta[name='_csrf_header']").attr("content");
+	
+	/* add context path to url  */
+	function addContextPath(url) {
+		return CONTEXT_PATH + url;
+	}
+</script>
+

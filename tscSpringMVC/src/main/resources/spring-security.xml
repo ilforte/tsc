@@ -45,6 +45,7 @@
     		<security:authentication-provider ref="customAuthenticationProvider" />
 		</security:authentication-manager>
 	    
+	    <beans:bean id="bcryptEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 	    <beans:bean id="customAuthenticationProvider"  class="it.tsc.component.authentication.provider.CustomAuthenticationProvider"/>
 	    <beans:bean id="authSuccessHandler"  class="it.tsc.security.handler.AuthSuccessHandler"/>
 	    
