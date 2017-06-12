@@ -31,6 +31,13 @@ public class RestAllarmServiceController {
   @Autowired
   private AllarmService allarmService;
 
+  /**
+   * remove allarm from queue
+   * 
+   * @param allarm
+   * @param user
+   * @return
+   */
   @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
   @RequestMapping(value = "/user/allarmService/removeAllarm", method = RequestMethod.POST,
       produces = "application/json")
@@ -42,6 +49,13 @@ public class RestAllarmServiceController {
     return allarm;
   }
 
+  /**
+   * update user in Allarm open
+   * 
+   * @param allarm
+   * @param user
+   * @return
+   */
   @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
   @RequestMapping(value = "/user/allarmService/updateAllarm", method = RequestMethod.POST,
       produces = "application/json")

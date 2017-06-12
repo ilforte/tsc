@@ -120,6 +120,7 @@ $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 			  
 			  <div id="remove-user" class="tab-pane fade mh-100">
 			  	<h5>Rimuovi Utente</h5>
+			  	<tiles:insertTemplate template="removeUser.jsp" />
 			  </div>
 	  </sec:authorize>	  
 	  

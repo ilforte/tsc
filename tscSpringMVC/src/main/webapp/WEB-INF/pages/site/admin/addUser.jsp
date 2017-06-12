@@ -1,40 +1,53 @@
 <%@include file="/WEB-INF/pages/jspf/include.jspf" %> 
+
+<%@ taglib tagdir="/WEB-INF/tags/form" prefix="ajaxForm" %>
+
+<ajaxForm:form function="addPortalUserFunction" action="/admin/userService/jsonAddUser" id="addPortalUser"
+	failure_message="Failure adding user" success_message="Add Portal user succesfully" >
+	<jsp:attribute name="content">
+		 <table>
+			<tr>
+                <td>
+                	<span class="label label-primary label-sm">
+                		<spring:message code="lbl.username" text="" />
+                	</span>
+                </td>
+                <td><ajaxForm:input type="text" cssClass="form-control input-sm" id="username" /></td>
+            </tr>
+			<tr>
+                <td>
+                	<span class="label label-primary label-sm">
+                		<spring:message code="lbl.password" text="" />
+                	</span>
+                </td>
+                <td><ajaxForm:input type="text" cssClass="form-control input-sm" id="password" /></td>
+            </tr>
+			<tr>
+                <td>
+                	<span class="label label-primary label-sm">
+                		<spring:message code="lbl.email" text="" />
+                	</span>
+                </td>
+                <td><ajaxForm:input type="text" cssClass="form-control input-sm" id="email" /></td>
+            </tr>
+			<tr>
+                <td>
+                	<span class="label label-primary label-sm">
+                		<spring:message code="lbl.role" text="" />
+                	</span>
+                </td>
+                <td>
+		            <select class="form-control input-sm" name="role">
+					    <c:forEach items="${roles}" var="role">
+					        <option value="${role.key}">${role.value}</option>
+					    </c:forEach>
+					</select>
+                </td>
+            </tr>
+		 </table>
+		<button type="submit" id="btn-search"
+						class="btn btn-primary btn-sm"><spring:message code="lbl.addUser" text="" />
+		</button>
+	</jsp:attribute>
+</ajaxForm:form>
     
-  <div class="form-group">
-    <label for="username" class="control-label">Nome Utente</label>
-    <input name="username" type="text" class="form-control" />
-  </div>
-  
-  <div class="form-group">
-     <label class="control-label">Ruolo</label>
-     <select class="form-control" name="role" required>
-         <option value="">Scegli il ruolo</option>
-         <option value="ROLE_ADMIN">Amministratore</option>
-         <option value="ROLE_ADMIN">Utente</option>
-         <option value="ROLE_BACKOFFICE">Backoffice</option>
-     </select>
-  </div>
-
-  <div class="form-group">
-    <label for="inputEmail" class="control-label">Email</label>
-    <input name="email" type="email" class="form-control" data-error="Bruh, that email address is invalid" />
-    <div class="help-block with-errors"></div>
-  </div>
-  
-  <div class="form-group">
-    <label for="inputPassword" class="control-label">Password</label>
-    <div class="form-inline row">
-      <div class="form-group col-sm-6">
-        <input name="password" type="password" data-minlength="6" class="form-control" />
-        <div class="help-block">Minimum of 6 characters</div>
-      </div>
-      <div class="form-group col-sm-6">
-        <input name="passwordConfirm" type="password" class="form-control" data-match="#password" data-match-error="Whoops, these don't match" />
-        <div class="help-block with-errors"></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <button type="submit" class="btn btn-primary">Aggiungi</button>
-  </div>

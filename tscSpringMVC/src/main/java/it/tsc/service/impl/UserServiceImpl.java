@@ -62,6 +62,7 @@ public class UserServiceImpl implements UserService {
    * 
    * @see it.tsc.service.UserService#getUserRoles(java.lang.String,java.lang.String)
    */
+  @Override
   public List<GrantedAuthority> getUserRoles(String username) {
     return userDao.getUserRoles(username);
   }
@@ -83,8 +84,8 @@ public class UserServiceImpl implements UserService {
    * it.tsc.model.User)
    */
   @Override
-  public void addUser(String username, String password, String email, Role role) {
-    userDao.addUser(username, password, email, role);
+  public boolean addUser(String username, String password, String email, Role role) {
+    return userDao.addUser(username, password, email, role);
   }
 
   /*
@@ -94,8 +95,8 @@ public class UserServiceImpl implements UserService {
    * it.tsc.model.Role, it.tsc.model.User)
    */
   @Override
-  public void removeUser(String username) {
-    userDao.removeUser(username);
+  public boolean removeUser(String username, Role role) {
+    return userDao.removeUser(username, role);
   }
 
   /*

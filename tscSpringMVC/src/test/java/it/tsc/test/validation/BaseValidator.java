@@ -30,7 +30,7 @@ public class BaseValidator {
   protected void printErrors(Set<ConstraintViolation<PortalUser>> errors) {
     if (errors.size() > 0) {
       for (ConstraintViolation<PortalUser> error : errors) {
-        logger.debug(error.getMessage());
+        logger.debug("message: {} path: {}", error.getMessage(), error.getPropertyPath());
       }
     } else {
       logger.debug("There were no errors to print.");

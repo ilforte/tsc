@@ -6,9 +6,10 @@ package it.tsc.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.groups.Default;
 
 import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.security.core.GrantedAuthority;
 
 import com.datastax.driver.mapping.annotations.Column;
@@ -23,12 +24,13 @@ import com.google.gson.annotations.Expose;
 @Table(keyspace = "ks_tsc", name = "tb_users", readConsistency = "QUORUM",
     writeConsistency = "QUORUM", caseSensitiveKeyspace = false, caseSensitiveTable = false)
 public class PortalUser {
-  @NotNull
+  @NotBlank(groups = PortalUserRemove.class)
   @Expose
   @PartitionKey(0)
   @Column(name = "username")
   private String username;
 
+  @NotBlank(groups = PortalUserRemove.class)
   @Expose
   @PartitionKey(1)
   @Column(name = "role")
@@ -38,11 +40,13 @@ public class PortalUser {
   @Expose
   private List<String> roles;
 
+  @NotBlank(groups = PortalUserInsert.class)
   @Email
   @Expose
   @Column(name = "email")
   private String email;
 
+  @NotBlank(groups = PortalUserInsert.class)
   @Expose
   @Column(name = "password")
   private String password;
@@ -71,6 +75,32 @@ public class PortalUser {
     this.username = username;
     this.roles = roles;
     this.email = email;
+  }
+
+  /**
+   * 
+   * @author astraservice
+   *
+   */
+  public interface PortalUserInsertValidator {
+
+  }
+
+  /**
+   * 
+   * @author astraservice
+   *
+   */
+  // @formatter:off
+    public interface PortalUserRemove extends Default {}
+    public interface PortalUserInsert extends PortalUserRemove {}
+  // @formatter:on
+
+
+  public interface Draft extends Default {
+  }
+
+  public interface Printing extends Draft {
   }
 
   public String getUsername() {

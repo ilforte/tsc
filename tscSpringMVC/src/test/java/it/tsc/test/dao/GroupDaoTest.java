@@ -8,6 +8,8 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ImportResource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
@@ -22,7 +24,8 @@ import it.tsc.service.GroupService;
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-// ApplicationContext will be loaded from the OrderServiceConfig class
+@Configuration
+@ImportResource(value = {"classpath:spring-beans.xml"})
 @ContextConfiguration(classes = ServiceConfig.class, loader = AnnotationConfigContextLoader.class)
 public class GroupDaoTest {
   private static Logger logger = LoggerFactory.getLogger(GroupDaoTest.class);

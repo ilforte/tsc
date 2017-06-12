@@ -36,7 +36,6 @@ import it.tsc.config.WebAppConfig;
 @WebAppConfiguration
 public class MvcStandardTest {
   private static Logger logger = LoggerFactory.getLogger(MvcStandardTest.class);
-
   @Autowired
   private WebApplicationContext webApplicationContext;
   @Autowired

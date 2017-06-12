@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 package it.tsc.test.mvc;
 
 import org.junit.Before;
@@ -27,8 +30,8 @@ import com.google.gson.Gson;
 
 import it.tsc.config.ServiceConfig;
 import it.tsc.config.WebAppConfig;
-import it.tsc.model.Allarm;
 import it.tsc.model.PortalUser;
+import it.tsc.model.Role;
 
 /**
  * @author astraservice
@@ -39,9 +42,8 @@ import it.tsc.model.PortalUser;
     @ContextConfiguration(classes = WebAppConfig.class),
     @ContextConfiguration(classes = ServiceConfig.class)})
 @WebAppConfiguration
-public class MvcValidationTest {
-  private static Logger logger = LoggerFactory.getLogger(MvcValidationTest.class);
-
+public class MvcRestUserTest {
+  private static Logger logger = LoggerFactory.getLogger(MvcRestUserTest.class);
   @Autowired
   private WebApplicationContext webApplicationContext;
   @Autowired
@@ -52,10 +54,9 @@ public class MvcValidationTest {
   /**
    * 
    */
-  public MvcValidationTest() {
+  public MvcRestUserTest() {
     // TODO Auto-generated constructor stub
   }
-
 
   @Before
   public void setup() throws Exception {
@@ -66,52 +67,10 @@ public class MvcValidationTest {
 
   @Test
   @WithMockUser(roles = "ADMIN", username = "matteo")
-  public void testUpdateAllarm() throws Exception {
-    Allarm allarm = new Allarm();
-    allarm.setSerial_uuid("123");
-    // omit email
-    ResultMatcher ok = MockMvcResultMatchers.status().isOk();
-    MockHttpServletRequestBuilder builder =
-        MockMvcRequestBuilders.post("/user/allarmService/updateAllarm");
-    builder.content(gson.toJson(allarm));
-    builder.header("Accept", "application/json");
-    builder.header("Content-Type", "application/json");
-    builder.with(SecurityMockMvcRequestPostProcessors.csrf());
-
-    MvcResult result = mvc.perform(builder).andExpect(ok).andReturn();
-    String content = result.getResponse().getContentAsString();
-    logger.debug("content {}", content);
-  }
-
-  @Test
-  @WithMockUser(roles = "ADMIN", username = "matteo")
-  public void testJsonInsertUser() throws Exception {
-    PortalUser user = new PortalUser();
-    user.setEmail("matteo@telesoccorso-infamiglia.it");
-    user.setRole("ROLE_USER");
-    user.setUsername("matteo");
-    user.setPassword("matteo");
-
-    // omit email
-    ResultMatcher ok = MockMvcResultMatchers.status().isOk();
-    MockHttpServletRequestBuilder builder =
-        MockMvcRequestBuilders.post("/admin/userService/jsonAddUser");
-    builder.content(gson.toJson(user));
-    builder.header("Accept", "application/json");
-    builder.header("Content-Type", "application/json");
-    builder.with(SecurityMockMvcRequestPostProcessors.csrf());
-
-    MvcResult result = mvc.perform(builder).andExpect(ok).andReturn();
-    String content = result.getResponse().getContentAsString();
-    logger.debug("content {}", content);
-  }
-
-  @Test
-  @WithMockUser(roles = "ADMIN", username = "matteo")
   public void testRemoveUser() throws Exception {
     PortalUser user = new PortalUser();
-    user.setUsername("matteo");
-
+    user.setUsername("testUser");
+    user.setRole(Role.ROLE_ADMIN.toString());
     // omit email
     ResultMatcher ok = MockMvcResultMatchers.status().isOk();
     MockHttpServletRequestBuilder builder =

@@ -3,6 +3,7 @@
  */
 package it.tsc.accessor;
 
+import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.mapping.Result;
 import com.datastax.driver.mapping.annotations.Accessor;
 import com.datastax.driver.mapping.annotations.Param;
@@ -25,7 +26,7 @@ public interface PortalUserAccessor {
    * @return
    */
   @Query("INSERT INTO ks_tsc.tb_users (username, password, email,role) VALUES (:username, :password, :email,:role) IF NOT EXISTS;")
-  public void addUser(@Param("username") String username, @Param("password") String password,
+  public ResultSet addUser(@Param("username") String username, @Param("password") String password,
       @Param("email") String email, @Param("role") String role);
 
   /**
@@ -34,8 +35,8 @@ public interface PortalUserAccessor {
    * @param username
    * @return
    */
-  @Query("DELETE FROM ks_tsc.tb_users WHERE username = :username;")
-  public void removeUser(@Param("username") String username);
+  @Query("DELETE FROM ks_tsc.tb_users WHERE username = :username AND role=:role IF EXISTS;")
+  public ResultSet removeUser(@Param("username") String username, @Param("role") String role);
 
   /**
    * update User using @Accessor

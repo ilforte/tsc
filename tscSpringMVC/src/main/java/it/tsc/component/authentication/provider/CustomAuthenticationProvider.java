@@ -58,7 +58,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     /**
      * check password
      */
-    if (bcryptEncoder.matches(password, currentUser.getPassword())) {
+    if (currentUser != null && bcryptEncoder.matches(password, currentUser.getPassword())) {
       // Authenticate the user based on your custom logic
       grantedAuths = userService.getUserRoles(username);
     } else {

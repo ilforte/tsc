@@ -77,15 +77,18 @@ public interface UserService {
    * @param password
    * @param email
    * @param role
+   * @return
    */
-  public void addUser(String username, String password, String email, Role role);
+  public boolean addUser(String username, String password, String email, Role role);
 
   /**
    * Remove user
    * 
-   * @param username (Only admin role is permitted)
+   * @param username
+   * @param role
+   * @return
    */
-  public void removeUser(String username);
+  public boolean removeUser(String username, Role role);
 
   /**
    * update user

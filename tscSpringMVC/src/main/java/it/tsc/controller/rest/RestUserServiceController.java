@@ -4,8 +4,11 @@
 package it.tsc.controller.rest;
 
 import java.security.Principal;
+import java.util.Set;
 
+import javax.validation.ConstraintViolation;
 import javax.validation.Valid;
+import javax.validation.Validator;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +23,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.tsc.model.PortalUser;
+import it.tsc.model.PortalUser.PortalUserInsert;
+import it.tsc.model.PortalUser.PortalUserRemove;
+import it.tsc.model.Response;
 import it.tsc.model.Role;
+import it.tsc.model.ValidationResponse;
 import it.tsc.service.UserService;
 
 /**
@@ -35,15 +42,30 @@ public class RestUserServiceController {
   @Autowired
   private UserService userService;
 
+  @Autowired
+  private Validator validator;
+
+  /**
+   * get TSC User
+   * 
+   * @param user
+   * @return
+   */
   @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
-  @RequestMapping(value = "/admin/userService/getUsers", method = RequestMethod.GET,
+  @RequestMapping(value = "/admin/userService/getUser", method = RequestMethod.GET,
       produces = "application/json")
-  public @ResponseBody PortalUser getUsers(@AuthenticationPrincipal Principal user) {
+  public @ResponseBody PortalUser getUser(@AuthenticationPrincipal Principal user) {
     // TODO return rest json service get user
-    logger.debug("/admin/userService/getUsers");
+    logger.debug("/admin/userService/getUser");
     return userService.getUser(user.getName());
   }
 
+  /**
+   * get All user in JSON format
+   * 
+   * @param user
+   * @return
+   */
   @PreAuthorize("hasAuthority('ROLE_ADMIN')")
   @RequestMapping(value = "/admin/userService/jsonGetAllUsers", method = RequestMethod.GET,
       produces = "application/json")
@@ -54,7 +76,7 @@ public class RestUserServiceController {
   }
 
   /**
-   * Add user rest service
+   * Add user rest service errors = validator.validate(portalUser);
    * 
    * @param user
    * @param portalUser
@@ -64,38 +86,73 @@ public class RestUserServiceController {
   @PreAuthorize("hasAuthority('ROLE_ADMIN')")
   @RequestMapping(value = "/admin/userService/jsonAddUser", method = RequestMethod.POST,
       produces = "application/json")
-  public @ResponseBody String jsonInsertUser(@AuthenticationPrincipal Principal user,
-      @Valid @RequestBody PortalUser portalUser, BindingResult result) {
+  public @ResponseBody ValidationResponse jsonInsertUser(@AuthenticationPrincipal Principal user,
+      @RequestBody PortalUser portalUser, BindingResult result) {
     logger.debug("portalUser: {}", portalUser.getUsername());
-    // TODO return rest json service get user
-    if (result.hasErrors()) {
+    // return rest json service get user
+    ValidationResponse res = new ValidationResponse();
+    Set<ConstraintViolation<PortalUser>> errors =
+        validator.validate(portalUser, PortalUserInsert.class, PortalUserRemove.class);
+    if (errors.size() > 0) {
       // if validator failed
+      res.setBindingResult(errors);
       logger.debug("portalUser: {} errors: {}", portalUser.getUsername(), result.hasErrors());
+      res.setStatus(Response.FAILURE.toString());
     } else {
-      userService.addUser(portalUser.getUsername(), portalUser.getPassword(), portalUser.getEmail(),
-          Role.valueOf(portalUser.getRole()));
-      logger.debug("no errors");
+      if (userService.addUser(portalUser.getUsername(), portalUser.getPassword(),
+          portalUser.getEmail(), Role.valueOf(portalUser.getRole())) == true) {
+        res.setStatus(Response.SUCCESS.toString());
+        logger.debug("no errors");
+      } else {
+        res.setStatus(Response.FAILURE.toString());
+        res.setResultMessage("Error adding user");
+      } ;
     }
-    return null;
+    return res;
   }
 
+  /**
+   * remove User
+   * 
+   * @param user
+   * @param portalUser
+   * @param result
+   * @return
+   */
   @PreAuthorize("hasAuthority('ROLE_ADMIN')")
   @RequestMapping(value = "/admin/userService/jsonRemoveUser", method = RequestMethod.POST,
       produces = "application/json")
-  public @ResponseBody String jsonRemoveUser(@AuthenticationPrincipal Principal user,
+  public @ResponseBody ValidationResponse jsonRemoveUser(@AuthenticationPrincipal Principal user,
       @Valid @RequestBody PortalUser portalUser, BindingResult result) {
     logger.debug("portalUser: {}", portalUser.getUsername());
+    ValidationResponse res = new ValidationResponse();
+    Set<ConstraintViolation<PortalUser>> errors =
+        validator.validate(portalUser, PortalUserRemove.class);
     // TODO return rest json service get user
-    if (result.hasErrors()) {
+    if (errors.size() > 0) {
       // if validator failed
+      res.setBindingResult(errors);
+      res.setStatus(Response.FAILURE.toString());
       logger.debug("portalUser: {} errors: {}", portalUser.getUsername(), result.hasErrors());
     } else {
-      userService.removeUser(portalUser.getUsername());
-      logger.debug("no errors");
+      if (userService.removeUser(portalUser.getUsername(),
+          Role.valueOf(portalUser.getRole())) == true) {
+        res.setStatus(Response.SUCCESS.toString());
+        logger.debug("no errors");
+      } else {
+        res.setStatus(Response.FAILURE.toString());
+        res.setResultMessage("Error removing user");
+      } ;
     }
-    return null;
+    return res;
   }
 
+  /**
+   * get User in JSON format
+   * 
+   * @param user
+   * @return
+   */
   @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
   @RequestMapping(value = "/user/userService/jsonGetUser", method = RequestMethod.GET,
       produces = "application/json")

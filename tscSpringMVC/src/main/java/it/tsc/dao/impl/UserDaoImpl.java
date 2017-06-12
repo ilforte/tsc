@@ -162,7 +162,7 @@ public class UserDaoImpl implements UserDao {
    * it.tsc.model.Role)
    */
   @Override
-  public void addUser(String username, String password, String email, Role role) {
+  public boolean addUser(String username, String password, String email, Role role) {
     /*
      PreparedStatement preparedStmt = getSession().prepare(
      "INSERT INTO ks_tsc.tb_users (username, password, email,role) VALUES (:username, :password,
@@ -178,7 +178,10 @@ public class UserDaoImpl implements UserDao {
      */
     MappingManager manager = baseDao.getMappingManager();
     PortalUserAccessor userAccessor = manager.createAccessor(PortalUserAccessor.class);
-    userAccessor.addUser(username, bcryptEncoder.encode(password), email, role.value(role));
+    ResultSet rs =
+        userAccessor.addUser(username, bcryptEncoder.encode(password), email, role.value(role));
+    logger.debug("result: {}", rs.wasApplied());
+    return rs.wasApplied();
   }
 
   /*
@@ -187,7 +190,7 @@ public class UserDaoImpl implements UserDao {
    * @see it.tsc.dao.UserDao#removeUser(java.lang.String)
    */
   @Override
-  public void removeUser(String username) {
+  public boolean removeUser(String username, Role role) {
     /*
      * PreparedStatement preparedStmt =
      * getSession().prepare("DELETE FROM ks_tsc.tb_users WHERE username = :username;");
@@ -197,7 +200,9 @@ public class UserDaoImpl implements UserDao {
      */
     MappingManager manager = baseDao.getMappingManager();
     PortalUserAccessor userAccessor = manager.createAccessor(PortalUserAccessor.class);
-    userAccessor.removeUser(username);
+    ResultSet rs = userAccessor.removeUser(username, role.toString());
+    logger.debug("result: {}", rs.wasApplied());
+    return rs.wasApplied();
   }
 
   /*

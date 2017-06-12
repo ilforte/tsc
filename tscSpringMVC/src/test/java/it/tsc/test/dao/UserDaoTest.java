@@ -15,8 +15,8 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import com.google.gson.Gson;
 
 import it.tsc.config.ServiceConfig;
-import it.tsc.model.Role;
 import it.tsc.model.PortalUser;
+import it.tsc.model.Role;
 import it.tsc.service.UserService;
 
 /**
@@ -24,7 +24,6 @@ import it.tsc.service.UserService;
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-// ApplicationContext will be loaded from the OrderServiceConfig class
 @ContextConfiguration(classes = ServiceConfig.class, loader = AnnotationConfigContextLoader.class)
 public class UserDaoTest {
   private static Logger logger = LoggerFactory.getLogger(UserDaoTest.class);
@@ -75,7 +74,12 @@ public class UserDaoTest {
 
   @Test
   public void testRemoveUser() {
-    userService.removeUser("testUser");
+    userService.removeUser("testUser", Role.ROLE_USER);
+  }
+
+  @Test
+  public void testRemoveUserFail() {
+    userService.removeUser("testUser", Role.ROLE_ADMIN);
   }
 
   @Test

@@ -6,6 +6,7 @@ package it.tsc.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
@@ -15,6 +16,7 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
  */
 @Configuration
 @ComponentScan(basePackages = {"it.tsc.service.impl", "it.tsc.dao"})
+@ImportResource({"classpath:spring-beans.xml"})
 @PropertySource(value = {"classpath:cassandra.properties"}, ignoreResourceNotFound = false)
 public class ServiceConfig {
 
