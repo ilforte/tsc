@@ -5,9 +5,25 @@
 <%@ attribute name="success_message" required="true"  type="java.lang.String"%>
 <%@ attribute name="failure_message" required="true"  type="java.lang.String"%>
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<%@attribute  name="validateContent" fragment="true" %>
 <%@attribute  name="content" fragment="true" %>
 
 <script type="text/javascript">
+
+//Wait for the DOM to be ready
+$(function() {
+  // Initialize form validation on the registration form.
+  // It has the name attribute "registration"
+  $("form[name='${id}']").validate({
+	    submitHandler: function(form) {
+	      form.submit();
+	    },
+    rules: {<jsp:invoke fragment="validateContent"/>}
+  });
+});
+
 $(document).ready(function(){
 	$("#${id}").submit(function(event) {
 		var data = $(this).serializeFormJSON();
@@ -76,7 +92,7 @@ function ${function}(data) {
 })(jQuery);
 </script>
 
-<form method="post" id="${id}" name= "${id}">
+<form method="post" id="${id}" name= "${id}" class="form-horizontal">
 	<jsp:invoke fragment="content"/>
 </form>
 

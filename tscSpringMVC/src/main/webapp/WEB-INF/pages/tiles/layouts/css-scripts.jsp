@@ -24,7 +24,9 @@
 <script src="<c:url value='/resources/js/howler.core.js' />"></script>
 <!-- grid -->
 <script src="<c:url value='/resources/js/jsgrid.min.js' />"></script>
-
+<!-- validation -->
+<script src="<c:url value='/resources/js/jquery.validate.min.js' />"></script>
+<script src="<c:url value='/resources/js/additional-methods.min.js' />"></script>
 
 <!-- spring Error - Message -->
 
