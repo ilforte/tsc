@@ -43,6 +43,11 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
+  public PortalUser getUser(String username, String email) {
+    return userDao.getUser(username, email);
+  }
+
+  @Override
   public String jsonGetUser(String username) {
     return userDao.jsonGetUser(username);
   }

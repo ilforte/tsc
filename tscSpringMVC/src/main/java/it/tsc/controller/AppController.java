@@ -12,7 +12,7 @@ import it.tsc.model.Role;
 
 @Controller
 @RequestMapping("/")
-public class AppController {
+public class AppController extends BaseController {
 
   @RequestMapping(value = {"/home"}, method = RequestMethod.GET)
   public ModelAndView homePage() {

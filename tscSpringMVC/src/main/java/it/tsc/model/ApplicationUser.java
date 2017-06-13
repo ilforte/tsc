@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.User;
 import com.google.gson.annotations.Expose;
 
 /**
- * @author astraservice
+ * @author astraservice Used for login in spring MVC seurity
  */
 public class ApplicationUser extends User {
   private static final long serialVersionUID = 4389964117627782934L;

@@ -1,6 +1,7 @@
 package it.tsc.config;
 
 import java.util.List;
+import java.util.Locale;
 
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -11,15 +12,14 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
-import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
+import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
@@ -122,6 +122,7 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
         new ReloadableResourceBundleMessageSource();
     String[] resources = {"/WEB-INF/classes/messages"};
     messageSource.setBasenames(resources);
+    messageSource.setUseCodeAsDefaultMessage(true);
     return messageSource;
   }
 
@@ -133,7 +134,7 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
   @Bean
   public LocaleChangeInterceptor localeChangeInterceptor() {
     LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
-    localeChangeInterceptor.setParamName("locale");
+    localeChangeInterceptor.setParamName("language");
     return localeChangeInterceptor;
   }
 
@@ -143,8 +144,10 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
    * @return
    */
   @Bean(name = "localeResolver")
-  public LocaleResolver getLocaleResolver() {
-    return new CookieLocaleResolver();
+  public SessionLocaleResolver getLocaleResolver() {
+    SessionLocaleResolver locale = new SessionLocaleResolver();
+    locale.setDefaultLocale(Locale.ITALY);
+    return locale;
   }
 
   @Bean

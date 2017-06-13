@@ -71,6 +71,8 @@
 	var CONTEXT_PATH = '${pageContext.request.contextPath}';
 	var TOKEN = $("meta[name='_csrf']").attr("content");
 	var HEADER = $("meta[name='_csrf_header']").attr("content");
+	/*  utente richiesto */
+	var AB_CODI;
 	
 	/* add context path to url  */
 	function addContextPath(url) {

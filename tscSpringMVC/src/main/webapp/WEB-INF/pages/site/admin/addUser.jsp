@@ -9,7 +9,7 @@
 			<tr>
                 <td>
                 	<span class="label label-primary label-sm">
-                		<spring:message code="lbl.username" text="" />
+                		<spring:message code="label.username" text="" />
                 	</span>
                 </td>
                 <td><ajaxForm:input type="text" cssClass="form-control input-sm" id="username" /></td>
@@ -17,7 +17,7 @@
 			<tr>
                 <td>
                 	<span class="label label-primary label-sm">
-                		<spring:message code="lbl.password" text="" />
+                		<spring:message code="label.password" text="" />
                 	</span>
                 </td>
                 <td><ajaxForm:input type="text" cssClass="form-control input-sm" id="password" /></td>
@@ -25,7 +25,7 @@
 			<tr>
                 <td>
                 	<span class="label label-primary label-sm">
-                		<spring:message code="lbl.email" text="" />
+                		<spring:message code="label.email" text="" />
                 	</span>
                 </td>
                 <td><ajaxForm:input type="text" cssClass="form-control input-sm" id="email" /></td>
@@ -33,7 +33,7 @@
 			<tr>
                 <td>
                 	<span class="label label-primary label-sm">
-                		<spring:message code="lbl.role" text="" />
+                		<spring:message code="label.role" text="" />
                 	</span>
                 </td>
                 <td>
@@ -46,7 +46,7 @@
             </tr>
 		 </table>
 		<button type="submit" id="btn-search"
-						class="btn btn-primary btn-sm"><spring:message code="lbl.addUser" text="" />
+						class="btn btn-primary btn-sm"><spring:message code="label.addUser" text="" />
 		</button>
 	</jsp:attribute>
 </ajaxForm:form>

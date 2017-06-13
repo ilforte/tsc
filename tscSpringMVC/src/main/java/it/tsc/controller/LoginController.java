@@ -10,16 +10,54 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import it.tsc.model.PortalUser;
+
 @Controller
-public class LoginController {
+public class LoginController extends BaseController {
   private static Logger logger = LoggerFactory.getLogger(LoginController.class);
+
+
 
   @RequestMapping(value = {"/", "/welcome**"}, method = RequestMethod.GET)
   public ModelAndView welcomePage() {
     ModelAndView model = new ModelAndView();
-    model.addObject("title", "Spring Security Hello World");
-    model.addObject("message", "This is welcome page!");
-    model.setViewName("hello");
+    model.addObject("title", "Welcome to TSC site");
+    model.addObject("message", "Welcome to TSC site");
+    model.setViewName("welcome");
+    return model;
+  }
+
+  /**
+   * ask new password through email
+   * 
+   * @return
+   */
+  @RequestMapping(value = {"/askNewPassword"}, method = RequestMethod.GET)
+  public ModelAndView askNewPassword() {
+    ModelAndView model = new ModelAndView();
+    model.setViewName("asknew");
+    return model;
+  }
+
+  @RequestMapping(value = {"/renewPassword"}, method = RequestMethod.GET)
+  public ModelAndView renewPassword(@RequestParam("username") String username,
+      @RequestParam("tmpPassword") String tmpPassword) {
+    ModelAndView model = new ModelAndView();
+    model.addObject("username", username);
+    /**
+     * retrieve user data
+     */
+    PortalUser user = getUserService().getUser(username);
+    if (user != null) {
+      model.addObject("email", user.getEmail());
+    } else {
+
+    } ;
+    model.addObject("tmpPassword", tmpPassword);
+    /**
+     * check if password can be requested using service
+     */
+    model.setViewName("renew");
     return model;
   }
 

@@ -3,6 +3,8 @@
  */
 package it.tsc.test.dao;
 
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -41,6 +43,12 @@ public class UserDaoTest {
   @Test
   public void testUserDao() {
     logger.info("userService user {}", gson.toJson(userService.getUser("matteo")));
+  }
+
+  @Test
+  public void testUserEmailDao() {
+    assertTrue(userService.getUser("matteo", "test") == null);
+    assertTrue(userService.getUser("matteo", "matteo@infamiglia.it") != null);
   }
 
   @Test

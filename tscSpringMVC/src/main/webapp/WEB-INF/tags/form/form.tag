@@ -13,6 +13,8 @@ $(document).ready(function(){
 		var data = $(this).serializeFormJSON();
 		// Prevent the form from submitting via the browser.
 		event.preventDefault();
+		//clear toastr previous message
+		toastr.clear();
 		${function}(data);
 	});
 });

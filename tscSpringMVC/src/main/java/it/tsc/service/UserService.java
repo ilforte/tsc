@@ -25,6 +25,15 @@ public interface UserService {
   public PortalUser getUser(String username);
 
   /**
+   * get User object (renew pwd service)
+   * 
+   * @param username
+   * @param email
+   * @return
+   */
+  public PortalUser getUser(String username, String email);
+
+  /**
    * get User in JSON format
    * 
    * @param username

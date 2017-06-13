@@ -56,6 +56,7 @@ public class AuthSuccessHandler extends SavedRequestAwareAuthenticationSuccessHa
   protected String determineTargetUrl(Authentication authentication) {
     boolean isUser = false;
     boolean isAdmin = false;
+    boolean isImpersonate = false;
     Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
     for (GrantedAuthority grantedAuthority : authorities) {
       if (grantedAuthority.getAuthority().equals("ROLE_USER")) {
@@ -64,12 +65,17 @@ public class AuthSuccessHandler extends SavedRequestAwareAuthenticationSuccessHa
       } else if (grantedAuthority.getAuthority().equals("ROLE_ADMIN")) {
         isAdmin = true;
         break;
+      } else if (grantedAuthority.getAuthority().equals("ROLE_IMPERSONATE")) {
+        isImpersonate = true;
+        break;
       }
     }
 
     if (isUser) {
       return "/user";
     } else if (isAdmin) {
+      return "/admin";
+    } else if (isImpersonate) {
       return "/admin";
     } else {
       throw new IllegalStateException();

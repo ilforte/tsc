@@ -32,6 +32,15 @@ public interface UserDao {
   public PortalUser getUser(String username);
 
   /**
+   * get User Object(for pwd recovery)
+   * 
+   * @param username
+   * @param email
+   * @return
+   */
+  public PortalUser getUser(String username, String email);
+
+  /**
    * get All Users in JSON format
    * 
    * @return (Only for admin role is permitted)

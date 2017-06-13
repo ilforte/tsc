@@ -9,7 +9,7 @@ package it.tsc.model;
  */
 public enum Role {
 
-  ROLE_ADMIN, ROLE_USER, ROLE_BACKOFFICE;
+  ROLE_ADMIN, ROLE_USER, ROLE_BACKOFFICE, ROLE_IMPERSONATE;
 
   /**
    * return String Value for role
@@ -25,6 +25,8 @@ public enum Role {
         return "ROLE_USER";
       case ROLE_BACKOFFICE:
         return "ROLE_BACKOFFICE";
+      case ROLE_IMPERSONATE:
+        return "ROLE_IMPERSONATE";
       default:
         throw new RuntimeException("Role cannot be converted");
     }

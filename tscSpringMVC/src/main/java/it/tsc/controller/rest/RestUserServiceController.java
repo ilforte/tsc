@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import it.tsc.model.PortalUser;
 import it.tsc.model.PortalUser.PortalUserInsert;
 import it.tsc.model.PortalUser.PortalUserRemove;
+import it.tsc.model.PortalUser.PortalUserRenewPassword;
 import it.tsc.model.Response;
 import it.tsc.model.Role;
 import it.tsc.model.ValidationResponse;
@@ -160,6 +161,36 @@ public class RestUserServiceController {
     // TODO return rest json service get user
     logger.debug("/admin/userService/jsonGetUser");
     return userService.jsonGetUser(user.getName());
+  }
+
+  @PreAuthorize("permitAll")
+  @RequestMapping(value = "/jsonAskNewPassword", method = RequestMethod.POST,
+      produces = "application/json")
+  public @ResponseBody ValidationResponse jsonAskNewPassword(
+      @Valid @RequestBody PortalUser portalUser, BindingResult result) {
+    // TODO return rest json service get user
+    logger.debug("jsonAskNewPassword");
+    ValidationResponse res = new ValidationResponse();
+    Set<ConstraintViolation<PortalUser>> errors =
+        validator.validate(portalUser, PortalUserRenewPassword.class);
+    // TODO return rest json service get user
+    if (errors.size() > 0) {
+      // if validator failed
+      res.setBindingResult(errors);
+      res.setStatus(Response.FAILURE.toString());
+      logger.debug("portalUser: {} errors: {}", portalUser.getUsername(), result.hasErrors());
+    } else {
+      PortalUser user = userService.getUser(portalUser.getUsername(), portalUser.getEmail());
+      /**
+       * always success
+       */
+      res.setStatus(Response.SUCCESS.toString());
+      if (user == null) {
+        logger.debug("error requesting jsonAskNewPassword user: {} username: {} emai: {}", user,
+            portalUser.getUsername(), portalUser.getEmail());
+      } ;
+    }
+    return res;
   }
 
 }

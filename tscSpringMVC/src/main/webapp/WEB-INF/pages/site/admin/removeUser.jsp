@@ -3,13 +3,13 @@
 <%@ taglib tagdir="/WEB-INF/tags/form" prefix="ajaxForm" %>
 
 <ajaxForm:form function="removePortalUserFunction" action="/admin/userService/jsonRemoveUser" id="removePortalUser"
-failure_message="Failure removing user" success_message="Remone Portal user succesfully">
+failure_message="Failure removing user" success_message="Remove Portal user succesfully">
 	<jsp:attribute name="content">
 		 <table>
 			<tr>
                 <td>
                 	<span class="label label-primary label-sm">
-                		<spring:message code="lbl.username" text="" />
+                		<spring:message code="label.username" text="" />
                 	</span>
                 </td>
                 <td><input type="text" class="form-control input-sm" id="username" name="username" ></td>
@@ -17,7 +17,7 @@ failure_message="Failure removing user" success_message="Remone Portal user succ
 			<tr>
                 <td>
                 	<span class="label label-primary label-sm">
-                		<spring:message code="lbl.role" text="" />
+                		<spring:message code="label.role" text="" />
                 	</span>
                 </td>
                 <td>
@@ -30,7 +30,7 @@ failure_message="Failure removing user" success_message="Remone Portal user succ
             </tr>
 		 </table>
 		<button type="submit" id="btn-search"
-						class="btn btn-primary btn-sm"><spring:message code="lbl.removeUser" text="" /></button>
+						class="btn btn-primary btn-sm"><spring:message code="label.removeUser" text="" /></button>
 	</jsp:attribute>
 </ajaxForm:form>
     

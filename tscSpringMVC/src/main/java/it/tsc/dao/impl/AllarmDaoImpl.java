@@ -13,9 +13,9 @@ import org.springframework.stereotype.Repository;
 import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.mapping.MappingManager;
 
-import it.tsc.accessor.AllarmAccessor;
 import it.tsc.dao.AllarmDao;
 import it.tsc.dao.BaseDao;
+import it.tsc.dao.accessor.AllarmAccessor;
 import it.tsc.util.ConversionUtil;
 
 /**

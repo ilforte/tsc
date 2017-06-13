@@ -24,13 +24,13 @@ import com.google.gson.annotations.Expose;
 @Table(keyspace = "ks_tsc", name = "tb_users", readConsistency = "QUORUM",
     writeConsistency = "QUORUM", caseSensitiveKeyspace = false, caseSensitiveTable = false)
 public class PortalUser {
-  @NotBlank(groups = PortalUserRemove.class)
+  @NotBlank(groups = {PortalUserRemove.class, PortalUserRenewPassword.class})
   @Expose
   @PartitionKey(0)
   @Column(name = "username")
   private String username;
 
-  @NotBlank(groups = PortalUserRemove.class)
+  @NotBlank(groups = {PortalUserRemove.class})
   @Expose
   @PartitionKey(1)
   @Column(name = "role")
@@ -40,7 +40,7 @@ public class PortalUser {
   @Expose
   private List<String> roles;
 
-  @NotBlank(groups = PortalUserInsert.class)
+  @NotBlank(groups = {PortalUserInsert.class, PortalUserRenewPassword.class})
   @Email
   @Expose
   @Column(name = "email")
@@ -94,6 +94,7 @@ public class PortalUser {
   // @formatter:off
     public interface PortalUserRemove extends Default {}
     public interface PortalUserInsert extends PortalUserRemove {}
+    public interface PortalUserRenewPassword extends Default {}
   // @formatter:on
 
 

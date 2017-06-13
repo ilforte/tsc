@@ -33,6 +33,9 @@ public class PasswordTest {
       // true for all 5 iteration
       System.out.println(encoder.matches("123456", passwd));
     }
+
+    String passwd = encoder.encode("telesoccorsoInFamiglia01$");
+    System.out.println("tsc pwd: " + passwd); // print hash
   }
 
 }

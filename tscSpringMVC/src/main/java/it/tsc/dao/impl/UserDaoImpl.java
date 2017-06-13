@@ -21,9 +21,9 @@ import com.datastax.driver.core.Row;
 import com.datastax.driver.mapping.MappingManager;
 import com.datastax.driver.mapping.Result;
 
-import it.tsc.accessor.PortalUserAccessor;
 import it.tsc.dao.BaseDao;
 import it.tsc.dao.UserDao;
+import it.tsc.dao.accessor.PortalUserAccessor;
 import it.tsc.model.PortalUser;
 import it.tsc.model.Role;
 import it.tsc.util.ConversionUtil;
@@ -88,8 +88,24 @@ public class UserDaoImpl implements UserDao {
       password = user.getPassword();
       roles.add(user.getRole());
     }
-    if (roles.size() > 0) {
+    if (roles != null && roles.size() > 0) {
       PortalUser = new PortalUser(username, password, roles, email);
+    }
+    return PortalUser;
+  }
+
+  @Override
+  public PortalUser getUser(String username, String email) {
+    PortalUser PortalUser = null;
+    MappingManager manager = baseDao.getMappingManager();
+    PortalUserAccessor userAccessor = manager.createAccessor(PortalUserAccessor.class);
+    Result<PortalUser> rs = userAccessor.getUser(username, email);
+    List<String> roles = new ArrayList<String>();
+    for (PortalUser user : rs.all()) {
+      roles.add(user.getRole());
+    }
+    if (roles != null && roles.size() > 0) {
+      PortalUser = new PortalUser(username, roles, email);
     }
     return PortalUser;
   }
@@ -208,6 +224,9 @@ public class UserDaoImpl implements UserDao {
   /*
    * (non-Javadoc)
    * 
+   * @Override public PortalUser getUser(String username, String email) { // TODO Auto-generated
+   * method stub return null; }*
+   * 
    * @see
    * it.tsc.dao.UserDao#updateUser(java.lang.String,java.lang.String,java.lang.String,it.tsc.model.
    * Role)
@@ -220,7 +239,11 @@ public class UserDaoImpl implements UserDao {
      + "WHERE username = :username AND role = :role IF EXISTS;");
     // @formatter:off
     BoundStatement bound = preparedStmt.bind()
-        .setString("password", password)
+    @Override
+  public PortalUser getUser(String username, String email) {
+    // TODO Auto-generated method stub
+    return null;
+  }      .setString("password", password)
         .setString("email", email)
         .setString("role", role.value(role))
         .setString("username", username);
