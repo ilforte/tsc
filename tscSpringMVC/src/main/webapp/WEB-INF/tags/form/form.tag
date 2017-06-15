@@ -1,5 +1,6 @@
 <%@ tag language="java" pageEncoding="UTF-8"%>
 <%@ attribute name="id" required="true"  type="java.lang.String"%>
+<%@ attribute name="cssClass" required="true"  type="java.lang.String"%>
 <%@ attribute name="function" required="true"  type="java.lang.String"%>
 <%@ attribute name="action" required="true"  type="java.lang.String"%>
 <%@ attribute name="success_message" required="true"  type="java.lang.String"%>
@@ -14,31 +15,37 @@
 
 //Wait for the DOM to be ready
 $(function() {
-  // Initialize form validation on the registration form.
-  // It has the name attribute "registration"
-  $("form[name='${id}']").validate({
-	    submitHandler: function(form) {
-	      form.submit();
-	    },
-    rules: {<jsp:invoke fragment="validateContent"/>}
-  });
-});
-
-$(document).ready(function(){
-	$("#${id}").submit(function(event) {
-		var data = $(this).serializeFormJSON();
-		// Prevent the form from submitting via the browser.
-		event.preventDefault();
-		//clear toastr previous message
-		toastr.clear();
-		${function}(data);
+	//Initialize form validation on the registration form.
+	// It has the name attribute "registration"
+	$("form[name='${id}']").validate({
+		submitHandler: function(form) {
+			//clear toastr previous message
+			toastr.clear();
+			${function}(JSON.stringify($(form).serializeFormJSON()));
+		},
+		errorClass: "invalid",
+		validClass: "success",
+		errorElement: "em",
+		framework: 'bootstrap',
+      icon: {
+          valid: 'glyphicon glyphicon-ok',
+          invalid: 'glyphicon glyphicon-remove',
+          validating: 'glyphicon glyphicon-refresh'
+      },
+      err: {
+          container: 'tooltip'
+      },
+      errorPlacement: function(error, element) {
+          error.insertAfter(element); // <- the default
+      },
+  	  rules: {<jsp:invoke fragment="validateContent"/>}
 	});
 });
 	
-function ${function}(data) {
-	$.ajax({ ${id},
-	    url:CONTEXT_PATH + '${action}',  
-	    data:JSON.stringify(data),
+function ${function}(content) {
+	$.ajax({
+	    url:'${action}',  
+	    data:content,
 	    type:"POST", 
 	    contentType: "application/json; charset=utf-8",
         beforeSend: function(xhr) {
@@ -92,7 +99,7 @@ function ${function}(data) {
 })(jQuery);
 </script>
 
-<form method="post" id="${id}" name= "${id}" class="form-horizontal">
+<form method="post" id="${id}" name="${id}" class="${cssClass}" action="${action}">
 	<jsp:invoke fragment="content"/>
 </form>
 

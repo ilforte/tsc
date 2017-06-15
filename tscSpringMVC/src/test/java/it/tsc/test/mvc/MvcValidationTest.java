@@ -110,7 +110,7 @@ public class MvcValidationTest {
   @WithMockUser(roles = "ADMIN", username = "matteo")
   public void testRemoveUser() throws Exception {
     PortalUser user = new PortalUser();
-    user.setUsername("matteo");
+    user.setUsername("testUser");
 
     // omit email
     ResultMatcher ok = MockMvcResultMatchers.status().isOk();

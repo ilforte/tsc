@@ -72,7 +72,7 @@ $(document).ready(function(){
 	    });
 	  });
 	
-	var TitleField = function(config) {
+/* 	var TitleField = function(config) {
 	    jsGrid.Field.call(this, config);
 	};
     
@@ -82,7 +82,7 @@ $(document).ready(function(){
         }
     });
     
-    jsGrid.fields.title = TitleField;
+    jsGrid.fields.title = TitleField; */
 	
 	$("#${id}").jsGrid({
 		fields:[<jsp:invoke fragment="fields"/>],
@@ -90,7 +90,6 @@ $(document).ready(function(){
 		<jsp:invoke fragment="options"/>
 	});
 	
-
 });
 </script>
 <div id="${id}" >

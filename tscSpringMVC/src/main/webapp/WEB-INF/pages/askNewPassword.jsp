@@ -6,7 +6,8 @@
 
 
 <ajaxForm:form function="askNewPasswordForm" action="/jsonAskNewPassword" id="addPortalUser"
-	failure_message="Password [errore richiesta]" success_message="Password [effettuata richiesta con successo] attendere email conferma"  >
+	failure_message="Password [errore richiesta]" success_message="Password [effettuata richiesta con successo] attendere email conferma" 
+	cssClass="form-inline" >
 	<jsp:attribute name="content">
 		 <table>
 			<tr>

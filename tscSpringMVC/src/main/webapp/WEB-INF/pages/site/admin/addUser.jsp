@@ -1,10 +1,11 @@
 <%@include file="/WEB-INF/pages/jspf/include.jspf" %> 
 <%@ taglib tagdir="/WEB-INF/tags/form" prefix="ajaxForm" %>
 
-<ajaxForm:form function="addPortalUserFunction" action="/admin/userService/jsonAddUser" id="addPortalUser"
-	failure_message="Failure adding user" success_message="Add Portal user succesfully" >
- 	<jsp:attribute name="validateContent">
-	      username: 'required',
+<ajaxForm:form function="addPortalUserFunction" action="admin/userService/jsonAddUser" id="addPortalUser"
+	failure_message="Failure adding user" success_message="Add Portal user succesfully" cssClass="form-horizontal" >
+  	<jsp:attribute name="validateContent">
+		 username: 'required',
+	      role: 'required',
 	      email: {
 	        required: true,
 	        email: true
@@ -20,38 +21,39 @@
 	        required: 'Please provide a password',
 	        minlength: 'Your password must be at least 5 characters long'
 	      },
-	      email: 'Please enter a valid email address'
+	      email: 'Please enter a valid email address',
+	      role: 'Select Valid Role'
 	</jsp:attribute>
 	<jsp:attribute name="content">
-				<div class="form-control-group">
-                	<span class="control-label label-primary label-sm">
+				<div class="form-group">
+                	<label class="control-label col-sm-2" for="username">
                 		<spring:message code="label.username" text="" />
-                	</span>
-					<div class="controls">
+                	</label>
+					<div class="col-xs-4 form-inline">
 						<ajaxForm:input type="text" cssClass="form-control input-sm" id="username" />
 					</div>
 				</div>
-				<div class="form-control-group">
-                	<span class="control-label label-primary label-sm">
+				<div class="form-group">
+                	<label class="control-label col-sm-2" for="password">
                 		<spring:message code="label.password" text="" />
-                	</span>
-					<div class="controls">
+                	</label>
+					<div class="col-xs-4">
 						<ajaxForm:input type="text" cssClass="form-control input-sm" id="password" />
 					</div>
 				</div>
-				<div class="form-control-group">
-                	<span class="control-label label-primary label-sm">
+				<div class="form-group">
+                	<label class="control-label col-sm-2" for="email">
                 		<spring:message code="label.email" text="" />
-                	</span>
-					<div class="controls">
-						<ajaxForm:input type="text" cssClass="form-control input-sm" id="email" />
+                	</label>
+					<div class="col-xs-4">
+						<ajaxForm:input type="text" cssClass="form-control input-sm" id="email"/>
 					</div>
 				</div>
-				<div class="form-control-group">
-                	<span class="control-label label-primary label-sm">
+				<div class="form-group">
+                	<label class="control-label col-sm-2" for="role">
                 		<spring:message code="label.role" text="" />
-                	</span>
-					<div class="controls">
+                	</label>
+					<div class="col-xs-4">
 			            <select class="form-control input-sm" name="role">
 						    <c:forEach items="${roles}" var="role">
 						        <option value="${role.key}">${role.value}</option>

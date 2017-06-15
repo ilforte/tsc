@@ -41,6 +41,7 @@ public class AppController extends BaseController {
 
   protected Map<String, String> roles() {
     Map<String, String> roles = new HashMap<String, String>();
+    roles.put("", "");
     roles.put(Role.ROLE_ADMIN.toString(), "Admin");
     roles.put(Role.ROLE_USER.toString(), "User");
     roles.put(Role.ROLE_BACKOFFICE.toString(), "Back Office");
