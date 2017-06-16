@@ -59,6 +59,7 @@ Current Locale : ${pageContext.response.locale} --%>
     height: 20px;
     font-size: 14px;
 }
+
 </style>
 
 <script type="text/javascript">
@@ -181,7 +182,7 @@ $(document).ready(function(){
     			<div class="row">
     				<tiles:insertAttribute name="body" />
     			</div>
-    			<div class="row">
+    			<div class="row vbottom">
     				<tiles:insertAttribute name="footer" />
     			</div>
     		</div>

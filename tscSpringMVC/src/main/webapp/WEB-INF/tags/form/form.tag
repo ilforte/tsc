@@ -11,6 +11,13 @@
 <%@attribute  name="validateContent" fragment="true" %>
 <%@attribute  name="content" fragment="true" %>
 
+<style>
+.invalid{
+	 margin-left:1em;
+	 color: red;
+}
+</style>
+
 <script type="text/javascript">
 
 //Wait for the DOM to be ready
@@ -23,7 +30,7 @@ $(function() {
 			toastr.clear();
 			${function}(JSON.stringify($(form).serializeFormJSON()));
 		},
-		errorElement: "div",
+		errorElement: "span",
 		errorClass: "invalid",
 		validClass: "success",
 		errorPlacement: function(error, element) {

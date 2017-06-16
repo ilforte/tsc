@@ -10,10 +10,10 @@
 	cssClass="form-inline" >
   	<jsp:attribute name="validateContent">
 		 username: 'required',
-	     	    email: {
-	        required: true,
+     	    email: {
+        	required: true,
 	        email: true
-	    	}
+    		}
 	    },
 	    messages: {
 	      username: '<spring:message code="label.enter.username" text="label.enter.username" />',
@@ -39,7 +39,7 @@
             </tr>
 		 </table>
 		<button type="submit" id="btn-search"
-						class="btn btn-primary btn-sm"><spring:message code="label.askNewPassword" text="" />
+						class="btn btn-primary btn-sm"><spring:message code="label.askNewPassword" text="label.askNewPassword" />
 		</button>
 	</jsp:attribute>
 </ajaxForm:form>

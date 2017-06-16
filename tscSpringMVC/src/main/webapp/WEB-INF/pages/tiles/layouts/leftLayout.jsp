@@ -33,7 +33,8 @@ function allarmGridRowClick(args,url) {
 		    }
 		});
 	}else {
-		toastr.info(PORTAL_USER);
+		var ab_codi = allarmData.ab_codi;
+		window.location.href = addContextPath('/admin?ab_codi=' + allarmData.ab_codi);
 	}
 }
 

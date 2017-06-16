@@ -74,7 +74,9 @@
 	var TOKEN = $("meta[name='_csrf']").attr("content");
 	var HEADER = $("meta[name='_csrf_header']").attr("content");
 	/*  utente richiesto */
-	var AB_CODI;
+	<c:if test="${not empty ab_codi}">
+		var AB_CODI = ${ab_codi};
+	</c:if>
 	
 	/* add context path to url  */
 	function addContextPath(url) {

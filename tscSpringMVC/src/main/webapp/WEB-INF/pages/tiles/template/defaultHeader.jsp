@@ -23,6 +23,16 @@
 		<spring:message code="label.remove-user" text="Rimuovi Utente"/>
 		</a>
 	</li> 
+	<li>
+		<a href="#add-group" data-toggle="tab">
+		<spring:message code="label.add-group" text="label.add-group"/>
+		</a>
+	</li> 
+	<li>
+		<a href="#remove-group" data-toggle="tab">
+		<spring:message code="label.remove-group" text="label.remove-group"/>
+		</a>
+	</li>
 </sec:authorize>
 <li>
 	<c:set var="image" >

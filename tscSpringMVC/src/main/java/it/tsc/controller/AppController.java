@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import it.tsc.model.Role;
@@ -15,25 +16,26 @@ import it.tsc.model.Role;
 public class AppController extends BaseController {
 
   @RequestMapping(value = {"/home"}, method = RequestMethod.GET)
-  public ModelAndView homePage() {
+  public ModelAndView homePage(@RequestParam(value = "ab_codi", required = false) String ab_codi) {
     ModelAndView model = new ModelAndView();
-    model.addObject("title", "Spring Security Hello World");
-    model.addObject("message", "This is welcome page!");
+    model.addObject("ab_codi", ab_codi);
     model.setViewName("home");
     return model;
   }
 
   @RequestMapping(value = {"/admin"}, method = RequestMethod.GET)
-  public ModelAndView adminPage() {
+  public ModelAndView adminPage(@RequestParam(value = "ab_codi", required = false) String ab_codi) {
     ModelAndView model = new ModelAndView();
+    model.addObject("ab_codi", ab_codi);
     model.addObject("roles", roles());
     model.setViewName("admin");
     return model;
   }
 
   @RequestMapping(value = {"/user"}, method = RequestMethod.GET)
-  public ModelAndView userPage() {
+  public ModelAndView userPage(@RequestParam(value = "ab_codi", required = false) String ab_codi) {
     ModelAndView model = new ModelAndView();
+    model.addObject("ab_codi", ab_codi);
     model.addObject("roles", roles());
     model.setViewName("user");
     return model;

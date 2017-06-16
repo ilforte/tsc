@@ -90,7 +90,6 @@ $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 	  </div>
 	  
 	  <!-- profile admin -->
-	  
 	  <sec:authorize access="hasRole('ADMIN')">
 		  <div id="list-group" class="tab-pane fade mh-100">
 		    <h5>Permessi utente</h5>
@@ -121,6 +120,14 @@ $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 			  <div id="remove-user" class="tab-pane fade mh-100">
 			  	<h5>Rimuovi Utente</h5>
 			  	<tiles:insertTemplate template="removeUser.jsp" />
+			  </div>
+			  
+			  <div id="add-group" class="tab-pane fade mh-100">
+			  	<h5>Aggiungi Gruppo</h5>
+			  </div>
+			  
+			  <div id="remove-group" class="tab-pane fade mh-100">
+			  	<h5>Rimuovi Gruppo</h5>
 			  </div>
 	  </sec:authorize>	  
 	  
