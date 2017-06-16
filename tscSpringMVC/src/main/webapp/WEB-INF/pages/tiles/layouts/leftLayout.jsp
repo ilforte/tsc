@@ -34,7 +34,7 @@ function allarmGridRowClick(args,url) {
 		});
 	}else {
 		var ab_codi = allarmData.ab_codi;
-		window.location.href = addContextPath('/admin?ab_codi=' + allarmData.ab_codi);
+		window.location.href = addContextPath(getPathFromRole() + '?ab_codi=' + allarmData.ab_codi);
 	}
 }
 

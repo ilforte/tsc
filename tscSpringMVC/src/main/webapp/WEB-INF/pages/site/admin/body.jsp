@@ -3,6 +3,8 @@
 <%@ taglib tagdir="/WEB-INF/tags/modal" prefix="modal" %>
 <%@ taglib tagdir="/WEB-INF/tags/grid" prefix="grid" %>
 
+<sec:authentication var="user" property="principal" />
+
 <script type="text/javascript">
 $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 	  var target = $(e.target).attr("href") // activated tab

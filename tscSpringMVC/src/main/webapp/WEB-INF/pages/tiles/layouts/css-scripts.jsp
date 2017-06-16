@@ -28,6 +28,10 @@
 <script src="<c:url value='/resources/js/jquery.validate.min.js' />"></script>
 <script src="<c:url value='/resources/js/additional-methods.min.js' />"></script>
 
+<sec:authorize access="hasRole('ROLE_USER')" var="isUser" />
+<sec:authorize access="hasRole('ROLE_ADMIN')" var="isAdmin" />
+<sec:authorize access="hasRole('ROLE_SADMIN')" var="isSuperUser" />
+
 <!-- spring Error - Message -->
 
 <style>
@@ -51,7 +55,9 @@
 	border-color: #bce8f1;
 }
 
-#login-box {
+#login-box {		<security:authorize access="hasRole('ROLE_USER')" var="isUser" />
+			<security:authorize access="hasRole('ROLE_ADMIN')" var="isAdmin" />
+			<security:authorize access="hasRole('ROLE_SADMIN')" var="isSuperUser" />
 	width: 600x;
 	padding: 20px;
 	margin: 100px auto;
@@ -82,5 +88,35 @@
 	function addContextPath(url) {
 		return CONTEXT_PATH + url;
 	}
+	
+	/* getUserRole */
+	function getUserRole(){
+		var user;
+		<c:choose>
+		  <c:when test="${isSuperUser}">
+		  	user = 'ROLE_SADMIN';
+		  </c:when>
+		  <c:when test="${isAdmin}">
+		  	user = 'ROLE_ADMIN';
+		  </c:when>
+		  <c:when test="${isUser}">
+		    user = 'ROLE_USER';
+		  </c:when>
+		  <c:otherwise>
+		   user = '';
+		  </c:otherwise>
+		</c:choose>
+		return user;
+	}
+	
+	/* get path from user role */
+	function getPathFromRole(){
+		if (getUserRole() == 'ROLE_ADMIN') {
+			return '/admin';
+		} else if (getUserRole() == 'ROLE_USER'){
+			return '/user';
+		};
+	}
+	
 </script>
 
