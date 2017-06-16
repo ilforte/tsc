@@ -23,22 +23,24 @@ $(function() {
 			toastr.clear();
 			${function}(JSON.stringify($(form).serializeFormJSON()));
 		},
+		errorElement: "div",
 		errorClass: "invalid",
 		validClass: "success",
-		errorElement: "em",
-		framework: 'bootstrap',
-      icon: {
-          valid: 'glyphicon glyphicon-ok',
-          invalid: 'glyphicon glyphicon-remove',
-          validating: 'glyphicon glyphicon-refresh'
-      },
-      err: {
-          container: 'tooltip'
-      },
-      errorPlacement: function(error, element) {
-          error.insertAfter(element); // <- the default
-      },
-  	  rules: {<jsp:invoke fragment="validateContent"/>}
+		errorPlacement: function(error, element) {
+            error.insertAfter(element); // default function
+        },
+	    framework: "bootstrap",
+        icon:{
+          valid: "glyphicon glyphicon-ok",
+          invalid: "glyphicon glyphicon-remove",
+          validating: "glyphicon glyphicon-refresh"
+        },
+        highlight: function(element, errorClass) {
+            $(element).fadeOut(function() {
+              $(element).fadeIn();
+            });
+          },
+  	    rules: {<jsp:invoke fragment="validateContent"/>}
 	});
 });
 	
@@ -98,7 +100,6 @@ function ${function}(content) {
     };
 })(jQuery);
 </script>
-
 <form method="post" id="${id}" name="${id}" class="${cssClass}" action="${action}">
 	<jsp:invoke fragment="content"/>
 </form>

@@ -10,12 +10,12 @@
   <sec:authorize access="hasRole('ADMIN')">
 	<li>
 		<a href="#list-group" data-toggle="tab">
-		<spring:message code="label.list-group" text="Gruppi"/>
+		<spring:message code="label.list-group" text="label.list-group"/>
 		</a>
 	</li>
 	<li>
 		<a href="#add-user" data-toggle="tab">
-		<spring:message code="label.add-user" text="Aggiungi Utente"/>
+		<spring:message code="label.add-user" text="label.add-user"/>
 		</a>
 	</li> 
 	<li>

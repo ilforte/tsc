@@ -73,7 +73,7 @@ function proveGridRowClick(args,url) {
 </script>
 
 <div class="row">
-	<div id="gradient" style="color:black;text-align:center;"><spring:message code="label.allarmi" text=""/></div>
+	<div id="gradient" style="color:black;text-align:center;"><spring:message code="label.allarmi" text="label.allarmi"/></div>
 	<grid:grid
 		id="allarmGrid"
 		callbackFunction="allarmGridRowClick(args,'/user/allarmService/updateAllarm');">
@@ -107,7 +107,7 @@ function proveGridRowClick(args,url) {
 	</grid:grid>
 </div>
 <div class="row">
-	<div id="gradient" style="color:black;text-align:center;"><spring:message code="label.prove" text=""/></div>
+	<div id="gradient" style="color:black;text-align:center;"><spring:message code="label.prove" text="label.prove"/></div>
 	<grid:grid
 		id="proveGrid"
 		callbackFunction="proveGridRowClick(args,'/user/allarmService/updateAllarm');">

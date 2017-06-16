@@ -5,9 +5,20 @@
 	<h2><spring:message code="label.password.asknew" text=""/></h2>
 
 
-<ajaxForm:form function="askNewPasswordForm" action="/jsonAskNewPassword" id="addPortalUser"
+<ajaxForm:form function="askNewPasswordForm" action="jsonAskNewPassword" id="addPortalUser"
 	failure_message="Password [errore richiesta]" success_message="Password [effettuata richiesta con successo] attendere email conferma" 
 	cssClass="form-inline" >
+  	<jsp:attribute name="validateContent">
+		 username: 'required',
+	     	    email: {
+	        required: true,
+	        email: true
+	    	}
+	    },
+	    messages: {
+	      username: '<spring:message code="label.enter.username" text="label.enter.username" />',
+	      email: '<spring:message code="label.enter.email" text="label.enter.email" />'
+	</jsp:attribute>
 	<jsp:attribute name="content">
 		 <table>
 			<tr>

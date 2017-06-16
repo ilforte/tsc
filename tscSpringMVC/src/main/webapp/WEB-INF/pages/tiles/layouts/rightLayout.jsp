@@ -3,7 +3,7 @@
 <%@ taglib tagdir="/WEB-INF/tags/grid" prefix="grid" %>
 
 <div class="row">
-	<div id="gradient" style="color:black;text-align:center;"><spring:message code="label.proveDay" text=""/></div>
+	<div id="gradient" style="color:black;text-align:center;"><spring:message code="label.proveDay" text="label.proveDay"/></div>
 	<grid:grid
 		id="proveDayGrid">
 		<jsp:attribute name="options">
@@ -23,7 +23,7 @@
 	</grid:grid>
 </div>
 <div class="row">
-	<div id="gradient" style="color:black;text-align:center;"><spring:message code="label.nonFare" text=""/></div>
+	<div id="gradient" style="color:black;text-align:center;"><spring:message code="label.nonFare" text="label.nonFare"/></div>
 	<grid:grid
 		id="DNDGrid">
 		<jsp:attribute name="options">
