@@ -37,9 +37,8 @@
    </definition>  
  
    <!-- Allarm Page -->
-   <definition name="user" extends="base-definition">  
+   <definition name="user" extends="admin">  
        <put-attribute name="title" value="Welcome User page" />  
-       <put-attribute name="body" value="/WEB-INF/pages/site/user/body.jsp" />
    </definition>  
    
    <!-- NOT PROFILED -->
