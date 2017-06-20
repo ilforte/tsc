@@ -80,6 +80,14 @@ public interface UserService {
   public boolean isAdmin(PortalUser user);
 
   /**
+   * Determines if User have Super Admin role
+   * 
+   * @param user
+   * @return
+   */
+  public boolean isSuperAdmin(PortalUser user);
+
+  /**
    * Add user
    * 
    * @param username (Only admin role is permitted)

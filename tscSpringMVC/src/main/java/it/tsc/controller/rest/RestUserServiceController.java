@@ -8,7 +8,6 @@ import java.util.Set;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Valid;
-import javax.validation.Validator;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,14 +36,11 @@ import it.tsc.service.UserService;
  */
 
 @RestController
-public class RestUserServiceController {
+public class RestUserServiceController extends RestBaseController {
   private static Logger logger = LoggerFactory.getLogger(RestUserServiceController.class);
 
   @Autowired
   private UserService userService;
-
-  @Autowired
-  private Validator validator;
 
   /**
    * get TSC User
@@ -52,7 +48,7 @@ public class RestUserServiceController {
    * @param user
    * @return
    */
-  @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
+  @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_SADMIN') or hasAuthority('ROLE_USER')")
   @RequestMapping(value = "/admin/userService/getUser", method = RequestMethod.GET,
       produces = "application/json")
   public @ResponseBody PortalUser getUser(@AuthenticationPrincipal Principal user) {
@@ -67,7 +63,7 @@ public class RestUserServiceController {
    * @param user
    * @return
    */
-  @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+  @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_SADMIN')")
   @RequestMapping(value = "/admin/userService/jsonGetAllUsers", method = RequestMethod.GET,
       produces = "application/json")
   public @ResponseBody String jsonGetAllUsers(@AuthenticationPrincipal Principal user) {
@@ -84,7 +80,7 @@ public class RestUserServiceController {
    * @param result
    * @return
    */
-  @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+  @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_SADMIN')")
   @RequestMapping(value = "/admin/userService/jsonAddUser", method = RequestMethod.POST,
       produces = "application/json")
   public @ResponseBody ValidationResponse jsonInsertUser(@AuthenticationPrincipal Principal user,
@@ -120,7 +116,7 @@ public class RestUserServiceController {
    * @param result
    * @return
    */
-  @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+  @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_SADMIN')")
   @RequestMapping(value = "/admin/userService/jsonRemoveUser", method = RequestMethod.POST,
       produces = "application/json")
   public @ResponseBody ValidationResponse jsonRemoveUser(@AuthenticationPrincipal Principal user,
@@ -154,7 +150,7 @@ public class RestUserServiceController {
    * @param user
    * @return
    */
-  @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
+  @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_SADMIN') or hasAuthority('ROLE_USER')")
   @RequestMapping(value = "/user/userService/jsonGetUser", method = RequestMethod.GET,
       produces = "application/json")
   public @ResponseBody String jsonGetUser(@AuthenticationPrincipal Principal user) {

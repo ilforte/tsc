@@ -47,6 +47,7 @@ public class BaseController {
 
   /**
    * Role Map
+   * 
    * @return
    */
   protected Map<String, String> roles() {

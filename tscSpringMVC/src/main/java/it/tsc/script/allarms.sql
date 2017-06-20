@@ -13,7 +13,7 @@ DROP TABLE IF EXISTS ks_tsc.tb_allarms;
 
 SELECT * FROM ks_tsc.tb_allarms;
 
-TRUNCATE ks_tsc.tb_allarms;
+TRUNCATE TABLE ks_tsc.tb_allarms;
 
 CREATE MATERIALIZED VIEW ks_tsc.vw_allarms AS
        SELECT data_arrivo,serial_uuid,evento,ab_codi,matricola,tel,user FROM ks_tsc.tb_allarms

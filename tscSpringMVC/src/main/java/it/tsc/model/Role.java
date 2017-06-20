@@ -9,7 +9,7 @@ package it.tsc.model;
  */
 public enum Role {
 
-  ROLE_ADMIN, ROLE_USER, ROLE_BACKOFFICE, ROLE_IMPERSONATE;
+  ROLE_ADMIN, ROLE_SADMIN, ROLE_USER, ROLE_BACKOFFICE, ROLE_IMPERSONATE;
 
   /**
    * return String Value for role
@@ -21,6 +21,8 @@ public enum Role {
     switch (role) {
       case ROLE_ADMIN:
         return "ROLE_ADMIN";
+      case ROLE_SADMIN:
+        return "ROLE_SADMIN";
       case ROLE_USER:
         return "ROLE_USER";
       case ROLE_BACKOFFICE:

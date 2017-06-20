@@ -6,17 +6,12 @@ package it.tsc.test.dao;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import com.google.gson.Gson;
 
-import it.tsc.config.ServiceConfig;
 import it.tsc.model.PortalUser;
 import it.tsc.model.Role;
 import it.tsc.service.UserService;
@@ -25,9 +20,7 @@ import it.tsc.service.UserService;
  * @author astraservice
  *
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = ServiceConfig.class, loader = AnnotationConfigContextLoader.class)
-public class UserDaoTest {
+public class UserDaoTest extends BaseDaoTest {
   private static Logger logger = LoggerFactory.getLogger(UserDaoTest.class);
   @Autowired
   private UserService userService;
@@ -64,8 +57,15 @@ public class UserDaoTest {
   @Test
   public void testAdmin() {
     PortalUser user = new PortalUser();
-    user.setUsername("ivan");
-    logger.info("test user {} Admin role: {}", user.getUsername(), userService.isAdmin(user));
+    user.setUsername("matteo");
+    assertTrue(userService.isAdmin(user));
+  }
+
+  @Test
+  public void testSuperAdmin() {
+    PortalUser user = new PortalUser();
+    user.setUsername("admin");
+    assertTrue(userService.isSuperAdmin(user));
   }
 
   @Test
@@ -82,7 +82,7 @@ public class UserDaoTest {
 
   @Test
   public void testRemoveUser() {
-    userService.removeUser("testUser", Role.ROLE_USER);
+    userService.removeUser("admin", Role.ROLE_ADMIN);
   }
 
   @Test

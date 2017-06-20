@@ -1,13 +1,30 @@
 <%@include file="/WEB-INF/pages/jspf/include.jspf" %>
 <%@ taglib tagdir="/WEB-INF/tags/modal" prefix="modal" %>
 
-<ul class="nav nav-tabs" role="tablist" id="portalTab">
+<script type="text/javascript">
+$('#portalTab a').click(function (e) {
+	  e.preventDefault()
+	  $(this).tab('show')
+	})
+</script>
+
+<style>
+	.nav>li>a {
+	    padding-top: 3px;
+	    padding-bottom: 3px;
+	    padding-left: 3px;
+	    padding-right: 3px;
+	}
+</style>
+
+<!-- Nav tabs -->
+<ul class="nav nav-pills" role="tablist" id="portalTab">
   <li class="active"><a href="#anagrafic" data-toggle="tab" ><spring:message code="label.anagrafic" /></a></li>
   <li><a href="#rescuers" data-toggle="tab" ><spring:message code="label.rescuers" />        </a></li> 
   <c:if test="${pageContext.request.userPrincipal.name != null}">
   	<li><a href="#user" data-toggle="tab" >profili:${pageContext.request.userPrincipal.name}</a></li>
   </c:if>
-  <sec:authorize access="hasRole('ADMIN')">
+  <sec:authorize access="hasRole('ADMIN') or hasRole('SADMIN')">
 	<li>
 		<a href="#list-group" data-toggle="tab">
 		<spring:message code="label.list-group" text="label.list-group"/>

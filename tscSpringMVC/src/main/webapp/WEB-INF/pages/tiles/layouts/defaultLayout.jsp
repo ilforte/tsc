@@ -81,19 +81,12 @@ $(document).ready(function(){
             console.log("WebSocket is already opened.");
             return;
         }
-        /* server-data
-        	${pageContext.request.requestURI} 
-			${pageContext.request.requestURL} 
-			${pageContext.request.serverPort}
-			${pageContext.request.getServerName()}
-			${pageContext.request.contextPath}
-        */
         // Create a new instance of the websocket/tscSpringMVC/
         var webSocketurl = 'ws://';
         webSocketurl += '${pageContext.request.getServerName()}' + ':';
         webSocketurl += '${pageContext.request.serverPort}';
         webSocketurl += '${pageContext.request.contextPath}';
-        webSocketurl += '/admin/allarmEndpoint';
+        webSocketurl += '/user/allarmEndpoint';
         webSocket = new WebSocket(webSocketurl);
          
         /**

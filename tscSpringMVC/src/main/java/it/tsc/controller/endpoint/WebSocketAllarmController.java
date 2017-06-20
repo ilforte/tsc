@@ -33,7 +33,7 @@ import it.tsc.service.AllarmService;
  *
  */
 @Controller
-@ServerEndpoint(value = "/admin/allarmEndpoint", configurator = SpringConfigurator.class)
+@ServerEndpoint(value = "/user/allarmEndpoint", configurator = SpringConfigurator.class)
 @Service
 public class WebSocketAllarmController {
   private static Logger logger = LoggerFactory.getLogger(WebSocketAllarmController.class);

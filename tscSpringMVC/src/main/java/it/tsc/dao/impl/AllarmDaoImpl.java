@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.datastax.driver.core.ResultSet;
-import com.datastax.driver.mapping.MappingManager;
 
 import it.tsc.dao.AllarmDao;
 import it.tsc.dao.BaseDao;
@@ -44,7 +43,7 @@ public class AllarmDaoImpl implements AllarmDao {
   @Override
   public void insertAllarmeMatricola(String matricola, String ab_codi, Date data_arrivo,
       String evento, String serial_uuid, String user) {
-    AllarmAccessor allarmAccessor = createAccessor(AllarmAccessor.class);
+    AllarmAccessor allarmAccessor = baseDao.createAccessor(AllarmAccessor.class);
     allarmAccessor.insertAllarmeMatricola(matricola, ab_codi, data_arrivo, evento, serial_uuid,
         user);
   }
@@ -69,29 +68,14 @@ public class AllarmDaoImpl implements AllarmDao {
    */
   @Override
   public void removeAllarme(String serial_uuid) {
-    AllarmAccessor allarmAccessor = createAccessor(AllarmAccessor.class);
+    AllarmAccessor allarmAccessor = baseDao.createAccessor(AllarmAccessor.class);
     allarmAccessor.removeAllarme(serial_uuid);
   }
 
   @Override
   public void updateAllarme(String serial_uuid, String user) {
-    AllarmAccessor allarmAccessor = createAccessor(AllarmAccessor.class);
+    AllarmAccessor allarmAccessor = baseDao.createAccessor(AllarmAccessor.class);
     allarmAccessor.updateAllarme(serial_uuid, user);
-  }
-
-  /**
-   * Return properly groupAccessor
-   * 
-   * @param <T>
-   * 
-   * @param <T>
-   * @return
-   * 
-   * @return
-   */
-  public <T> T createAccessor(Class<T> klass) {
-    MappingManager manager = baseDao.getMappingManager();
-    return manager.createAccessor(klass);
   }
 
   @Override

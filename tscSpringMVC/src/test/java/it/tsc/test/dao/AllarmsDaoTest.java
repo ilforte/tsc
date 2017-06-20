@@ -7,15 +7,10 @@ import java.text.ParseException;
 import java.util.Date;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import it.tsc.config.ServiceConfig;
 import it.tsc.service.AllarmService;
 import it.tsc.util.PortalUtil;
 
@@ -23,9 +18,7 @@ import it.tsc.util.PortalUtil;
  * @author astraservice
  *
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = ServiceConfig.class, loader = AnnotationConfigContextLoader.class)
-public class AllarmsDaoTest {
+public class AllarmsDaoTest extends BaseDaoTest {
   private static Logger logger = LoggerFactory.getLogger(AllarmsDaoTest.class);
   @Autowired
   private AllarmService allarmService;
@@ -45,7 +38,7 @@ public class AllarmsDaoTest {
 
   @Test
   public void testInsertAllarmeMatricolaSound() throws ParseException {
-    allarmService.insertAllarmeMatricola("064795", "000000", new Date(), "1",
+    allarmService.insertAllarmeMatricola("064795", "N00001", new Date(), "1",
         PortalUtil.generateUUID(), "");
   }
 

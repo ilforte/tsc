@@ -11,14 +11,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import it.tsc.controller.LoginController;
-
 /**
  * @author astraservice
  *
  */
 public class PageRequestInterceptor implements HandlerInterceptor {
-  private static Logger logger = LoggerFactory.getLogger(LoginController.class);
+  private static Logger logger = LoggerFactory.getLogger(PageRequestInterceptor.class);
 
   /*
    * (non-Javadoc)
@@ -27,9 +25,10 @@ public class PageRequestInterceptor implements HandlerInterceptor {
    * HttpServletRequest, javax.servlet.http.HttpServletResponse, java.lang.Object,
    * java.lang.Exception)
    */
+  @Override
   public void afterCompletion(HttpServletRequest request, HttpServletResponse response,
       Object handler, Exception ex) throws Exception {
-    logger.debug("Request Completed {}", handler);
+    logger.debug("Request Completed handler:{}", handler);
   }
 
   /*
@@ -39,9 +38,10 @@ public class PageRequestInterceptor implements HandlerInterceptor {
    * HttpServletRequest, javax.servlet.http.HttpServletResponse, java.lang.Object,
    * org.springframework.web.servlet.ModelAndView)
    */
+  @Override
   public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
       ModelAndView model) throws Exception {
-    logger.debug("method executed {}", handler);
+    logger.debug("method executed handler:{}", handler);
   }
 
   /*
@@ -50,9 +50,10 @@ public class PageRequestInterceptor implements HandlerInterceptor {
    * @see org.springframework.web.servlet.HandlerInterceptor#preHandle(javax.servlet.http.
    * HttpServletRequest, javax.servlet.http.HttpServletResponse, java.lang.Object)
    */
+  @Override
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
       throws Exception {
-    logger.debug("Before Method Execution {}", handler);
+    logger.debug("Before Method Execution handler:{}", handler);
     return true;
   }
 

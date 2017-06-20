@@ -62,7 +62,8 @@ public class AuthSuccessHandler extends SavedRequestAwareAuthenticationSuccessHa
       if (grantedAuthority.getAuthority().equals("ROLE_USER")) {
         isUser = true;
         break;
-      } else if (grantedAuthority.getAuthority().equals("ROLE_ADMIN")) {
+      } else if (grantedAuthority.getAuthority().equals("ROLE_ADMIN")
+          || grantedAuthority.getAuthority().equals("ROLE_SADMIN")) {
         isAdmin = true;
         break;
       } else if (grantedAuthority.getAuthority().equals("ROLE_IMPERSONATE")) {
@@ -76,7 +77,7 @@ public class AuthSuccessHandler extends SavedRequestAwareAuthenticationSuccessHa
     } else if (isAdmin) {
       return "/admin";
     } else if (isImpersonate) {
-      return "/admin";
+      return "/impersonate";
     } else {
       throw new IllegalStateException();
     }

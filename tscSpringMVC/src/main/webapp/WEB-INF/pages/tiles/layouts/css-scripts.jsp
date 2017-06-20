@@ -27,6 +27,8 @@
 <!-- validation -->
 <script src="<c:url value='/resources/js/jquery.validate.min.js' />"></script>
 <script src="<c:url value='/resources/js/additional-methods.min.js' />"></script>
+<!-- knockout template -->
+<script src="<c:url value='/resources/js/knockout.min.js' />"></script>
 
 <sec:authorize access="hasRole('ROLE_USER')" var="isUser" />
 <sec:authorize access="hasRole('ROLE_ADMIN')" var="isAdmin" />
@@ -55,9 +57,7 @@
 	border-color: #bce8f1;
 }
 
-#login-box {		<security:authorize access="hasRole('ROLE_USER')" var="isUser" />
-			<security:authorize access="hasRole('ROLE_ADMIN')" var="isAdmin" />
-			<security:authorize access="hasRole('ROLE_SADMIN')" var="isSuperUser" />
+#login-box {
 	width: 600x;
 	padding: 20px;
 	margin: 100px auto;
@@ -81,7 +81,7 @@
 	var HEADER = $("meta[name='_csrf_header']").attr("content");
 	/*  utente richiesto */
 	<c:if test="${not empty ab_codi}">
-		var AB_CODI = ${ab_codi};
+		var AB_CODI = '${ab_codi}';
 	</c:if>
 	
 	/* add context path to url  */
@@ -111,11 +111,16 @@
 	
 	/* get path from user role */
 	function getPathFromRole(){
-		if (getUserRole() == 'ROLE_ADMIN') {
+		if (getUserRole() == 'ROLE_ADMIN' || getUserRole() == 'ROLE_SADMIN') {
 			return '/admin';
 		} else if (getUserRole() == 'ROLE_USER'){
 			return '/user';
 		};
+	}
+	
+	/* show tab */
+	function swowTab(portalTabId,tab) {
+		$('#' + portalTabId + ' a[href="#' + tab + '"]').tab('show');
 	}
 	
 </script>

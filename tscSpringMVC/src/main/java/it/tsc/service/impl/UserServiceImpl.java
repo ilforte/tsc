@@ -79,7 +79,8 @@ public class UserServiceImpl implements UserService {
    */
   public boolean isAdmin(ApplicationUser requester) {
     return requester.getAuthorities() != null
-        && requester.getAuthorities().contains(Role.ROLE_ADMIN) ? true : false;
+        && requester.getAuthorities().contains(Role.ROLE_ADMIN)
+        || requester.getAuthorities().contains(Role.ROLE_ADMIN) ? true : false;
   }
 
   /*
@@ -123,6 +124,11 @@ public class UserServiceImpl implements UserService {
   @Override
   public boolean isAdmin(PortalUser user) {
     return getUser(user.getUsername()).getRoles().contains(Role.ROLE_ADMIN.toString());
+  }
+
+  @Override
+  public boolean isSuperAdmin(PortalUser user) {
+    return getUser(user.getUsername()).getRoles().contains(Role.ROLE_SADMIN.toString());
   }
 
 }

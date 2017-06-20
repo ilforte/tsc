@@ -57,7 +57,7 @@ public class UserDaoImpl implements UserDao {
     BoundStatement bound = preparedStmt.bind().setString("username", username);
     ResultSet resultSet = baseDao.getSession().execute(bound);
     String result = ConversionUtil.returnJson(resultSet.all());
-    logger.debug("jsonGetAllUsers {}", result);
+    logger.debug("jsonGetUser {}", result);
     return result;
   }
 
@@ -168,7 +168,7 @@ public class UserDaoImpl implements UserDao {
    */
   @Override
   public boolean isAdmin(Role role) {
-    return role.equals(Role.ROLE_ADMIN);
+    return role.equals(Role.ROLE_ADMIN) || role.equals(Role.ROLE_SADMIN);
   }
 
   /*

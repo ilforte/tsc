@@ -61,16 +61,17 @@ $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 	});
 </script>
 
-
+<!-- Tab panes -->
 <div class="tab-content">
-	  <div id="anagrafic" class="tab-pane fade mh-100">
+	  <div id="anagrafic" role="tabpanel" class="tab-pane active">
 		<h5>Anagrafica</h5>
+		<tiles:insertTemplate template="anagrafica/anagrafica.jsp" flush="true"/>
 	  </div>	  
-	  <div id="rescuers" class="tab-pane fade mh-100">
+	  <div id="rescuers" role="tabpanel" class="tab-pane">
 	    <h5>Soccorritori</h5>
 	  </div>
 	  
-	  <div id="user" class="tab-pane fade mh-100">
+	  <div id="user" role="tabpanel" class="tab-pane">
 	    <h5>Profilo utente</h5>
 			<grid:grid
 				id="userGrid">
@@ -92,8 +93,8 @@ $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 	  </div>
 	  
 	  <!-- profile admin -->
-	  <sec:authorize access="hasRole('ADMIN')">
-		  <div id="list-group" class="tab-pane fade mh-100">
+	  <sec:authorize access="hasRole('ADMIN') or hasRole('SADMIN')">
+		  <div id="list-group" role="tabpanel" class="tab-pane">
 		    <h5>Permessi utente</h5>
 				<grid:grid
 					id="allUserGrid">
@@ -114,21 +115,20 @@ $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 				</grid:grid>
 			  </div>
 			  
-			  <div id="add-user" class="tab-pane fade mh-100">
+			  <div id="add-user" role="tabpanel" class="tab-pane">
 			  	<h5>Aggiungi Utente</h5>
-		  		<tiles:insertTemplate template="addUser.jsp" />
+		  		<tiles:insertTemplate template="user/addUser.jsp" flush="true"/>
 			  </div>
-			  
-			  <div id="remove-user" class="tab-pane fade mh-100">
+			  <div id="remove-user" role="tabpanel" class="tab-pane">
 			  	<h5>Rimuovi Utente</h5>
-			  	<tiles:insertTemplate template="removeUser.jsp" />
+			  	<tiles:insertTemplate template="user/removeUser.jsp" flush="true"/>
 			  </div>
 			  
-			  <div id="add-group" class="tab-pane fade mh-100">
+			  <div id="add-group" role="tabpanel" class="tab-pane">
 			  	<h5>Aggiungi Gruppo</h5>
 			  </div>
 			  
-			  <div id="remove-group" class="tab-pane fade mh-100">
+			  <div id="remove-group" role="tabpanel" class="tab-pane">
 			  	<h5>Rimuovi Gruppo</h5>
 			  </div>
 	  </sec:authorize>	  

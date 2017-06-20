@@ -25,7 +25,7 @@ public class AppController extends BaseController {
   public ModelAndView adminPage(@RequestParam(value = "ab_codi", required = false) String ab_codi,
       HttpServletRequest request) {
     ModelAndView model = new ModelAndView();
-    request.getSession().setAttribute("ab_codi", "ab_codi");
+    request.getSession().setAttribute("ab_codi", ab_codi);
     model.addObject("ab_codi", ab_codi);
     model.addObject("roles", roles());
     model.setViewName("admin");
@@ -36,7 +36,7 @@ public class AppController extends BaseController {
   public ModelAndView userPage(@RequestParam(value = "ab_codi", required = false) String ab_codi,
       HttpServletRequest request) {
     ModelAndView model = new ModelAndView();
-    request.getSession().setAttribute("ab_codi", "ab_codi");
+    request.getSession().setAttribute("ab_codi", ab_codi);
     model.addObject("ab_codi", ab_codi);
     model.addObject("roles", roles());
     model.setViewName("user");

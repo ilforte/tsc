@@ -38,7 +38,7 @@ public class RestAllarmServiceController {
    * @param user
    * @return
    */
-  @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
+  @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_SADMIN') or hasAuthority('ROLE_USER')")
   @RequestMapping(value = "/user/allarmService/removeAllarm", method = RequestMethod.POST,
       produces = "application/json")
   public @ResponseBody Allarm removeAllarm(@RequestBody Allarm allarm,
@@ -56,7 +56,7 @@ public class RestAllarmServiceController {
    * @param user
    * @return
    */
-  @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
+  @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_SADMIN') or hasAuthority('ROLE_USER')")
   @RequestMapping(value = "/user/allarmService/updateAllarm", method = RequestMethod.POST,
       produces = "application/json")
   public @ResponseBody Allarm updateAllarm(@RequestBody Allarm allarm,

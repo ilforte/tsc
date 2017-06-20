@@ -96,9 +96,25 @@ public class BaseDao implements InitializingBean {
     return manager;
   }
 
+  @Override
   public void afterPropertiesSet() throws Exception {
     logger.debug("Init method after properties are set and connect ");
     this.connect();
+  }
+
+  /**
+   * Return properly groupAccessor
+   * 
+   * @param <T>
+   * 
+   * @param <T>
+   * @return
+   * 
+   * @return
+   */
+  public <T> T createAccessor(Class<T> klass) {
+    MappingManager manager = this.getMappingManager();
+    return manager.createAccessor(klass);
   }
 
 }

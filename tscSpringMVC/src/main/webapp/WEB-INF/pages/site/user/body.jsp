@@ -88,7 +88,7 @@ $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 	  
 	  <!-- profile admin -->
 	  
-	  <sec:authorize access="hasRole('ADMIN')">
+	  <sec:authorize access="hasRole('ADMIN') or hasRole('SADMIN')">
 		  <div id="list-group" class="tab-pane fade mh-100">
 		    <h5>Permessi utente</h5>
 				<grid:grid
