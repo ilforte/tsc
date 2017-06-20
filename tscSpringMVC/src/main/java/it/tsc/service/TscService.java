@@ -4,7 +4,6 @@
 package it.tsc.service;
 
 import it.tsc.model.Allarm;
-import it.tsc.model.Anagrafica;
 
 /**
  * @author astraservice TSC Service
@@ -12,11 +11,11 @@ import it.tsc.model.Anagrafica;
 public interface TscService {
 
   /**
-   * Obtain Anagrafica giving allarm
+   * Obtain Anagrafica giving allarm (JSON)
    * 
    * @param allarm
    * @return
    */
-  public Anagrafica getAnagrafica(Allarm allarm);
+  public String getAnagrafica(Allarm allarm);
 
 }

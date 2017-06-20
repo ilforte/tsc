@@ -28,7 +28,11 @@
 <script src="<c:url value='/resources/js/jquery.validate.min.js' />"></script>
 <script src="<c:url value='/resources/js/additional-methods.min.js' />"></script>
 <!-- knockout template -->
+<script src="<c:url value='/resources/js/jquery.tmpl.min.js' />"></script>
 <script src="<c:url value='/resources/js/knockout.min.js' />"></script>
+<script src="<c:url value='/resources/js/knockout.mapping.min.js' />"></script>
+
+
 
 <sec:authorize access="hasRole('ROLE_USER')" var="isUser" />
 <sec:authorize access="hasRole('ROLE_ADMIN')" var="isAdmin" />

@@ -53,7 +53,7 @@ public class UserDaoImpl implements UserDao {
   public String jsonGetUser(String username) {
     String sql =
         "SELECT JSON username,role,email FROM ks_tsc.tb_users WHERE username = ? ALLOW FILTERING;";
-    PreparedStatement preparedStmt = baseDao.getSession().prepare(sql);
+    PreparedStatement preparedStmt = baseDao.prepareAndCacheStatement(sql);
     BoundStatement bound = preparedStmt.bind().setString("username", username);
     ResultSet resultSet = baseDao.getSession().execute(bound);
     String result = ConversionUtil.returnJson(resultSet.all());

@@ -9,16 +9,25 @@ $('#portalTab a').click(function (e) {
 </script>
 
 <style>
-	.nav>li>a {
+/* 	.nav>li>a {
 	    padding-top: 3px;
 	    padding-bottom: 3px;
 	    padding-left: 3px;
 	    padding-right: 3px;
-	}
+	} */
+.nav-tabs { border-bottom: 2px solid #DDD; }
+    .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover { border-width: 0; }
+    .nav-tabs > li > a { border: none; color: #666; }
+        .nav-tabs > li.active > a, .nav-tabs > li > a:hover { border: none; color: #4285F4 !important; background: transparent; }
+        .nav-tabs > li > a::after { content: ""; background: #4285F4; height: 2px; position: absolute; width: 100%; left: 0px; bottom: -1px; transition: all 250ms ease 0s; transform: scale(0); }
+    .nav-tabs > li.active > a::after, .nav-tabs > li:hover > a::after { transform: scale(1); }
+.tab-nav > li > a::after { background: #21527d none repeat scroll 0% 0%; color: #fff; }
+.tab-pane { padding: 0px 0; }
+.tab-content{padding:0px}
 </style>
 
 <!-- Nav tabs -->
-<ul class="nav nav-pills" role="tablist" id="portalTab">
+<ul class="nav nav-tabs" role="tablist" id="portalTab">
   <li class="active"><a href="#anagrafic" data-toggle="tab" ><spring:message code="label.anagrafic" /></a></li>
   <li><a href="#rescuers" data-toggle="tab" ><spring:message code="label.rescuers" />        </a></li> 
   <c:if test="${pageContext.request.userPrincipal.name != null}">

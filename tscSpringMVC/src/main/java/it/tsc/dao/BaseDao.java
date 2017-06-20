@@ -3,6 +3,9 @@
  */
 package it.tsc.dao;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.annotation.PreDestroy;
 
 import org.slf4j.Logger;
@@ -13,6 +16,7 @@ import org.springframework.stereotype.Repository;
 
 import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.Cluster.Builder;
+import com.datastax.driver.core.PreparedStatement;
 import com.datastax.driver.core.QueryOptions;
 import com.datastax.driver.core.Session;
 import com.datastax.driver.mapping.MappingManager;
@@ -43,9 +47,14 @@ public class BaseDao implements InitializingBean {
   private Session session;
   /** Cassandra MappingManager. */
   private MappingManager manager;
+  /**
+   * cached statemens
+   */
+  private Map<String, PreparedStatement> cachedStatements;
 
   public BaseDao() {
     super();
+    cachedStatements = new HashMap<String, PreparedStatement>();
   }
 
 
@@ -70,6 +79,8 @@ public class BaseDao implements InitializingBean {
     manager = new MappingManager(session);
     logger.debug("Cluster name {} metadata: {}", cluster.getMetadata());
   }
+
+  private Map<PreparedStatement, String> statements;
 
   /**
    * Provide my Session.
@@ -115,6 +126,23 @@ public class BaseDao implements InitializingBean {
   public <T> T createAccessor(Class<T> klass) {
     MappingManager manager = this.getMappingManager();
     return manager.createAccessor(klass);
+  }
+
+  /**
+   * Cache statement just prepared
+   * 
+   * @param sqlStatement
+   * @return
+   */
+  public PreparedStatement prepareAndCacheStatement(String sqlStatement) {
+    PreparedStatement preparedStmt;
+    if (!cachedStatements.containsKey(sqlStatement)) {
+      preparedStmt = this.getSession().prepare(sqlStatement);
+      cachedStatements.put(sqlStatement, preparedStmt);
+    } else {
+      preparedStmt = cachedStatements.get(sqlStatement);
+    }
+    return preparedStmt;
   }
 
 }

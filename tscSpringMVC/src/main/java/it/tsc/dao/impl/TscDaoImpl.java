@@ -8,10 +8,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.datastax.driver.core.BoundStatement;
+import com.datastax.driver.core.PreparedStatement;
+import com.datastax.driver.core.ResultSet;
+
 import it.tsc.dao.BaseDao;
 import it.tsc.dao.TscDao;
 import it.tsc.model.Allarm;
-import it.tsc.model.Anagrafica;
+import it.tsc.util.ConversionUtil;
 
 /**
  * @author astraservice
@@ -27,7 +31,7 @@ public class TscDaoImpl implements TscDao {
    * 
    */
   public TscDaoImpl() {
-    // TODO Auto-generated constructor stub
+
   }
 
   /*
@@ -36,9 +40,18 @@ public class TscDaoImpl implements TscDao {
    * @see it.tsc.dao.TscDao#getAnagrafica(it.tsc.model.Allarm)
    */
   @Override
-  public Anagrafica getAnagrafica(Allarm allarm) {
-    // TODO Auto-generated method stub
-    return null;
+  public String getAnagrafica(Allarm allarm) {
+    if (allarm.getAb_codi() == null) {
+      throw new IllegalArgumentException("ab_codi is empty");
+    }
+    String sql =
+        "SELECT JSON ab_codi,nominativo FROM ks_tsc.tb_anagrafica WHERE ab_codi = :ab_codi ALLOW FILTERING;";
+    PreparedStatement preparedStmt = baseDao.prepareAndCacheStatement(sql);
+    BoundStatement bound = preparedStmt.bind().setString("ab_codi", allarm.getAb_codi());
+    ResultSet resultSet = baseDao.getSession().execute(bound);
+    String result = ConversionUtil.returnJson(resultSet.all());
+    logger.debug("getAnagrafica {}", result);
+    return result;
   }
 
 }

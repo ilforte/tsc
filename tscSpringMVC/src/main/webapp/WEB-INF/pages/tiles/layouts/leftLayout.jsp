@@ -33,8 +33,10 @@ function allarmGridRowClick(args,url) {
 		    }
 		});
 	}else {
-		var ab_codi = allarmData.ab_codi;
-		window.location.href = addContextPath(getPathFromRole() + '?ab_codi=' + allarmData.ab_codi);
+		var data = {ab_codi:allarmData.ab_codi};
+		swowTab('portalTab','anagrafic');
+		loadAnagrafica(data,addContextPath('/user/tscService/getAnagrafica'));
+		//window.location.href = addContextPath(getPathFromRole() + '?ab_codi=' + allarmData.ab_codi);
 	}
 }
 

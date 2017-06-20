@@ -64,15 +64,15 @@ $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 <!-- Tab panes -->
 <div class="tab-content">
 	  <div id="anagrafic" role="tabpanel" class="tab-pane active">
-		<h5>Anagrafica</h5>
+		<div id="gradient" style="color:black;text-align:center;"><spring:message code="label.anagrafica" text="label.anagrafica"/></div>
 		<tiles:insertTemplate template="anagrafica/anagrafica.jsp" flush="true"/>
 	  </div>	  
 	  <div id="rescuers" role="tabpanel" class="tab-pane">
-	    <h5>Soccorritori</h5>
+	    <div id="gradient" style="color:black;text-align:center;"><spring:message code="label.soccorritori" text="label.soccorritori"/></div>
 	  </div>
 	  
 	  <div id="user" role="tabpanel" class="tab-pane">
-	    <h5>Profilo utente</h5>
+	    <div id="gradient" style="color:black;text-align:center;"><spring:message code="label.profilo.utente" text="label.profilo.utente"/></div>
 			<grid:grid
 				id="userGrid">
 				<jsp:attribute name="options">
@@ -95,7 +95,7 @@ $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 	  <!-- profile admin -->
 	  <sec:authorize access="hasRole('ADMIN') or hasRole('SADMIN')">
 		  <div id="list-group" role="tabpanel" class="tab-pane">
-		    <h5>Permessi utente</h5>
+		    <div id="gradient" style="color:black;text-align:center;"><spring:message code="label.permessi.utente" text="label.permessi.utente"/></div>
 				<grid:grid
 					id="allUserGrid">
 					<jsp:attribute name="options">
@@ -116,20 +116,21 @@ $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 			  </div>
 			  
 			  <div id="add-user" role="tabpanel" class="tab-pane">
-			  	<h5>Aggiungi Utente</h5>
+			  	<div id="gradient" style="color:black;text-align:center;"><spring:message code="label.user.add" text="label.user.add"/></div>
 		  		<tiles:insertTemplate template="user/addUser.jsp" flush="true"/>
 			  </div>
 			  <div id="remove-user" role="tabpanel" class="tab-pane">
-			  	<h5>Rimuovi Utente</h5>
+			  	<div id="gradient" style="color:black;text-align:center;"><spring:message code="label.user.remove" text="label.user.remove"/></div>
 			  	<tiles:insertTemplate template="user/removeUser.jsp" flush="true"/>
 			  </div>
 			  
 			  <div id="add-group" role="tabpanel" class="tab-pane">
-			  	<h5>Aggiungi Gruppo</h5>
+			  	<div id="gradient" style="color:black;text-align:center;"><spring:message code="label.group.add" text="label.group.add"/></div>
+			  	<tiles:insertTemplate template="group/addGroup.jsp" flush="true"/>
 			  </div>
 			  
 			  <div id="remove-group" role="tabpanel" class="tab-pane">
-			  	<h5>Rimuovi Gruppo</h5>
+			  	<div id="gradient" style="color:black;text-align:center;"><spring:message code="label.group.remove" text="label.group.remove"/></div>
 			  </div>
 	  </sec:authorize>	  
 	  

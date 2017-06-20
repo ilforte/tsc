@@ -4,7 +4,6 @@
 package it.tsc.dao;
 
 import it.tsc.model.Allarm;
-import it.tsc.model.Anagrafica;
 
 /**
  * @author astraservice Dao for TSC Service
@@ -17,6 +16,6 @@ public interface TscDao {
    * @param allarm
    * @return
    */
-  public Anagrafica getAnagrafica(Allarm allarm);
+  public String getAnagrafica(Allarm allarm);
 
 }
