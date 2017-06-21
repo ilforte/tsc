@@ -25,8 +25,11 @@ $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 			        },
 				    success: function(resposeJsonObject){
 				        // Success Message Handler
-				        console.log('resposeJsonObject %O',JSON.parse(resposeJsonObject));
-				        $("#userGrid").jsGrid({data:JSON.parse(resposeJsonObject)});
+						try {
+								$("#userGrid").jsGrid({data:JSON.parse(resposeJsonObject)});
+					    	} catch(e) {
+					    		toastr.error(e);
+					    }
 				    }
 				});
 			break;
@@ -45,8 +48,11 @@ $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 			        },
 				    success: function(resposeJsonObject){
 				        // Success Message Handler
-				        console.log('resposeJsonObject %O',resposeJsonObject);
-				        $("#allUserGrid").jsGrid({data:JSON.parse(resposeJsonObject)});
+						try {
+								$("#allUserGrid").jsGrid({data:JSON.parse(resposeJsonObject)});
+					    	} catch(e) {
+					    		toastr.error(e);
+					    }
 				    }
 				});
 			break;

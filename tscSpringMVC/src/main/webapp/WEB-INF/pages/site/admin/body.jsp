@@ -27,7 +27,11 @@ $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 			        },
 				    success: function(resposeJsonObject){
 				        // Success Message Handler
-				        $("#userGrid").jsGrid({data:JSON.parse(resposeJsonObject)});
+						try {
+			        			$("#userGrid").jsGrid({data:JSON.parse(resposeJsonObject)});
+					    	} catch(e) {
+					    		toastr.error(e);
+					    }
 				    }
 				});
 			break;
@@ -46,7 +50,11 @@ $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 			        },
 				    success: function(resposeJsonObject){
 				        // Success Message Handler
-				        $("#allUserGrid").jsGrid({data:JSON.parse(resposeJsonObject)});
+						try {
+				        		$("#allUserGrid").jsGrid({data:JSON.parse(resposeJsonObject)});
+					    	} catch(e) {
+					    		toastr.error(e);
+					    }
 				    },
 				    error: function(XMLHttpRequest, textStatus, errorThrown) { 
 				    	var message = "Status: " + textStatus + "<br>";

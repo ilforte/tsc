@@ -106,12 +106,22 @@ $(document).ready(function(){
 
         webSocket.onmessage = function(event){
         	// loadData with custom filter
-        	$("#allarmGrid").jsGrid({data:JSON.parse(event.data)});
+			try {
+				$("#allarmGrid").jsGrid({data:JSON.parse(event.data)});
+		    	} catch(e) {
+		    		toastr.error(e);
+		    }
         	//console.log(JSON.stringify(event.data));
         	/**
         	* Play allarm 
         	**/
-        	var arr = JSON.parse(event.data);
+        	
+        	var arr = {};
+			try {
+					arr = JSON.parse(event.data);
+	    		} catch(e) {
+	    			toastr.error(e);
+	    	}
         	var totalSoundDuration;
         	if(userExists(arr,'')){
         		/* sound config */

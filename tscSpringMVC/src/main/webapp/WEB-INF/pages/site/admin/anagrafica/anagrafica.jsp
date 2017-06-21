@@ -31,7 +31,12 @@ function loadAnagrafica(data,url) {
 	        },
 		    success: function(resposeJsonObject){
 		        // Success Message Handler
-		        var parsed = JSON.parse(resposeJsonObject);
+	        	var parsed;
+				try {
+						parsed = JSON.parse(resposeJsonObject);
+		    		} catch(e) {
+		    			toastr.error(e);
+		    	}
 		        if (parsed.length >0) {
 			        viewModel.ab_codi(parsed[0].ab_codi);
 			        viewModel.nominativo(parsed[0].nominativo);
