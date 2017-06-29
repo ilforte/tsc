@@ -103,7 +103,7 @@ public class RestUserServiceController extends RestBaseController {
       } else {
         res.setStatus(Response.FAILURE.toString());
         res.setResultMessage("Error adding user");
-      } ;
+      }
     }
     return res;
   }
@@ -139,7 +139,7 @@ public class RestUserServiceController extends RestBaseController {
       } else {
         res.setStatus(Response.FAILURE.toString());
         res.setResultMessage("Error removing user");
-      } ;
+      }
     }
     return res;
   }

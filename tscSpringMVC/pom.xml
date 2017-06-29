@@ -156,11 +156,17 @@
 	</dependency>
 
 	<!-- for compile only, your container should have this -->
-	<dependency>
+ 	<dependency>
 		<groupId>javax.servlet</groupId>
 		<artifactId>servlet-api</artifactId>
 		<version>${servletapi.version}</version>
 		<scope>provided</scope>
+	</dependency>
+	
+	<dependency>
+		<groupId>javax</groupId>
+		<artifactId>javaee-api</artifactId>
+		<version>7.0</version>
 	</dependency>
 	
 	<!-- Hibernate validations -->
@@ -218,6 +224,7 @@
     </dependency> -->
     
   </dependencies>
+  <!-- BUILD -->
   <build>
     <finalName>tscSpringMVC</finalName>
 	<plugins>
@@ -232,6 +239,21 @@
           	   <compilerVersion>1.8</compilerVersion>
 	        </configuration>
 	    </plugin>
+		<plugin>
+		    <groupId>org.apache.maven.plugins</groupId>
+		    <artifactId>maven-war-plugin</artifactId>
+		    <version>2.4</version>
+		    <configuration>
+		      <failOnMissingWebXml>true</failOnMissingWebXml>
+		      <warName>tscSpringMVC</warName>
+		      <webResources>
+		        <resource>
+		          <!-- this is relative to the pom.xml directory -->
+		          <directory>src/main/webapp</directory>
+		        </resource>
+		      </webResources>
+		    </configuration>
+		  </plugin>
 	  </plugins>
   </build>
 </project>

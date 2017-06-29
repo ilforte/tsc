@@ -140,7 +140,7 @@ $(document).ready(function(){
     			<div class="row">
     				<tiles:insertAttribute name="body" />
     			</div>
-    			<div class="row vbottom">
+    			<div class="row vbottom" id="footer">
     				<tiles:insertAttribute name="footer" />
     			</div>
     		</div>

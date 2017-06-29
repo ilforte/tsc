@@ -52,3 +52,9 @@
 .tab-pane { padding: 0px 0; }
 .tab-content{padding:0px}
 
+/* footer */
+#footer {
+  background-color: #f3e5f5;
+  padding: 1px;
+}
+
