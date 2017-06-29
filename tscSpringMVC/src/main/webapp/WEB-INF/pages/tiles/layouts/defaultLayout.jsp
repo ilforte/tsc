@@ -17,51 +17,6 @@
 <%-- 
 Current Locale : ${pageContext.response.locale} --%>
 
-<style>
-
-/* Tooltip */
-.test + .tooltip > .tooltip-inner {
-    background-color: #73AD21; 
-    color: #FFFFFF; 
-    border: 1px solid red; 
-    padding: 5px;
-    font-size: 10px;
-}
-/* Tooltip on top */
-.test + .tooltip.top > .tooltip-arrow {
-    border-top: 1px solid yellow;
-}
-/* Tooltip on bottom */
-.test + .tooltip.bottom > .tooltip-arrow {
-    border-bottom: 1px solid yellow;
-}
-/* Tooltip on left */
-.test + .tooltip.left > .tooltip-arrow {
-    border-left: 1px solid yellow;
-}
-/* Tooltip on right */
-.test + .tooltip.right > .tooltip-arrow {
-    border-right: 1px solid yellow;
-}
-/* grid */
-.jsgrid-row {
-    border-left: 1px solid yellow;
-} 
-
-/*  */
-#gradient {
-    height: 100px;
-    background: red; /* For browsers that do not support gradients */        
-    background: -webkit-linear-gradient(90deg, #ccffe6, #66ffb5); /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(90deg, #ccffe6, #66ffb5); /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(90deg, #ccffe6, #66ffb5); /* For Firefox 3.6 to 15 */
-    background: linear-gradient(90deg, #ccffe6, #66ffb5); /* Standard syntax (must be last) */
-    height: 20px;
-    font-size: 14px;
-}
-
-</style>
-
 <script type="text/javascript">
 $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();   

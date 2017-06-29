@@ -45,7 +45,7 @@ public class TscDaoImpl implements TscDao {
       throw new IllegalArgumentException("ab_codi is empty");
     }
     String sql =
-        "SELECT JSON ab_codi,nominativo FROM ks_tsc.tb_anagrafica WHERE ab_codi = :ab_codi ALLOW FILTERING;";
+        "SELECT JSON ab_codi,nominativo,centrale,sesso FROM ks_tsc.tb_anagrafica WHERE ab_codi = :ab_codi ALLOW FILTERING;";
     PreparedStatement preparedStmt = baseDao.prepareAndCacheStatement(sql);
     BoundStatement bound = preparedStmt.bind().setString("ab_codi", allarm.getAb_codi());
     ResultSet resultSet = baseDao.getSession().execute(bound);

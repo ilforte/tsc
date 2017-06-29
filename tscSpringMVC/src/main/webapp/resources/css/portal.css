@@ -1,0 +1,54 @@
+@CHARSET "UTF-8";
+
+/* Tooltip */
+.test + .tooltip > .tooltip-inner {
+    background-color: #73AD21; 
+    color: #FFFFFF; 
+    border: 1px solid red; 
+    padding: 5px;
+    font-size: 10px;
+}
+/* Tooltip on top */
+.test + .tooltip.top > .tooltip-arrow {
+    border-top: 1px solid yellow;
+}
+/* Tooltip on bottom */
+.test + .tooltip.bottom > .tooltip-arrow {
+    border-bottom: 1px solid yellow;
+}
+/* Tooltip on left */
+.test + .tooltip.left > .tooltip-arrow {
+    border-left: 1px solid yellow;
+}
+/* Tooltip on right */
+.test + .tooltip.right > .tooltip-arrow {
+    border-right: 1px solid yellow;
+}
+/* grid */
+.jsgrid-row {
+    border-left: 1px solid yellow;
+} 
+
+/* H3 radient style */
+#gradient {
+    height: 100px;
+    background: red; /* For browsers that do not support gradients */        
+    background: -webkit-linear-gradient(90deg, #ccffe6, #66ffb5); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(90deg, #ccffe6, #66ffb5); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(90deg, #ccffe6, #66ffb5); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(90deg, #ccffe6, #66ffb5); /* Standard syntax (must be last) */
+    height: 20px;
+    font-size: 14px;
+}
+
+/* Nav style */
+.nav-tabs { border-bottom: 2px solid #DDD; }
+    .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover { border-width: 0; }
+    .nav-tabs > li > a { border: none; color: #666; }
+        .nav-tabs > li.active > a, .nav-tabs > li > a:hover { border: none; color: #4285F4 !important; background: transparent; }
+        .nav-tabs > li > a::after { content: ""; background: #4285F4; height: 2px; position: absolute; width: 100%; left: 0px; bottom: -1px; transition: all 250ms ease 0s; transform: scale(0); }
+    .nav-tabs > li.active > a::after, .nav-tabs > li:hover > a::after { transform: scale(1); }
+.tab-nav > li > a::after { background: #21527d none repeat scroll 0% 0%; color: #fff; }
+.tab-pane { padding: 0px 0; }
+.tab-content{padding:0px}
+

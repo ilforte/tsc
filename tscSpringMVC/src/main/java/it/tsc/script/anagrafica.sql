@@ -1,6 +1,8 @@
 CREATE TABLE ks_tsc.tb_anagrafica(
   ab_codi text,
   nominativo text,
+  centrale text,
+  sesso text,
   PRIMARY KEY (ab_codi)
 );
 

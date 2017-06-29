@@ -11,6 +11,8 @@
 <link href="<c:url value='/resources/css/jsgrid.min.css' />"  rel="stylesheet"></link>
 <link href="<c:url value='/resources/css/jsgrid-theme.min.css' />"  rel="stylesheet"></link>
 <link href="<c:url value='/resources/css/jsgrid-custom-theme.css' />"  rel="stylesheet"></link>
+<!-- PORTAL stylesheet -->
+<link href="<c:url value='/resources/css/portal.css' />"  rel="stylesheet"></link>
 
 <!-- js library -->
 <script src="<c:url value='/resources/js/jquery-3.2.1.min.js' />"></script>
