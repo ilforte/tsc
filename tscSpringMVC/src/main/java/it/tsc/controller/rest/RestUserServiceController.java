@@ -184,7 +184,7 @@ public class RestUserServiceController extends RestBaseController {
       if (user == null) {
         logger.debug("error requesting jsonAskNewPassword user: {} username: {} emai: {}", user,
             portalUser.getUsername(), portalUser.getEmail());
-      } ;
+      }
     }
     return res;
   }

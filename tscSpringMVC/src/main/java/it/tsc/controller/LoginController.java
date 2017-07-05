@@ -18,7 +18,7 @@ public class LoginController extends BaseController {
 
 
 
-  @RequestMapping(value = {"/", "/welcome**"}, method = RequestMethod.GET)
+  @RequestMapping(value = { "/", "/welcome**" }, method = RequestMethod.GET)
   public ModelAndView welcomePage() {
     ModelAndView model = new ModelAndView();
     model.addObject("title", "Welcome to TSC site");
@@ -32,14 +32,14 @@ public class LoginController extends BaseController {
    * 
    * @return
    */
-  @RequestMapping(value = {"/askNewPassword"}, method = RequestMethod.GET)
+  @RequestMapping(value = { "/askNewPassword" }, method = RequestMethod.GET)
   public ModelAndView askNewPassword() {
     ModelAndView model = new ModelAndView();
     model.setViewName("asknew");
     return model;
   }
 
-  @RequestMapping(value = {"/renewPassword"}, method = RequestMethod.GET)
+  @RequestMapping(value = { "/renewPassword" }, method = RequestMethod.GET)
   public ModelAndView renewPassword(@RequestParam("username") String username,
       @RequestParam("tmpPassword") String tmpPassword) {
     ModelAndView model = new ModelAndView();
@@ -52,7 +52,7 @@ public class LoginController extends BaseController {
       model.addObject("email", user.getEmail());
     } else {
 
-    } ;
+    }
     model.addObject("tmpPassword", tmpPassword);
     /**
      * check if password can be requested using service
@@ -80,7 +80,7 @@ public class LoginController extends BaseController {
 
 
   // for 403 access denied page
-  @RequestMapping(value = {"/403", "/admin/userService/403"}, method = RequestMethod.GET)
+  @RequestMapping(value = { "/403", "/admin/userService/403" }, method = RequestMethod.GET)
   public ModelAndView accesssDenied(Principal user) {
     ModelAndView model = new ModelAndView();
 
