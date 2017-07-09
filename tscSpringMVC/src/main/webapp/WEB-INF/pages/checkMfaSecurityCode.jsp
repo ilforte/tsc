@@ -25,6 +25,11 @@
 	  action="${userActionUrl}" method='GET' role="form" 
 	  data-toggle="validator" >
 
+	  <div class="form-group row">
+		  <div class="col-xs-4">
+		    <label for="user" class="control-label label-sm">User:${pageContext.request.userPrincipal.name}</label>
+		  </div>
+	  </div>
 
 	  <div class="form-group row">
 		  <div class="col-xs-4">
@@ -42,3 +47,12 @@
 		value="${_csrf.token}" />
 	</form>
 </div>
+
+<spring:url value="/logout" var="logoutUrl" />
+<form action="${logoutUrl}"
+	method="post">
+<button type="submit" class="btn btn-primary btn-sm">Logout</button>
+<input type="hidden"
+	name="${_csrf.parameterName}"
+	value="${_csrf.token}"/>
+</form>

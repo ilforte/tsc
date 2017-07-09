@@ -76,6 +76,10 @@ public class AppController extends BaseController {
       model.setViewName(ACTION_CHECK_MFA);
     } else {
       model.addObject("error", "MFA invalid doesn't check with code");
+      model.addObject("generatedBase32Secret", generatedBase32Secret);
+      model.addObject("keyId", keyId);
+      model.addObject("qrcode_url",
+          TimeBasedOneTimePasswordUtil.qrImageUrl(keyId, generatedBase32Secret));
       model.setViewName(ACTION_INSERT_MFA);
     }
 
