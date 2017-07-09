@@ -2,6 +2,8 @@ package it.tsc.controller;
 
 import java.security.Principal;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -62,9 +64,9 @@ public class LoginController extends BaseController {
   }
 
   // Spring Security see this :
-  @RequestMapping(value = "/login", method = RequestMethod.GET)
+  @RequestMapping(value = "/login", method = { RequestMethod.GET, RequestMethod.POST })
   public ModelAndView login(@RequestParam(value = "error", required = false) String error,
-      @RequestParam(value = "logout", required = false) String logout) {
+      @RequestParam(value = "logout", required = false) String logout, HttpServletRequest request) {
     ModelAndView model = new ModelAndView();
     if (error != null) {
       model.addObject("error", "error");
@@ -73,7 +75,22 @@ public class LoginController extends BaseController {
     if (logout != null) {
       model.addObject("msg", "msg");
     }
+    if (logout != null && request.getSession() != null) {
+      logger.debug("invalidate session");
+      request.getSession().invalidate();
+    }
     logger.debug("invoke login");
+    model.setViewName("login");
+    return model;
+  }
+
+  @RequestMapping(value = "/logout", method = { RequestMethod.GET, RequestMethod.POST })
+  public ModelAndView logout(@RequestParam(value = "error", required = false) String error,
+      @RequestParam(value = "logout", required = false) String logout, HttpServletRequest request) {
+    ModelAndView model = new ModelAndView();
+    logger.debug("invalidate session");
+    request.getSession().invalidate();
+    logger.debug("invoke logout");
     model.setViewName("login");
     return model;
   }

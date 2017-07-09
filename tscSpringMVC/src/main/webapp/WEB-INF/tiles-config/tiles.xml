@@ -55,10 +55,24 @@
        <put-attribute name="body" value="/WEB-INF/pages/askNewPassword.jsp" />
    </definition>
    
-   <!-- Ask new password -->
+   <!-- Renew password -->
    <definition name="renew" extends="notprofiled-base-definition">  
        <put-attribute name="title" value="Password Renew" />  
        <put-attribute name="body" value="/WEB-INF/pages/renewPassword.jsp" />
    </definition>
+   
+   <!-- mfa -->
+   
+   <definition name="addMfaSecurityCode" extends="notprofiled-base-definition">  
+       <put-attribute name="title" value="mfa add security code" />  
+       <put-attribute name="body" value="/WEB-INF/pages/addMfaSecurityCode.jsp" />
+   </definition>
+   
+   <definition name="checkMfaSecurityCode" extends="notprofiled-base-definition">  
+       <put-attribute name="title" value="mfa Authentication" />  
+       <put-attribute name="body" value="/WEB-INF/pages/checkMfaSecurityCode.jsp" />
+   </definition>
+   
+
   
 </tiles-definitions>

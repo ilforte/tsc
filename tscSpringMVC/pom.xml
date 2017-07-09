@@ -218,14 +218,22 @@
 		<version>${tiles.version}</version>
 	</dependency>
 	
+	<!-- two factor auth -->
+	<dependency>
+		<groupId>com.j256.two-factor-auth</groupId>
+		<artifactId>two-factor-auth</artifactId>
+		<version>1.1-SNAPSHOT</version>
+	</dependency>
+	
 	<!-- Quartz framework -->
 <!--     <dependency>
         <groupId>org.quartz-scheduler</groupId>
         <artifactId>quartz</artifactId>
         <version>${quartz.version}</version>
     </dependency> -->
-    
+
   </dependencies>
+  
   <!-- BUILD -->
   <build>
     <finalName>tscSpringMVC</finalName>

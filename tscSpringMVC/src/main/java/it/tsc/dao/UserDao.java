@@ -98,4 +98,13 @@ public interface UserDao {
    * @param role
    */
   public void updateUser(String username, String password, String email, Role role);
+
+  /**
+   * insert MFA key updating user
+   * 
+   * @param username
+   * @param keyId
+   * @param base32Secret
+   */
+  public void updateMfaUserKey(String username, String keyId, String base32Secret, String role);
 }

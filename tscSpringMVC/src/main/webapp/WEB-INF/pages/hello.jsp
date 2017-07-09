@@ -6,7 +6,7 @@
 	<h1>Message : ${message}</h1>
 		<h2>Welcome : ${pageContext.request.userPrincipal.name}
         </h2>
-		<c:url var="logoutUrl" value="/logout"/>
+		<c:url var="logoutUrl" value="/login?logout"/>
 		<form action="${logoutUrl}"
 			method="post">
 		<input type="submit"

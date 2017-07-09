@@ -52,6 +52,17 @@ public interface PortalUserAccessor {
       @Param("email") String email, @Param("role") String role);
 
   /**
+   * Update code for MFA access
+   * 
+   * @param username
+   * @param keyId
+   * @param base32Secret
+   */
+  @Query("UPDATE ks_tsc.tb_users SET keyId=:keyId,base32Secret=:base32Secret WHERE username = :username and role=:role IF EXISTS;")
+  public void updateMfaUserKey(@Param("username") String username, @Param("keyId") String keyId,
+      @Param("base32Secret") String base32Secret, @Param("role") String role);
+
+  /**
    * get All Users using @Accessor
    * 
    * @return
@@ -75,7 +86,7 @@ public interface PortalUserAccessor {
    * @param username
    * @return
    */
-  @Query("SELECT username,role,email,password FROM ks_tsc.tb_users WHERE username = ? ALLOW FILTERING;")
+  @Query("SELECT username,role,email,password,base32Secret FROM ks_tsc.tb_users WHERE username = ? ALLOW FILTERING;")
   public Result<PortalUser> getUser(@Param("username") String username);
 
   /**

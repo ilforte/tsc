@@ -100,5 +100,15 @@ public class UserDaoTest extends BaseDaoTest {
     userService.updateUser("testUser", "testUser2", "testUser@tsc.it", Role.ROLE_ADMIN);
   }
 
+  @Test
+  public void testUpdateMfaUserKey() {
+    userService.updateMfaUserKey("admin", "testUser@tsc.it", "fwefwefwegeg");
+  }
+
+  @Test
+  public void testUpdateEmptyMfaUserKey() {
+    userService.updateMfaUserKey("matteo", "", "");
+  }
+
 
 }

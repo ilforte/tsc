@@ -24,13 +24,13 @@ import com.google.gson.annotations.Expose;
 @Table(keyspace = "ks_tsc", name = "tb_users", readConsistency = "QUORUM",
     writeConsistency = "QUORUM", caseSensitiveKeyspace = false, caseSensitiveTable = false)
 public class PortalUser {
-  @NotBlank(groups = {PortalUserRemove.class, PortalUserRenewPassword.class})
+  @NotBlank(groups = { PortalUserRemove.class, PortalUserRenewPassword.class })
   @Expose
   @PartitionKey(0)
   @Column(name = "username")
   private String username;
 
-  @NotBlank(groups = {PortalUserRemove.class})
+  @NotBlank(groups = { PortalUserRemove.class })
   @Expose
   @PartitionKey(1)
   @Column(name = "role")
@@ -40,7 +40,7 @@ public class PortalUser {
   @Expose
   private List<String> roles;
 
-  @NotBlank(groups = {PortalUserInsert.class, PortalUserRenewPassword.class})
+  @NotBlank(groups = { PortalUserInsert.class, PortalUserRenewPassword.class })
   @Email
   @Expose
   @Column(name = "email")
@@ -50,6 +50,9 @@ public class PortalUser {
   @Expose
   @Column(name = "password")
   private String password;
+
+  @Column(name = "base32Secret")
+  private String base32Secret;
 
   /**
    * 
@@ -75,6 +78,16 @@ public class PortalUser {
     this.username = username;
     this.roles = roles;
     this.email = email;
+  }
+
+  public PortalUser(String username, String password, List<String> roles, String email,
+      String base32Secret) {
+    super();
+    this.username = username;
+    this.roles = roles;
+    this.email = email;
+    this.password = password;
+    this.base32Secret = base32Secret;
   }
 
   /**
@@ -144,12 +157,12 @@ public class PortalUser {
     this.password = password;
   }
 
-  public PortalUser(String username, String password, List<String> roles, String email) {
-    super();
-    this.username = username;
-    this.roles = roles;
-    this.email = email;
-    this.password = password;
+  public String getBase32Secret() {
+    return base32Secret;
+  }
+
+  public void setBase32Secret(String base32Secret) {
+    this.base32Secret = base32Secret;
   }
 
 }

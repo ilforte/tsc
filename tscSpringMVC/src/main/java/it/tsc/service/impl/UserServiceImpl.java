@@ -131,4 +131,14 @@ public class UserServiceImpl implements UserService {
     return getUser(user.getUsername()).getRoles().contains(Role.ROLE_SADMIN.toString());
   }
 
+  @Override
+  public void updateMfaUserKey(String username, String keyId, String base32Secret) {
+    /**
+     * iterate all over user role
+     */
+    for (GrantedAuthority grantedAuthority : userDao.getUserRoles(username)) {
+      userDao.updateMfaUserKey(username, keyId, base32Secret, grantedAuthority.getAuthority());
+    }
+  }
+
 }

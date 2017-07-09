@@ -10,6 +10,7 @@
 <beans:bean id="bcryptEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 <beans:bean id="customAuthenticationProvider"  class="it.tsc.component.CustomAuthenticationProvider"/>
 <beans:bean id="authSuccessHandler"  class="it.tsc.security.handler.AuthSuccessHandler"/>
+<beans:bean id="customLogoutHandler"  class="it.tsc.security.handler.CustomLogoutHandler"/>
    
 <beans:bean id="customAccessDeniedHandler"
 	class="it.tsc.security.handler.CustomAccessDeniedHandler">

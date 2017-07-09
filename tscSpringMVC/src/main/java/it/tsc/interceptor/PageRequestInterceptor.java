@@ -28,7 +28,8 @@ public class PageRequestInterceptor implements HandlerInterceptor {
   @Override
   public void afterCompletion(HttpServletRequest request, HttpServletResponse response,
       Object handler, Exception ex) throws Exception {
-    logger.debug("Request Completed handler:{}", handler);
+    String referrer = request.getHeader("referer");
+    logger.debug("Request Completed handler:{}", handler, referrer);
   }
 
   /*
@@ -41,7 +42,8 @@ public class PageRequestInterceptor implements HandlerInterceptor {
   @Override
   public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
       ModelAndView model) throws Exception {
-    logger.debug("method executed handler:{}", handler);
+    String referrer = request.getHeader("referer");
+    logger.debug("method executed handler:{}", handler, referrer);
   }
 
   /*
@@ -53,7 +55,8 @@ public class PageRequestInterceptor implements HandlerInterceptor {
   @Override
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
       throws Exception {
-    logger.debug("Before Method Execution handler:{}", handler);
+    String referrer = request.getHeader("referer");
+    logger.debug("Before Method Execution handler:{} referrer:{}", handler, referrer);
     return true;
   }
 

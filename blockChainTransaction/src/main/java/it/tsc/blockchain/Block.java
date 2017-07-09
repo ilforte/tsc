@@ -21,7 +21,7 @@ public class Block {
   private static final AtomicLong LAST_TIME_MS = new AtomicLong();
 
   /**
-   * 
+   * Block constructor for blockchain
    */
   public Block(String previousHash, String jsonData, long index) {
     super();

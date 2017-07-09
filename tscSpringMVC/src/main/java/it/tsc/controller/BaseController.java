@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
@@ -37,12 +39,12 @@ public class BaseController {
     return messageSource.getMessage(key, null, defaultLocale);
   }
 
-  public UserService getUserService() {
-    return userService;
-  }
-
   public MessageSource getMessageSource() {
     return messageSource;
+  }
+
+  protected UserService getUserService() {
+    return userService;
   }
 
   /**
@@ -57,6 +59,38 @@ public class BaseController {
     roles.put(Role.ROLE_USER.toString(), "User");
     roles.put(Role.ROLE_BACKOFFICE.toString(), "Back Office");
     return roles;
+  }
+
+  /**
+   * check if authenticated
+   * 
+   * @param request
+   * @return
+   */
+  protected boolean isMfaAuthenticated(HttpServletRequest request) {
+    if (request.getSession().getAttribute("isMfaAuthenticated") == null) {
+      return false;
+    } else {
+      if (request.getSession().getAttribute("isMfaAuthenticated") instanceof String) {
+        if (((String) request.getSession().getAttribute("isMfaAuthenticated")).equals("true")) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    }
+  }
+
+  /**
+   * set Authenticated
+   * 
+   * @param request
+   * @param value
+   */
+  protected void setMfaAuthenticated(HttpServletRequest request, String value) {
+    request.getSession().setAttribute("isMfaAuthenticated", value);
   }
 
 }

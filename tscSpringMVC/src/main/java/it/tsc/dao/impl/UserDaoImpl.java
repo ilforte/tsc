@@ -83,13 +83,15 @@ public class UserDaoImpl implements UserDao {
     List<String> roles = new ArrayList<String>();
     String email = "";
     String password = "";
+    String base32Secret = "";
     for (PortalUser user : rs.all()) {
       email = user.getEmail();
       password = user.getPassword();
+      base32Secret = user.getBase32Secret();
       roles.add(user.getRole());
     }
     if (roles != null && roles.size() > 0) {
-      PortalUser = new PortalUser(username, password, roles, email);
+      PortalUser = new PortalUser(username, password, roles, email, base32Secret);
     }
     return PortalUser;
   }
@@ -219,6 +221,20 @@ public class UserDaoImpl implements UserDao {
     ResultSet rs = userAccessor.removeUser(username, role.toString());
     logger.debug("result: {}", rs.wasApplied());
     return rs.wasApplied();
+  }
+
+  @Override
+  public void updateMfaUserKey(String username, String keyId, String base32Secret, String role) {
+    /*
+     * PreparedStatement preparedStmt =
+     * getSession().prepare("DELETE FROM ks_tsc.tb_users WHERE username = :username;");
+     * BoundStatement bound = preparedStmt.bind().setString("username", username); ResultSet rs =
+     * getSession().execute(bound); logger.debug("removeUser ExecutionInfo {}",
+     * rs.getExecutionInfo());
+     */
+    MappingManager manager = baseDao.getMappingManager();
+    PortalUserAccessor userAccessor = manager.createAccessor(PortalUserAccessor.class);
+    userAccessor.updateMfaUserKey(username, keyId, base32Secret, role);
   }
 
   /*

@@ -3,6 +3,8 @@ CREATE TABLE ks_tsc.tb_users(
   password text,
   email text,
   role text,
+  keyId text,
+  base32Secret text,
   PRIMARY KEY (username,role)
 );
 

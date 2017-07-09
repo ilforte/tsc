@@ -62,6 +62,7 @@ public class BlockUtil {
    * get First Index
    */
   private static long getFirstindex() {
+    lastIndex.set(0L);
     return lastIndex.get();
   }
 
