@@ -27,7 +27,7 @@ public class TscDaoTest extends BaseDaoTest {
    * 
    */
   public TscDaoTest() {
-
+    logger.debug("TscDaoTest");
   }
 
   @Test

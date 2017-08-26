@@ -19,6 +19,7 @@ import com.datastax.driver.core.Cluster.Builder;
 import com.datastax.driver.core.PreparedStatement;
 import com.datastax.driver.core.QueryOptions;
 import com.datastax.driver.core.Session;
+import com.datastax.driver.extras.codecs.jdk8.InstantCodec;
 import com.datastax.driver.mapping.MappingManager;
 
 /**
@@ -72,6 +73,11 @@ public class BaseDao implements InitializingBean {
     b.withCredentials(username, password);
     b.withQueryOptions(new QueryOptions());
     cluster = b.build();
+    /**
+     * Map Instant codec for string to timestamp
+     */
+    cluster.getConfiguration().getCodecRegistry().register(InstantCodec.instance);
+
     session = cluster.connect();
     /**
      * prepare mapping manager
@@ -79,8 +85,6 @@ public class BaseDao implements InitializingBean {
     manager = new MappingManager(session);
     logger.debug("Cluster name {} metadata: {}", cluster.getMetadata());
   }
-
-  private Map<PreparedStatement, String> statements;
 
   /**
    * Provide my Session.

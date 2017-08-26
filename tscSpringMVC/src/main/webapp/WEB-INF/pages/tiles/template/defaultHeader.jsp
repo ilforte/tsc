@@ -51,7 +51,7 @@ $('#portalTab a').click(function (e) {
 				<!-- modal window -->
 				<modal:modal button_close="Chiudi" button_send="Logout" 
 					text="Si vuole effettuare il logout?" title="Logout" id="logoutModal"
-					callback_function="$('#logoutForm').submit();">
+					callback_function="$('#logoutForm').submit();" formModal="true">
 					
 						<!-- logout form -->
 						<c:if test="${pageContext.request.userPrincipal.name != null}">

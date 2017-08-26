@@ -18,15 +18,20 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.j256.twofactorauth.TimeBasedOneTimePasswordUtil;
 
+import it.tsc.model.Role;
+
 @Controller
 @RequestMapping("/")
 public class AppController extends BaseController {
   private static Logger logger = LoggerFactory.getLogger(AppController.class);
-  private String ACTION_ADMIN = "admin";
-  private String ACTION_USER = "user";
-  private String ACTION_INSERT_MFA = "addMfaSecurityCode";
-  private String ACTION_CHECK_MFA = "checkMfaSecurityCode";
 
+  /**
+   * home access page
+   * 
+   * @param ab_codi
+   * @param request
+   * @return
+   */
   @RequestMapping(value = { "/home" }, method = RequestMethod.GET)
   public ModelAndView homePage(@RequestParam(value = "ab_codi", required = false) String ab_codi,
       HttpServletRequest request) {
@@ -36,29 +41,52 @@ public class AppController extends BaseController {
     return model;
   }
 
+  /**
+   * admin access page
+   * 
+   * @param ab_codi
+   * @param mfaCode
+   * @param user
+   * @param request
+   * @return
+   */
   @RequestMapping(value = { "/admin" }, method = RequestMethod.GET)
   public ModelAndView adminPage(@RequestParam(value = "ab_codi", required = false) String ab_codi,
+      @RequestParam(value = "mfaCode", required = false) String mfaCode,
       @AuthenticationPrincipal Principal user, HttpServletRequest request) {
     ModelAndView model = new ModelAndView();
     request.getSession().setAttribute("ab_codi", ab_codi);
 
     model.addObject("ab_codi", ab_codi);
     model.addObject("roles", roles());
-    model = setReturnView(model, ACTION_ADMIN, request, user);
+    model = getReturnView(model, ACTION_ADMIN, request, user);
     return model;
   }
 
   @RequestMapping(value = { "/user" }, method = RequestMethod.GET)
   public ModelAndView userPage(@RequestParam(value = "ab_codi", required = false) String ab_codi,
+      @RequestParam(value = "mfaCode", required = false) String mfaCode,
       @AuthenticationPrincipal Principal user, HttpServletRequest request) {
     ModelAndView model = new ModelAndView();
     request.getSession().setAttribute("ab_codi", ab_codi);
     model.addObject("ab_codi", ab_codi);
     model.addObject("roles", roles());
-    model = setReturnView(model, ACTION_USER, request, user);
+    model = getReturnView(model, ACTION_USER, request, user);
     return model;
   }
 
+  /**
+   * add MFA code
+   * 
+   * @param user
+   * @param request
+   * @param mfaCode
+   * @param keyId
+   * @param generatedBase32Secret
+   * @param login
+   * @return
+   * @throws GeneralSecurityException
+   */
   @RequestMapping(value = { "/addMfaSecurityCode" }, method = RequestMethod.GET)
   public ModelAndView addMfaSecurityCode(@AuthenticationPrincipal Principal user,
       HttpServletRequest request, @RequestParam(value = "mfaCode", required = true) String mfaCode,
@@ -67,10 +95,18 @@ public class AppController extends BaseController {
       @RequestParam(value = "login", required = true) String login)
       throws GeneralSecurityException {
     ModelAndView model = new ModelAndView();
+    boolean mfaCodeValid = false;
     /**
      * insert in database if mfa is valid
      */
-    if (isMfaCodeValid(mfaCode, generatedBase32Secret)) {
+    model.addObject("message", "MFA code succesfully reset");
+    try {
+      mfaCodeValid = isMfaCodeValid(mfaCode, generatedBase32Secret);
+    } catch (Exception e) {
+      model.addObject("error", "MFA code raising exception");
+      logger.error(e.getMessage());
+    }
+    if (mfaCodeValid) {
       getUserService().updateMfaUserKey(user.getName(), keyId, generatedBase32Secret);
       model.addObject("message", "MFA correctly registered");
       model.setViewName(ACTION_CHECK_MFA);
@@ -86,11 +122,21 @@ public class AppController extends BaseController {
     return model;
   }
 
+  /**
+   * check MFA access code
+   * 
+   * @param user
+   * @param request
+   * @param mfaCode
+   * @return
+   * @throws GeneralSecurityException
+   */
   @RequestMapping(value = { "/checkMfaSecurityCode" }, method = RequestMethod.GET)
   public ModelAndView checkMfaSecurityCode(@AuthenticationPrincipal Principal user,
       HttpServletRequest request, @RequestParam(value = "mfaCode", required = true) String mfaCode)
       throws GeneralSecurityException {
     ModelAndView model = new ModelAndView();
+    boolean mfaCodeValid = false;
     /**
      * check if mfa is valid
      */
@@ -98,19 +144,51 @@ public class AppController extends BaseController {
 
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     logger.debug("auth: {}", auth.getAuthorities().toString());
-    if (isMfaCodeValid(mfaCode, base32Secret)) {
-      setMfaAuthenticated(request, "true");
-      // if (Role.valueOf(auth.getAuthorities().toString()).equals(Role.ROLE_ADMIN)) {
-      model.setViewName(ACTION_ADMIN);
-      // } else if (Role.valueOf(auth.getAuthorities().toString()).equals(Role.ROLE_USER)) {
-      // model.setViewName(ACTION_USER);
-      // }
 
+    try {
+      mfaCodeValid = isMfaCodeValid(mfaCode, base32Secret);
+    } catch (Exception e) {
+      model.addObject("error", "MFA code raising exception");
+      logger.error(e.getMessage());
+    }
+    if (mfaCodeValid) {
+      setMfaAuthenticated(request, "true");
+      if (getUserRole() != null
+          && (getUserRole().equals(Role.ROLE_ADMIN) || getUserRole().equals(Role.ROLE_SADMIN))) {
+        logger.debug("auth admin step");
+        model.setViewName("redirect:/" + ACTION_ADMIN);
+      } else if (getUserRole() != null && getUserRole().equals(Role.ROLE_USER)) {
+        model.setViewName("redirect:/" + ACTION_USER);
+        logger.debug("auth user step");
+      } else {
+        throw new IllegalArgumentException("Unexpected user role");
+      }
     } else {
       model.addObject("error", "MFA invalid doesn't check with code");
       setMfaAuthenticated(request, "false");
       model.setViewName(ACTION_CHECK_MFA);
     }
+    return model;
+  }
+
+  /**
+   * reset MFA
+   * 
+   * @param user
+   * @param request
+   * @return
+   */
+  @RequestMapping(value = { "/resetmfa" }, method = RequestMethod.POST)
+  public ModelAndView resetMfa(@AuthenticationPrincipal Principal user,
+      HttpServletRequest request) {
+    ModelAndView model = new ModelAndView();
+    setMfaAuthenticated(request, "false");
+    /**
+     * reset mfa
+     */
+    getUserService().updateMfaUserKey(user.getName(), "", "");
+    model.addObject("message", "MFA code succesfully reset");
+    model.setViewName(ACTION_CHECK_MFA);
     return model;
   }
 
@@ -145,23 +223,18 @@ public class AppController extends BaseController {
   }
 
   /**
-   * set return view with MFA Check
+   * get return view with MFA Check
    * 
    * @param model
    * @param viewName
    * @param request
    * @param base32Secret
    */
-  private ModelAndView setReturnView(ModelAndView model, String viewName,
+  private ModelAndView getReturnView(ModelAndView model, String viewName,
       HttpServletRequest request, Principal user) {
     model.addObject("action", viewName);
-    request.setAttribute("page", viewName);
 
     if (isMfaAuthenticated(request)) {
-      /**
-       * generate QR code
-       */
-      model.addObject("generateQrCode", false);
       model.setViewName(viewName);
     } else if (!isMfaAuthenticated(request)) {
       String base32Secret = getBase32Secret(user);

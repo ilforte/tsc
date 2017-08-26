@@ -3,7 +3,7 @@
  */
 package it.tsc.dao.impl;
 
-import java.util.Date;
+import java.time.Instant;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +23,7 @@ import it.tsc.util.ConversionUtil;
  */
 @Repository("allarmDao")
 public class AllarmDaoImpl implements AllarmDao {
+  @SuppressWarnings("unused")
   private static Logger logger = LoggerFactory.getLogger(AllarmDaoImpl.class);
   @Autowired
   private BaseDao baseDao;
@@ -41,11 +42,11 @@ public class AllarmDaoImpl implements AllarmDao {
    * java.lang.String, java.lang.String, java.lang.String)
    */
   @Override
-  public void insertAllarmeMatricola(String matricola, String ab_codi, Date data_arrivo,
+  public void insertAllarmeMatricola(String matricola, String ab_codi, String data_arrivo,
       String evento, String serial_uuid, String user) {
     AllarmAccessor allarmAccessor = baseDao.createAccessor(AllarmAccessor.class);
-    allarmAccessor.insertAllarmeMatricola(matricola, ab_codi, data_arrivo, evento, serial_uuid,
-        user);
+    allarmAccessor.insertAllarmeMatricola(matricola, ab_codi, Instant.parse(data_arrivo), evento,
+        serial_uuid, user);
   }
 
   /*
@@ -55,9 +56,8 @@ public class AllarmDaoImpl implements AllarmDao {
    * java.lang.String, java.lang.String, java.lang.String)
    */
   @Override
-  public void insertAllarmeTel(String tel, String ab_codi, Date data_arrivo, String evento,
+  public void insertAllarmeTel(String tel, String ab_codi, String data_arrivo, String evento,
       String serial_uuid, String user) {
-    // TODO Auto-generated method stub
 
   }
 

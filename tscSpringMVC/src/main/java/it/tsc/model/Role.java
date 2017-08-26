@@ -34,4 +34,18 @@ public enum Role {
     }
   }
 
+  /**
+   * return role from string value
+   * 
+   * @param text
+   * @return
+   */
+  public static Role fromString(String text) {
+    for (Role role : Role.values()) {
+      if (text.contains(role.toString())) {
+        return role;
+      }
+    }
+    return null;
+  }
 }

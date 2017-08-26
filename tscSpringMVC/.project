@@ -3,6 +3,7 @@
 	<name>tscSpringMVC</name>
 	<comment></comment>
 	<projects>
+		<project>two-factor-auth</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

@@ -3,7 +3,7 @@
  */
 package it.tsc.dao.accessor;
 
-import java.util.Date;
+import java.time.Instant;
 
 import com.datastax.driver.mapping.annotations.Accessor;
 import com.datastax.driver.mapping.annotations.Param;
@@ -16,7 +16,7 @@ import com.datastax.driver.mapping.annotations.Query;
 public interface AllarmAccessor {
   @Query("INSERT INTO ks_tsc.tb_allarms (matricola,ab_codi,data_arrivo,evento,serial_uuid,user) VALUES (:matricola,:ab_codi,:data_arrivo,:evento,:serial_uuid,:user) IF NOT EXISTS;")
   public void insertAllarmeMatricola(@Param("matricola") String matricola,
-      @Param("ab_codi") String ab_codi, @Param("data_arrivo") Date data_arrivo,
+      @Param("ab_codi") String ab_codi, @Param("data_arrivo") Instant data_arrivo,
       @Param("evento") String evento, @Param("serial_uuid") String serial_uuid,
       @Param("user") String user);
 

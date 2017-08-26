@@ -4,7 +4,6 @@
 package it.tsc.test.dao;
 
 import java.text.ParseException;
-import java.util.Date;
 
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -13,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import it.tsc.service.AllarmService;
 import it.tsc.util.PortalUtil;
+import it.tsc.util.TimeUtil;
 
 /**
  * @author astraservice
@@ -32,13 +32,13 @@ public class AllarmsDaoTest extends BaseDaoTest {
 
   @Test
   public void testInsertAllarmeMatricola() throws ParseException {
-    allarmService.insertAllarmeMatricola("064795", "000000", new Date(), "1",
-        PortalUtil.generateUUID(), "matteo");
+    allarmService.insertAllarmeMatricola("064795", "000000", null, "1", PortalUtil.generateUUID(),
+        "matteo");
   }
 
   @Test
   public void testInsertAllarmeMatricolaSound() throws ParseException {
-    allarmService.insertAllarmeMatricola("064795", "N00001", new Date(), "1",
+    allarmService.insertAllarmeMatricola("064795", "N00001", TimeUtil.getCurrentDate(), "1",
         PortalUtil.generateUUID(), "");
   }
 

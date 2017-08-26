@@ -16,7 +16,7 @@
 	</c:if>
 	
 	<c:if test="${not empty message}">
-		<div class="message">Message: ${message}</div>
+		<div class="msg">Message: ${message}</div>
 	</c:if>
 
 	<h2><spring:message code="label.login.addmfa" text="label.login.addmfa"/></h2>
