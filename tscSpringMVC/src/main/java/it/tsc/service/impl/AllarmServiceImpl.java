@@ -3,6 +3,8 @@
  */
 package it.tsc.service.impl;
 
+import java.time.Instant;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +34,7 @@ public class AllarmServiceImpl implements AllarmService {
    * java.lang.String, java.lang.String)
    */
   @Override
-  public void insertAllarmeMatricola(String matricola, String ab_codi, String data_arrivo,
+  public void insertAllarmeMatricola(String matricola, String ab_codi, Instant data_arrivo,
       String evento, String serial_uuid, String user) {
     allarmDao.insertAllarmeMatricola(matricola, ab_codi, data_arrivo, evento, serial_uuid, user);
   }

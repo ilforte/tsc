@@ -3,6 +3,8 @@
  */
 package it.tsc.service;
 
+import java.time.Instant;
+
 /**
  * @author astraservice Manage Allarm in TSC
  */
@@ -16,7 +18,7 @@ public interface AllarmService {
    * @param serial_uuid
    * @param user
    */
-  public void insertAllarmeMatricola(String matricola, String ab_codi, String data_arrivo,
+  public void insertAllarmeMatricola(String matricola, String ab_codi, Instant data_arrivo,
       String evento, String serial_uuid, String user);
 
   /**

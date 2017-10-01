@@ -42,11 +42,11 @@ public class AllarmDaoImpl implements AllarmDao {
    * java.lang.String, java.lang.String, java.lang.String)
    */
   @Override
-  public void insertAllarmeMatricola(String matricola, String ab_codi, String data_arrivo,
+  public void insertAllarmeMatricola(String matricola, String ab_codi, Instant data_arrivo,
       String evento, String serial_uuid, String user) {
     AllarmAccessor allarmAccessor = baseDao.createAccessor(AllarmAccessor.class);
-    allarmAccessor.insertAllarmeMatricola(matricola, ab_codi, Instant.parse(data_arrivo), evento,
-        serial_uuid, user);
+    allarmAccessor.insertAllarmeMatricola(matricola, ab_codi, data_arrivo, evento, serial_uuid,
+        user);
   }
 
   /*

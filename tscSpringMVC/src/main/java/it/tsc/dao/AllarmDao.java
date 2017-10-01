@@ -1,5 +1,7 @@
 package it.tsc.dao;
 
+import java.time.Instant;
+
 public interface AllarmDao {
   /**
    * Inserisce allarme per matricola (ITALTEL)
@@ -10,7 +12,7 @@ public interface AllarmDao {
    * @param serial_uuid
    * @param user
    */
-  public void insertAllarmeMatricola(String matricola, String ab_codi, String data_arrivo,
+  public void insertAllarmeMatricola(String matricola, String ab_codi, Instant data_arrivo,
       String evento, String serial_uuid, String user);
 
   /**

@@ -22,7 +22,7 @@ public interface GroupAccessor {
   @Query("INSERT INTO ks_tsc.tb_groups (groupname) VALUES (:groupname) IF NOT EXISTS;")
   public void addGroup(@Param("groupname") String groupname);
 
-  @Query("DELETE FROM ks_tsc.tb_groups WHERE groupname = :groupname;")
+  @Query("DELETE FROM ks_tsc.tb_groups WHERE groupname = :groupname IF EXISTS;;")
   public void removeGroup(@Param("groupname") String groupname);
 
   @Query("INSERT INTO ks_tsc.tb_users_groups (username,groupname) VALUES (:username,:groupname) IF NOT EXISTS;")

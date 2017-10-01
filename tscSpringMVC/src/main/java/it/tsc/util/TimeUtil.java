@@ -4,6 +4,7 @@
 package it.tsc.util;
 
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.Calendar;
 import java.util.TimeZone;
 
@@ -30,6 +31,15 @@ public class TimeUtil {
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
     System.out.println(sdf.format(cSchedStartCal.getTime()));
     return sdf.format(cSchedStartCal.getTime());
+  }
+
+  /**
+   * return Date in Instant format using UTC
+   * 
+   * @return
+   */
+  public static Instant getCurrentInstantDate() {
+    return Instant.parse(getCurrentDate());
   }
 
 
