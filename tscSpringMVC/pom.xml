@@ -226,10 +226,11 @@
 	</dependency> -->
 	
 	<!-- two factor auth -->
+	<!-- https://mvnrepository.com/artifact/com.j256.two-factor-auth/two-factor-auth -->
 	<dependency>
-		<groupId>com.j256.two-factor-auth</groupId>
-		<artifactId>two-factor-auth</artifactId>
-		<version>1.1-SNAPSHOT</version>
+	    <groupId>com.j256.two-factor-auth</groupId>
+	    <artifactId>two-factor-auth</artifactId>
+	    <version>1.0</version>
 	</dependency>
 	
 	<!-- Quartz framework -->
