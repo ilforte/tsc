@@ -123,12 +123,24 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public boolean isAdmin(PortalUser user) {
-    return getUser(user.getUsername()).getRoles().contains(Role.ROLE_ADMIN.toString());
+    if (getUser(user.getUsername()) == null) {
+      return false;
+    } else if(getUser(user.getUsername()).getRoles() != null ){
+      return getUser(user.getUsername()).getRoles().contains(Role.ROLE_ADMIN.toString());
+    }else {
+      return false;
+    }
+    
   }
 
   @Override
   public boolean isSuperAdmin(PortalUser user) {
-    return getUser(user.getUsername()).getRoles().contains(Role.ROLE_SADMIN.toString());
+    if (getUser(user.getUsername()) != null && getUser(user.getUsername()).getRoles() != null) {
+      return getUser(user.getUsername()).getRoles().contains(Role.ROLE_SADMIN.toString());
+    }else {
+      return false;
+    }
+    
   }
 
   @Override
@@ -136,8 +148,10 @@ public class UserServiceImpl implements UserService {
     /**
      * iterate all over user role
      */
-    for (GrantedAuthority grantedAuthority : userDao.getUserRoles(username)) {
-      userDao.updateMfaUserKey(username, keyId, base32Secret, grantedAuthority.getAuthority());
+    if (userDao != null && userDao.getUserRoles(username) != null) {
+      for (GrantedAuthority grantedAuthority : userDao.getUserRoles(username)) {
+        userDao.updateMfaUserKey(username, keyId, base32Secret, grantedAuthority.getAuthority());
+      }
     }
   }
 

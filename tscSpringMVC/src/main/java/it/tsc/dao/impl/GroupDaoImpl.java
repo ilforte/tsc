@@ -5,6 +5,8 @@ package it.tsc.dao.impl;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import it.tsc.dao.GroupDao;
 import it.tsc.model.Group;
 
@@ -12,6 +14,7 @@ import it.tsc.model.Group;
  * @author astraservice
  *
  */
+@Repository("groupDao")
 public class GroupDaoImpl implements GroupDao {
 
   /* (non-Javadoc)
