@@ -30,8 +30,10 @@
 			<!-- profiled access -->
 			<security:intercept-url pattern="/addMfaSecurityCode" access="hasRole('ROLE_SADMIN') or hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')" />
 			<security:intercept-url pattern="/checkMfaSecurityCode" access="hasRole('ROLE_SADMIN') or hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')" />
+	        <security:intercept-url pattern="/resetmfa" access="hasRole('ROLE_SADMIN') or hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')" />
 	        <security:intercept-url pattern="/user**" access="hasRole('ROLE_SADMIN') or hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')" />
-	        <security:intercept-url pattern="/admin**" access="hasRole('ROLE_SADMIN') or hasRole('ROLE_ADMIN') or hasRole('ROLE_SADMIN')" />
+	        <security:intercept-url pattern="/admin**" access="hasRole('ROLE_SADMIN') or hasRole('ROLE_ADMIN')" />
+	        <security:intercept-url pattern="/backOffice**" access="hasRole('ROLE_SADMIN') or hasRole('ROLE_BACKOFFICE')" />
 	        <security:intercept-url pattern="/impersonate**" access="hasRole('IMPERSONATE')" />
 	        
 	        <!-- manage access denied -->

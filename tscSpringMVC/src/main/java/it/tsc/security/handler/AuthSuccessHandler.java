@@ -57,6 +57,7 @@ public class AuthSuccessHandler extends SavedRequestAwareAuthenticationSuccessHa
     boolean isUser = false;
     boolean isAdmin = false;
     boolean isImpersonate = false;
+    boolean isBackOffice = false;
     Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
     for (GrantedAuthority grantedAuthority : authorities) {
       if (grantedAuthority.getAuthority().equals("ROLE_USER")) {
@@ -69,7 +70,10 @@ public class AuthSuccessHandler extends SavedRequestAwareAuthenticationSuccessHa
       } else if (grantedAuthority.getAuthority().equals("ROLE_IMPERSONATE")) {
         isImpersonate = true;
         break;
-      }
+      } else if (grantedAuthority.getAuthority().equals("ROLE_BACKOFFICE")) {
+        isBackOffice = true;
+        break;
+    }
     }
 
     if (isUser) {
@@ -78,6 +82,8 @@ public class AuthSuccessHandler extends SavedRequestAwareAuthenticationSuccessHa
       return "/admin";
     } else if (isImpersonate) {
       return "/impersonate";
+    }else if (isBackOffice) {
+      return "/backOffice";
     } else {
       throw new IllegalStateException();
     }
