@@ -16,6 +16,7 @@ import org.springframework.web.servlet.config.annotation.DefaultServletHandlerCo
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
@@ -50,6 +51,12 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
         .setCachePeriod(31556926);
     registry.addResourceHandler("/resources/js/**").addResourceLocations("/resources/js/")
         .setCachePeriod(31556926);
+    registry.addResourceHandler("/*.html").addResourceLocations("/WEB-INF/pages/");
+  }
+  
+  @Override
+  public void addViewControllers(ViewControllerRegistry registry) {
+      registry.addViewController("/").setViewName("forward:/welcome.html");
   }
 
   @Override
