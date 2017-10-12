@@ -170,7 +170,12 @@ public class UserDaoImpl implements UserDao {
    */
   @Override
   public boolean isAdmin(Role role) {
-    return role.equals(Role.ROLE_ADMIN) || role.equals(Role.ROLE_SADMIN);
+    if (role != null) {
+      return role.equals(Role.ROLE_ADMIN) || role.equals(Role.ROLE_SADMIN);
+    } else {
+      return false;
+    }
+    
   }
 
   /*
