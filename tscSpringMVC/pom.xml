@@ -178,6 +178,20 @@
 	    <version>${hibernate.validation.version}</version> 
 	</dependency> 
 	
+	<!-- https://mvnrepository.com/artifact/com.impetus.kundera.client/kundera-cassandra -->
+	<dependency>
+	    <groupId>com.impetus.kundera.client</groupId>
+	    <artifactId>kundera-cassandra</artifactId>
+	    <version>3.10.1</version>
+	</dependency>
+	
+	<!-- https://mvnrepository.com/artifact/com.impetus.kundera.client/kundera-cassandra-ds-driver -->
+	<dependency>
+	    <groupId>com.impetus.kundera.client</groupId>
+	    <artifactId>kundera-cassandra-ds-driver</artifactId>
+	    <version>3.10.1</version>
+	</dependency>
+	
 	<!-- Gson JSON Mapper -->
 	<dependency>
 	    <groupId>com.google.code.gson</groupId>
