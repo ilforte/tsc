@@ -107,7 +107,7 @@ public class UserDaoTest extends BaseDaoTest {
 
   @Test
   public void testUpdateEmptyMfaUserKey() {
-    userService.updateMfaUserKey("matteo", "", "");
+    userService.updateMfaUserKey("admin", "", "");
   }
 
 
