@@ -13,7 +13,7 @@ import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import org.junit.Test;
 
@@ -35,7 +35,7 @@ public class DomainTest {
         props.put(CassandraConstants.CQL_VERSION, CassandraConstants.CQL_VERSION_3_0);
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(_PU, props);
         EntityManager em = emf.createEntityManager();  
-        Query findQuery = em.createQuery("Select a from Allarm a", Allarm.class);
+        TypedQuery<Allarm> findQuery = em.createQuery("Select a from Allarm a", Allarm.class);
         List<Allarm> allAllarms = findQuery.getResultList();
         assertEquals(0L, allAllarms.size());
         assertNotNull(em);
@@ -47,10 +47,26 @@ public class DomainTest {
         props.put(CassandraConstants.CQL_VERSION, CassandraConstants.CQL_VERSION_3_0);
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(_PU, props);
         EntityManager em = emf.createEntityManager();  
-        Query findQuery = em.createQuery("Select u from Users u", Users.class);
-        List<Users> allUsers = findQuery.getResultList();
-        assertEquals(2L, allUsers.size());
+        TypedQuery<Users> findQuery = em.createQuery("Select u from Users u where u.key.username = :username", Users.class);
+        findQuery.setParameter("username", "admin");
+		List<Users> allUsers = findQuery.getResultList();
+        assertEquals(1L, allUsers.size());
         assertNotNull(em);
 	}
+	
+	@Test
+	public void userTestAndRole() {
+        Map<String, String> props = new HashMap<String, String>();
+        props.put(CassandraConstants.CQL_VERSION, CassandraConstants.CQL_VERSION_3_0);
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(_PU, props);
+        EntityManager em = emf.createEntityManager();  
+        TypedQuery<Users> findQuery = em.createQuery("Select u from Users u where u.key.username = :username and u.key.role = :role", Users.class);
+        findQuery.setParameter("username", "admin");
+        findQuery.setParameter("role", "ROLE_SADMIN");
+        List<Users> allUsers = findQuery.getResultList();
+        assertEquals(1L, allUsers.size());
+        assertNotNull(em);
+	}
+
 
 }

@@ -20,7 +20,12 @@ public class CompoundKey {
     
 	public CompoundKey() {
 		super();
-		// TODO Auto-generated constructor stub
+	}
+
+	public CompoundKey(String username, String role) {
+		super();
+		this.username = username;
+		this.role = role;
 	}
 
 	public String getUsername() {
