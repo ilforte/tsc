@@ -100,7 +100,7 @@ function proveGridRowClick(args,url) {
 	       	{name: "serial_uuid",type:"text",visible:false,width:0},
 			{name: "data_arrivo",type:"date",width:15,
 			    itemTemplate: function(value,item) {
-			    	var tooltip = $('<div>' + value.slice(11,19) + '</div>').attr("title",item.serial_uuid);
+			    	var tooltip = $('<div>' + value != undefined?value.slice(11,19):'' + '</div>').attr("title",item.serial_uuid);
 			        return tooltip;
 			    }
 	       				},
@@ -134,7 +134,7 @@ function proveGridRowClick(args,url) {
 	       	{name: "serial_uuid",type:"text",visible:false,width:0},
 			{name: "data_arrivo",type:"date",width:15,
 			    itemTemplate: function(value,item) {
-			    	var tooltip = $('<div>' + value.slice(11,19) + '</div>').attr("title",item.serial_uuid);
+			    	var tooltip = $('<div>' + value != undefined?value.slice(11,19):'' + '</div>').attr("title",item.serial_uuid);
 			        return tooltip;
 			    }
 	       				},

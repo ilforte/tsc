@@ -73,9 +73,10 @@ $(document).ready(function(){
         	
         	var arr = {};
 			try {
+					console.log(event.data);
 					arr = JSON.parse(event.data);
 	    		} catch(e) {
-	    			toastr.error(e);
+	    			toastr.error('websocket: ' + e);
 	    	}
         	var totalSoundDuration;
         	if(userExists(arr,'')){

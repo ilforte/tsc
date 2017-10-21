@@ -50,6 +50,7 @@
 		            xhr.setRequestHeader(HEADER, TOKEN);
 		        },
 			    success: function(resposeJsonObject){
+			    	console.log(resposeJsonObject);
 			        // Success Message Handler
 		        	var parsed;
 					try {

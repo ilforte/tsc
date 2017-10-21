@@ -26,6 +26,7 @@ $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 			            xhr.setRequestHeader(HEADER, TOKEN);
 			        },
 				    success: function(resposeJsonObject){
+				    	console.log(resposeJsonObject);
 				        // Success Message Handler
 						try {
 			        			$("#userGrid").jsGrid({data:JSON.parse(resposeJsonObject)});
@@ -49,6 +50,7 @@ $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 			            xhr.setRequestHeader(HEADER, TOKEN);
 			        },
 				    success: function(resposeJsonObject){
+				    	console.log(resposeJsonObject);
 				        // Success Message Handler
 						try {
 				        		$("#allUserGrid").jsGrid({data:JSON.parse(resposeJsonObject)});
