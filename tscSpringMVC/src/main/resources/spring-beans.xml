@@ -16,5 +16,10 @@
 	class="it.tsc.security.handler.CustomAccessDeniedHandler">
 	<beans:property name="errorPage" value="/tscSpringMVC/403" />
 </beans:bean>
+
+<beans:bean id="entityManagerFactory"
+	class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+	<beans:property name="persistenceUnitName" value="cassandra_pu" />
+</beans:bean>	
 	
 </beans:beans>

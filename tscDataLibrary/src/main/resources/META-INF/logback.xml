@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration 
-    debug="true" packagingData="true" scan="true" scanPeriod="60 seconds">
+    debug="true" packagingData="true" scan="true" scanPeriod="15 seconds">
 
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <layout class="ch.qos.logback.classic.PatternLayout">
@@ -8,7 +8,7 @@
         </layout>
     </appender>
 
-	<logger name="org.springframework" level="debug" additivity="false">
+	<logger name="org.springframework" level="error" additivity="false">
 		<appender-ref ref="STDOUT" />
 	</logger>
 
@@ -16,9 +16,9 @@
 		<appender-ref ref="STDOUT" />
 	</logger>
 	
-	<logger name="com.datastax.driver.core.QueryLogger.NORMAL" level="debug" >
+<!-- 	<logger name="com.datastax.driver.core.QueryLogger.NORMAL" level="debug" >
 		<appender-ref ref="STDOUT" />
-	</logger>
+	</logger> -->
 
 	<root level="info">
 		<appender-ref ref="STDOUT" />

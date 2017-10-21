@@ -6,8 +6,11 @@ package it.tsc.config;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceUnit;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -45,12 +48,12 @@ public class ServiceConfig {
     return new PropertySourcesPlaceholderConfigurer();
   }
   
-  @Bean(name="entityManagerFactory")
-  public EntityManagerFactory entityManagerFactory() {
-    Map<String, String> props = new HashMap<String, String>();
-    props.put(CassandraConstants.CQL_VERSION, CassandraConstants.CQL_VERSION_3_0);
-    EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT, props);
-    return entityManagerFactory;  
-  }
+//  @PersistenceUnit(unitName="cassandra_pu")
+//  public EntityManagerFactory entityManagerFactory() {
+//    Map<String, String> props = new HashMap<String, String>();
+//    props.put(CassandraConstants.CQL_VERSION, CassandraConstants.CQL_VERSION_3_0);
+//    EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT, props);
+//    return entityManagerFactory;  
+//  }
 
 }

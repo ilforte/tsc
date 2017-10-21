@@ -52,6 +52,7 @@ public class TscDaoImpl extends AbstractDao implements TscDao {
     query.setParameter("ab_codi", allarm.getAb_codi());
     List<Anagrafica> list = query.getResultList();
     entityManager.close();
+    
     String result = ConversionUtil.getGsonConverter().toJson(list);
     logger.debug("getAnagrafica {}", result);
     return result;

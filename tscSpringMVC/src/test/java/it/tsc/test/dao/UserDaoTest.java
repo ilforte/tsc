@@ -35,12 +35,13 @@ public class UserDaoTest extends BaseDaoTest {
 
   @Test
   public void testUserDao() {
-    logger.info("userService user {}", gson.toJson(userService.getUser("matteo")));
+    logger.info("userService user {}", gson.toJson(userService.getUser("testUser")));
   }
 
   @Test
   public void testUserEmailDao() {
-    assertTrue(userService.getUser("matteo", "test") == null);
+    userService.getUser("matteo", "test");
+    //assertTrue(userService.getUser("matteo", "test") == null);
     assertTrue(userService.getUser("matteo", "matteo@infamiglia.it") != null);
   }
 
@@ -82,8 +83,13 @@ public class UserDaoTest extends BaseDaoTest {
 
   @Test
   public void testRemoveUser() {
-    userService.removeUser("admin", Role.ROLE_ADMIN);
+    userService.removeUser("testUser", Role.ROLE_USER);
   }
+  
+//  @Test
+//  public void testRemoveUserAdmin() {
+//    userService.removeUser("admin", Role.ROLE_SADMIN);
+//  }
 
   @Test
   public void testRemoveUserFail() {
@@ -108,6 +114,11 @@ public class UserDaoTest extends BaseDaoTest {
   @Test
   public void testUpdateEmptyMfaUserKey() {
     userService.updateMfaUserKey("admin", "", "");
+  }
+  
+  @Test
+  public void jsonGestUser() {
+    userService.jsonGetUser("admin");
   }
 
 

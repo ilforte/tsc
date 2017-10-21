@@ -16,9 +16,9 @@
 		<appender-ref ref="STDOUT" />
 	</logger>
 	
-	<logger name="com.datastax.driver.core.QueryLogger.NORMAL" level="debug" >
+<!-- 	<logger name="com.datastax.driver.core.QueryLogger.NORMAL" level="debug" >
 		<appender-ref ref="STDOUT" />
-	</logger>
+	</logger> -->
 
 	<root level="info">
 		<appender-ref ref="STDOUT" />

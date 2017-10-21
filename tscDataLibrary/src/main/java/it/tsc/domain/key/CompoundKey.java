@@ -6,6 +6,8 @@ package it.tsc.domain.key;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
+import com.google.gson.annotations.Expose;
+
 /**
  * @author astraservice
  *
@@ -14,8 +16,10 @@ import javax.persistence.Embeddable;
 public class CompoundKey {
 	
 	@Column(name="username") 
+	@Expose
     private String username;
 	@Column(name="role")  
+	@Expose
     private String role;
     
 	public CompoundKey() {

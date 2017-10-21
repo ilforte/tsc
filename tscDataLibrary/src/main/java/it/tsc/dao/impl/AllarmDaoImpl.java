@@ -75,7 +75,7 @@ public class AllarmDaoImpl extends AbstractDao implements AllarmDao {
 	  Allarm allarm = new Allarm();
 	  allarm.setTel(tel);
 	  allarm.setAb_codi(ab_codi);
-	  allarm.setData_arrivo(data_arrivo);
+	  allarm.setData_arrivo(Date.from(data_arrivo));
 	  allarm.setEvento(evento);
 	  allarm.setSerial_uuid(serial_uuid);
 	  allarm.setUser(user);

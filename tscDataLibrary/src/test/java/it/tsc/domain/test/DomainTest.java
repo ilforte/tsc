@@ -4,6 +4,7 @@
 package it.tsc.domain.test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.HashMap;
@@ -37,7 +38,7 @@ public class DomainTest {
         EntityManager em = emf.createEntityManager();  
         TypedQuery<Allarm> findQuery = em.createQuery("Select a from Allarm a", Allarm.class);
         List<Allarm> allAllarms = findQuery.getResultList();
-        assertEquals(0L, allAllarms.size());
+        assertNotEquals(0L, allAllarms.size());
         assertNotNull(em);
 	}
 	

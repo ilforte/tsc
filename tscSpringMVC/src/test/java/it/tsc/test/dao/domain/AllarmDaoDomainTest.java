@@ -4,6 +4,7 @@
 package it.tsc.test.dao.domain;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.List;
@@ -31,7 +32,7 @@ public class AllarmDaoDomainTest extends BaseDaoTest{
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         TypedQuery<Allarm> findQuery = entityManager.createQuery("Select a from Allarm a", Allarm.class);
         List<Allarm> allAllarms = findQuery.getResultList();
-        assertEquals(0L, allAllarms.size());
+        assertNotEquals(0L, allAllarms.size());
         assertNotNull(entityManager);
   }
 

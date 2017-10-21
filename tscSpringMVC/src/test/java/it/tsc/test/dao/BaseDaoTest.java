@@ -3,6 +3,7 @@
  */
 package it.tsc.test.dao;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -23,6 +24,11 @@ public class BaseDaoTest {
    */
   public BaseDaoTest() {
 
+  }
+  
+  @Test
+  public void baseDaoTest() {
+    
   }
 
 }
