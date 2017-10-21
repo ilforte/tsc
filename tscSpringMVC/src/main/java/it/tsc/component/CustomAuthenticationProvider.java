@@ -15,8 +15,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import it.tsc.model.ApplicationUser;
-import it.tsc.model.PortalUser;
+import it.tsc.domain.ApplicationUser;
+import it.tsc.domain.PortalUser;
 import it.tsc.service.UserService;
 
 /**

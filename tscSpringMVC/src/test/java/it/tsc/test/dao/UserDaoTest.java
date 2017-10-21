@@ -12,8 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.gson.Gson;
 
-import it.tsc.model.PortalUser;
-import it.tsc.model.Role;
+import it.tsc.domain.PortalUser;
+import it.tsc.domain.Role;
 import it.tsc.service.UserService;
 
 /**

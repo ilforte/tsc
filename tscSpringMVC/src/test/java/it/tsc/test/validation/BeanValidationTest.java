@@ -20,9 +20,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
-import it.tsc.model.PortalUser;
-import it.tsc.model.PortalUser.PortalUserInsert;
-import it.tsc.model.PortalUser.PortalUserRemove;
+import it.tsc.domain.PortalUser;
+import it.tsc.domain.PortalUser.PortalUserInsert;
+import it.tsc.domain.PortalUser.PortalUserRemove;
 
 /**
  * @author astraservice

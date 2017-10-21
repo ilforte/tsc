@@ -11,7 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import it.tsc.model.Allarm;
+import it.tsc.domain.Allarm;
 import it.tsc.service.TscService;
 
 /**

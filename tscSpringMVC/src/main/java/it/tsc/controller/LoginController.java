@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import it.tsc.model.PortalUser;
+import it.tsc.domain.PortalUser;
 
 @Controller
 public class LoginController extends BaseController {

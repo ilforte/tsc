@@ -44,7 +44,7 @@ public class AllarmsDaoTest extends BaseDaoTest {
 
   @Test
   public void removeAllarmDao() throws ParseException {
-    allarmService.removeAllarme("1234");
+    allarmService.removeAllarme("2017102112:00:44.223_699a0958");
   }
 
   @Test

@@ -5,7 +5,7 @@ package it.tsc.test.generic;
 
 import org.junit.Test;
 
-import it.tsc.model.UsersGroup;
+import it.tsc.domain.UsersGroup;
 
 /**
  * @author astraservice

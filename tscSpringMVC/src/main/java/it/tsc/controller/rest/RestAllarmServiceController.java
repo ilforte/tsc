@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import it.tsc.model.Allarm;
+import it.tsc.domain.Allarm;
 import it.tsc.service.AllarmService;
 
 /**

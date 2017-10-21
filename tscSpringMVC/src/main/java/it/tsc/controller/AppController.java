@@ -18,7 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.j256.twofactorauth.TimeBasedOneTimePasswordUtil;
 
-import it.tsc.model.Role;
+import it.tsc.domain.Role;
 
 @Controller
 @RequestMapping("/")

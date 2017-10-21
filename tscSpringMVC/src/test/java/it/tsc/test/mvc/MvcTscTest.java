@@ -30,7 +30,7 @@ import com.google.gson.Gson;
 
 import it.tsc.config.ServiceConfig;
 import it.tsc.config.WebAppConfig;
-import it.tsc.model.Allarm;
+import it.tsc.domain.Allarm;
 
 /**
  * @author astraservice

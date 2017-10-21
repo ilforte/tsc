@@ -10,7 +10,7 @@ import javax.validation.ConstraintViolation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import it.tsc.model.PortalUser;
+import it.tsc.domain.PortalUser;
 
 /**
  * @author astraservice

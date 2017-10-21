@@ -5,7 +5,6 @@ package it.tsc.test.mvc;
 
 import static org.junit.Assert.assertTrue;
 
-import org.apache.cassandra.repair.messages.ValidationRequest;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,10 +32,10 @@ import com.google.gson.Gson;
 
 import it.tsc.config.ServiceConfig;
 import it.tsc.config.WebAppConfig;
-import it.tsc.model.PortalUser;
-import it.tsc.model.Response;
-import it.tsc.model.Role;
-import it.tsc.model.ValidationResponse;
+import it.tsc.domain.PortalUser;
+import it.tsc.domain.Response;
+import it.tsc.domain.Role;
+import it.tsc.domain.ValidationResponse;
 
 /**
  * @author astraservice

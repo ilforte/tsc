@@ -3,9 +3,12 @@
  */
 package it.tsc.domain;
 
+import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+
+import com.google.gson.annotations.Expose;
 
 import it.tsc.domain.key.CompoundKey;
 
@@ -20,7 +23,17 @@ public class Users extends BaseDomain{
 	 * 
 	 */
 	private static final long serialVersionUID = -5293616948185366680L;
-
+	
+	@EmbeddedId
+	@Expose
+	private CompoundKey key;
+	@Column
+	@Expose
+	private String base32Secret;
+	@Column
+	@Expose
+	private String email;
+	
 	public CompoundKey getKey() {
 		return key;
 	}
@@ -29,7 +42,5 @@ public class Users extends BaseDomain{
 		this.key = key;
 	}
 
-	@EmbeddedId
-    private CompoundKey key;
 
 }

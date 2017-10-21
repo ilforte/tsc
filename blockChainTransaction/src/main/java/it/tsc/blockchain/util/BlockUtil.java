@@ -82,7 +82,8 @@ public class BlockUtil {
    * @param previousBlock
    * @return
    */
-  private static boolean isValidBlock(Block newBlock, Block previousBlock) {
+  @SuppressWarnings("unused")
+private static boolean isValidBlock(Block newBlock, Block previousBlock) {
     if (previousBlock.getIndex().get() + 1 != newBlock.getIndex().get()) {
       return false;
     } else if (previousBlock.getHash() != newBlock.getPreviousHash()) {

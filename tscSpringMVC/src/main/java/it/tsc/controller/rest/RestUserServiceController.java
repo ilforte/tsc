@@ -21,13 +21,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import it.tsc.model.PortalUser;
-import it.tsc.model.PortalUser.PortalUserInsert;
-import it.tsc.model.PortalUser.PortalUserRemove;
-import it.tsc.model.PortalUser.PortalUserRenewPassword;
-import it.tsc.model.Response;
-import it.tsc.model.Role;
-import it.tsc.model.ValidationResponse;
+import it.tsc.domain.PortalUser;
+import it.tsc.domain.Response;
+import it.tsc.domain.Role;
+import it.tsc.domain.ValidationResponse;
+import it.tsc.domain.PortalUser.PortalUserInsert;
+import it.tsc.domain.PortalUser.PortalUserRemove;
+import it.tsc.domain.PortalUser.PortalUserRenewPassword;
 import it.tsc.service.UserService;
 
 /**
