@@ -61,10 +61,11 @@ $(document).ready(function(){
 
         webSocket.onmessage = function(event){
         	// loadData with custom filter
+			console.log('onmessage data: ',event.data);
 			try {
 				$("#allarmGrid").jsGrid({data:JSON.parse(event.data)});
 		    	} catch(e) {
-		    		toastr.error(e,"#allarmGrid");
+		    		toastr.error(e,"#allarmGrid onmessage");
 		    }
         	//console.log(JSON.stringify(event.data));
         	/**
@@ -73,7 +74,6 @@ $(document).ready(function(){
         	
         	var arr = {};
 			try {
-					console.log(event.data);
 					arr = JSON.parse(event.data);
 	    		} catch(e) {
 	    			toastr.error('websocket: ' + e);

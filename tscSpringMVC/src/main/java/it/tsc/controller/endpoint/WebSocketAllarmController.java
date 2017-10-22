@@ -3,15 +3,10 @@
  */
 package it.tsc.controller.endpoint;
 
-import java.io.IOException;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.ArrayList;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
-import javax.servlet.http.HttpSession;
 import javax.websocket.EndpointConfig;
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
@@ -37,9 +32,10 @@ import it.tsc.service.AllarmService;
 @Service
 public class WebSocketAllarmController {
   private static Logger logger = LoggerFactory.getLogger(WebSocketAllarmController.class);
-  private static ScheduledExecutorService service = null;
-  private static Set<Session> clients = Collections.synchronizedSet(new HashSet<Session>());
-
+  // private static ScheduledExecutorService service = null;
+  // queue holds the list of connected clients
+  private static Queue<Session> queue = new ConcurrentLinkedQueue<Session>();
+  private static Thread publisherThread; // rate publisher thread
   @Autowired
   private AllarmService allarmService;
 
@@ -50,42 +46,69 @@ public class WebSocketAllarmController {
 
   }
 
+
+
   @OnOpen
   public void onOpenSession(Session session, EndpointConfig config) {
     /**
      * Manage session
      */
-    HttpSession httpSession = (HttpSession) config.getUserProperties().get("HTTP_SESSION");
-    if (httpSession != null) {
-      httpSession.setAttribute("WEBSOCKET_SESSION", session);
-      logger.debug("manage session attribute {}", session);
-    }
-    synchronized (clients) {
-      logger.debug("add item to clients: {}", session.getId());
-      clients.add(session);
+    queue.add(session);
+    logger.debug("New session opened: {}", session.getId());
+    if (queue.size() != 0) {
+      publisherThread = new Thread() {
+        @Override
+        public void run() {
+          while (true) {
+            if (queue != null)
+              sendMessageToAll(allarmService.jsonGetAllarms());
+            try {
+              sleep(3000);
+            } catch (InterruptedException e) {
+            }
+          }
+        };
+      };
+      publisherThread.start();
     }
 
-    if (clients.size() != 0) {
-      if (service == null) {
-        /**
-         * activate executor if not exist
-         */
-        ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
-        service.scheduleAtFixedRate(() -> checkAllarmOnDatabase(session), 0, 3, TimeUnit.SECONDS);
-      }
-    }
+
+    // if (queue.size() != 0) {
+    // if (service == null) {
+    // /**
+    // * activate executor if not exist
+    // */
+    // ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
+    // service.scheduleAtFixedRate(() -> checkAllarmOnDatabase(session), 0, 3, TimeUnit.SECONDS);
+    // }
+    // }
   }
 
   @OnError
   public void error(Session session, Throwable t) {
-    for (Session s : clients) {
-      if (s.getId().equals(session.getId())) {
-        clients.remove(session);
-        logger.error("Error on session " + session.getId());
-        return;
+    System.err.println("Error on session " + session.getId());
+    logger.debug("Error on session " + session.getId());
+    publisherThread.stop();
+  }
+
+
+  private static void sendMessageToAll(String msg) {
+    try {
+      /* Send the new rate to all open WebSocket sessions */
+      ArrayList<Session> closedSessions = new ArrayList<>();
+      for (Session session : queue) {
+        if (!session.isOpen()) {
+          logger.error("Closed session: " + session.getId());
+          closedSessions.add(session);
+        } else {
+          session.getBasicRemote().sendText(msg);
+        }
       }
+      queue.removeAll(closedSessions);
+      System.out.println("Sending message to " + queue.size() + " clients");
+    } catch (Throwable e) {
+      e.printStackTrace();
     }
-    logger.debug("no matching session " + session.getId());
   }
 
 
@@ -96,38 +119,40 @@ public class WebSocketAllarmController {
     /**
      * broadcast message
      */
-    synchronized (clients) {
-      for (Session sess : session.getOpenSessions()) {
-        if (sess.isOpen()) {
-          try {
-            String result = allarmService.jsonGetAllarms();
-            sess.getBasicRemote().sendText(result);
-          } catch (IOException ex) {
-            logger.error(ex.getMessage());
-          }
-        }
-      }
-    }
+    // synchronized (clients) {
+    // for (Session sess : session.getOpenSessions()) {
+    // if (sess.isOpen()) {
+    // try {
+    // String result = jobResult.getResult();
+    // sess.getBasicRemote().sendText(result);
+    // logger.debug("send result: ", result);
+    // } catch (IOException ex) {
+    // logger.error(ex.getMessage());
+    // }
+    // }
+    // }
+    // }
   }
 
   @OnClose
   public void onClose(Session session) {
-    synchronized (clients) {
-      for (Session s : clients) {
-        if (s.getId().equals(session.getId())) {
-          clients.remove(session);
-          logger.debug("Client disconnected @ {}", session.getId());
-        }
-      }
-    }
+    queue.remove(session);
+    logger.debug("session closed:  " + session.getId());
+    publisherThread.stop();
   }
 
   /**
    * destroy scheduler avoiding leak
    */
   public static void destroyScheduler() {
-    if (service != null && clients.size() == 0) {
-      service.shutdown();
+    // if (service != null && clients.size() == 0) {
+    // service.shutdown();
+    // }
+    if (publisherThread != null) {
+      publisherThread.destroy();;
+    }
+    if (queue != null) {
+      queue.remove();
     }
   }
 }

@@ -33,9 +33,9 @@ import it.tsc.interceptor.PageRequestInterceptor;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = {"it.tsc.service.impl", "it.tsc.dao.impl", "it.tsc.controller",
-    "it.tsc.component"})
-@Import({ServiceConfig.class,SchedulerConfig.class})
+@ComponentScan(basePackages = { "it.tsc.service.impl", "it.tsc.dao.impl", "it.tsc.controller",
+    "it.tsc.component" })
+@Import({ ServiceConfig.class })
 public class WebAppConfig extends WebMvcConfigurerAdapter {
 
   public WebAppConfig() {
@@ -53,10 +53,10 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
         .setCachePeriod(31556926);
     registry.addResourceHandler("/*.html").addResourceLocations("/WEB-INF/pages/");
   }
-  
+
   @Override
   public void addViewControllers(ViewControllerRegistry registry) {
-      registry.addViewController("/").setViewName("forward:/welcome.html");
+    registry.addViewController("/").setViewName("forward:/welcome.html");
   }
 
   @Override
@@ -113,7 +113,7 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
   @Bean
   public TilesConfigurer tilesConfigurer() {
     TilesConfigurer tilesConfigurer = new TilesConfigurer();
-    tilesConfigurer.setDefinitions(new String[] {"/WEB-INF/tiles-config/tiles.xml"});
+    tilesConfigurer.setDefinitions(new String[] { "/WEB-INF/tiles-config/tiles.xml" });
     tilesConfigurer.setCheckRefresh(true);
     return tilesConfigurer;
   }
@@ -127,7 +127,7 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
   public MessageSource messageSource() {
     ReloadableResourceBundleMessageSource messageSource =
         new ReloadableResourceBundleMessageSource();
-    String[] resources = {"/WEB-INF/classes/messages"};
+    String[] resources = { "/WEB-INF/classes/messages" };
     messageSource.setBasenames(resources);
     messageSource.setUseCodeAsDefaultMessage(true);
     return messageSource;

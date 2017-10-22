@@ -27,9 +27,7 @@ public class AllarmWatcherJob implements Job {
   @Override
   public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
     logger.debug("Start job");
-    if (allarmService != null) {
-      logger.debug("AllarmWatcherJob result: {}", allarmService.jsonGetAllarms());
-    }
+    // send websocket event
     logger.debug("End job");
   }
 

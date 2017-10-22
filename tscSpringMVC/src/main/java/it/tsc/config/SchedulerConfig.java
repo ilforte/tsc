@@ -64,7 +64,7 @@ public class SchedulerConfig {
   }
 
   @Bean
-  public JobDetailFactoryBean processMyJob() {
+  public JobDetailFactoryBean jobDetailFactoryBean() {
     JobDetailFactoryBean jobDetailFactory = new JobDetailFactoryBean();
     jobDetailFactory.setJobClass(AllarmWatcherJob.class);
     jobDetailFactory.setDurability(true);
@@ -75,7 +75,7 @@ public class SchedulerConfig {
   // Configure cron to fire trigger every 1 minute
   public CronTriggerFactoryBean cronTriggerFactoryBean() {
     CronTriggerFactoryBean cronTriggerFactoryBean = new CronTriggerFactoryBean();
-    cronTriggerFactoryBean.setJobDetail(processMyJob().getObject());
+    cronTriggerFactoryBean.setJobDetail(jobDetailFactoryBean().getObject());
     cronTriggerFactoryBean.setCronExpression("0/3 * * * * ?");
     return cronTriggerFactoryBean;
   }
