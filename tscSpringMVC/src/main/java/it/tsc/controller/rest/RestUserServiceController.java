@@ -22,12 +22,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.tsc.domain.PortalUser;
-import it.tsc.domain.Response;
-import it.tsc.domain.Role;
-import it.tsc.domain.ValidationResponse;
 import it.tsc.domain.PortalUser.PortalUserInsert;
 import it.tsc.domain.PortalUser.PortalUserRemove;
 import it.tsc.domain.PortalUser.PortalUserRenewPassword;
+import it.tsc.domain.Response;
+import it.tsc.domain.Role;
+import it.tsc.domain.ValidationResponse;
 import it.tsc.service.UserService;
 
 /**
@@ -81,7 +81,7 @@ public class RestUserServiceController extends RestBaseController {
    * @return
    */
   @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_SADMIN')")
-  @RequestMapping(value = "/admin/userService/jsonAddUser", method = RequestMethod.POST,
+  @RequestMapping(value = { "/admin/userService/jsonAddUser" }, method = RequestMethod.POST,
       produces = "application/json")
   public @ResponseBody ValidationResponse jsonInsertUser(@AuthenticationPrincipal Principal user,
       @RequestBody PortalUser portalUser, BindingResult result) {
@@ -117,7 +117,7 @@ public class RestUserServiceController extends RestBaseController {
    * @return
    */
   @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_SADMIN')")
-  @RequestMapping(value = "/admin/userService/jsonRemoveUser", method = RequestMethod.POST,
+  @RequestMapping(value = { "/admin/userService/jsonRemoveUser" }, method = RequestMethod.POST,
       produces = "application/json")
   public @ResponseBody ValidationResponse jsonRemoveUser(@AuthenticationPrincipal Principal user,
       @Valid @RequestBody PortalUser portalUser, BindingResult result) {
@@ -151,8 +151,8 @@ public class RestUserServiceController extends RestBaseController {
    * @return
    */
   @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_SADMIN') or hasAuthority('ROLE_USER')")
-  @RequestMapping(value = "/user/userService/jsonGetUser", method = RequestMethod.GET,
-      produces = "application/json")
+  @RequestMapping(value = { "/admin/userService/jsonGetUser", "/user/userService/jsonGetUser" },
+      method = RequestMethod.GET, produces = "application/json")
   public @ResponseBody String jsonGetUser(@AuthenticationPrincipal Principal user) {
     // TODO return rest json service get user
     logger.debug("/admin/userService/jsonGetUser");

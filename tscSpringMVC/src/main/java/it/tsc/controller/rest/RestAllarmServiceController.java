@@ -39,8 +39,9 @@ public class RestAllarmServiceController {
    * @return
    */
   @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_SADMIN') or hasAuthority('ROLE_USER')")
-  @RequestMapping(value = "/user/allarmService/removeAllarm", method = RequestMethod.POST,
-      produces = "application/json")
+  @RequestMapping(
+      value = { "/user/allarmService/removeAllarm", "/admin/allarmService/removeAllarm" },
+      method = RequestMethod.POST, produces = "application/json")
   public @ResponseBody Allarm removeAllarm(@RequestBody Allarm allarm,
       @AuthenticationPrincipal Principal user) {
     logger.debug("getSerial_uuid() {} user: {}", allarm.getSerial_uuid());
@@ -57,8 +58,9 @@ public class RestAllarmServiceController {
    * @return
    */
   @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_SADMIN') or hasAuthority('ROLE_USER')")
-  @RequestMapping(value = "/user/allarmService/updateAllarm", method = RequestMethod.POST,
-      produces = "application/json")
+  @RequestMapping(
+      value = { "/user/allarmService/updateAllarm", "/admin/allarmService/updateAllarm" },
+      method = RequestMethod.POST, produces = "application/json")
   public @ResponseBody Allarm updateAllarm(@RequestBody Allarm allarm,
       @AuthenticationPrincipal Principal user) {
     logger.debug("getSerial_uuid() {} user: {}", allarm.getSerial_uuid(), user.getName());

@@ -14,6 +14,7 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,7 +89,11 @@ public class WebSocketAllarmController {
   public void error(Session session, Throwable t) {
     System.err.println("Error on session " + session.getId());
     logger.debug("Error on session " + session.getId());
-    publisherThread.stop();
+    try {
+      publisherThread.join();
+    } catch (InterruptedException e) {
+      logger.error("error: {}", e);
+    }
   }
 
 
@@ -100,12 +105,11 @@ public class WebSocketAllarmController {
         if (!session.isOpen()) {
           logger.error("Closed session: " + session.getId());
           closedSessions.add(session);
-        } else {
+        } else if (msg != null && StringUtils.isNotEmpty(msg)) {
           session.getBasicRemote().sendText(msg);
         }
       }
       queue.removeAll(closedSessions);
-      System.out.println("Sending message to " + queue.size() + " clients");
     } catch (Throwable e) {
       e.printStackTrace();
     }
@@ -138,7 +142,11 @@ public class WebSocketAllarmController {
   public void onClose(Session session) {
     queue.remove(session);
     logger.debug("session closed:  " + session.getId());
-    publisherThread.stop();
+    try {
+      publisherThread.join();
+    } catch (InterruptedException e) {
+      logger.error("onClose: {}", e);
+    }
   }
 
   /**
@@ -149,7 +157,11 @@ public class WebSocketAllarmController {
     // service.shutdown();
     // }
     if (publisherThread != null) {
-      publisherThread.destroy();;
+      try {
+        publisherThread.join();
+      } catch (InterruptedException e) {
+        logger.error("destroyScheduler: {}", e);
+      }
     }
     if (queue != null) {
       queue.remove();

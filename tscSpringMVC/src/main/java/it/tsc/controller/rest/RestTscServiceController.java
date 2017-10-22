@@ -44,8 +44,8 @@ public class RestTscServiceController extends RestBaseController {
    * @return
    */
   @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_SADMIN') or hasAuthority('ROLE_USER')")
-  @RequestMapping(value = "/user/tscService/getAnagrafica", method = RequestMethod.POST,
-      produces = "application/json")
+  @RequestMapping(value = { "/user/tscService/getAnagrafica", "/admin/tscService/getAnagrafica" },
+      method = RequestMethod.POST, produces = "application/json")
   public @ResponseBody String getAnagrafica(@AuthenticationPrincipal Principal user,
       @RequestBody Allarm allarm, BindingResult result) {
     // TODO return rest json service get user
