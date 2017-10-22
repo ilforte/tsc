@@ -6,7 +6,6 @@ package it.tsc.config;
 import java.io.IOException;
 import java.util.Properties;
 
-import org.quartz.Scheduler;
 import org.quartz.Trigger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,8 +33,6 @@ import it.tsc.job.AutowiringSpringBeanJobFactory;
 @PropertySource(value = { "classpath:quartz.properties" }, ignoreResourceNotFound = false)
 public class SchedulerConfig {
   private static Logger logger = LoggerFactory.getLogger(SchedulerConfig.class);
-  private Trigger trigger;
-  private Scheduler scheduler;
 
   /**
    * Class for spring definition scheduler
