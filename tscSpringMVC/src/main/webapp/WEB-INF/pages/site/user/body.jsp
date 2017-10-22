@@ -28,7 +28,7 @@ $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 						try {
 								$("#userGrid").jsGrid({data:JSON.parse(resposeJsonObject)});
 					    	} catch(e) {
-					    		toastr.error(e);
+					    		toastr.error(e,"#user");
 					    }
 				    }
 				});
@@ -51,7 +51,7 @@ $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 						try {
 								$("#allUserGrid").jsGrid({data:JSON.parse(resposeJsonObject)});
 					    	} catch(e) {
-					    		toastr.error(e);
+					    		toastr.error(e,"#allUserGrid");
 					    }
 				    }
 				});

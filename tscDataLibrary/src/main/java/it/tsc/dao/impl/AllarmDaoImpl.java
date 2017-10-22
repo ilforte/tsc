@@ -119,7 +119,6 @@ public class AllarmDaoImpl extends AbstractDao implements AllarmDao {
 	    EntityManager entityManager = entityManagerFactory.createEntityManager();
 	    TypedQuery<Allarm> query = entityManager.createNamedQuery(Allarm.SELECT_ALL_ALLARMS, Allarm.class);
 	    List<Allarm> list = query.getResultList();
-	    entityManager.close();
 	  
 	    String result = ConversionUtil.getGsonConverter().toJson(list);
         return result;

@@ -87,7 +87,7 @@ public class MvcRestUserTest {
     MvcResult result = mvc.perform(builder).andExpect(ok).andReturn();
     String content = result.getResponse().getContentAsString();
     ValidationResponse response = gson.fromJson(content, ValidationResponse.class);
-    assertTrue(response.getStatus().equalsIgnoreCase(Response.FAILURE.toString()));
+    assertTrue(response.getStatus().equalsIgnoreCase(Response.SUCCESS.toString()));
     logger.debug("content {}", content);
   }
 

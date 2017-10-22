@@ -64,7 +64,7 @@ $(document).ready(function(){
 			try {
 				$("#allarmGrid").jsGrid({data:JSON.parse(event.data)});
 		    	} catch(e) {
-		    		toastr.error(e);
+		    		toastr.error(e,"#allarmGrid");
 		    }
         	//console.log(JSON.stringify(event.data));
         	/**

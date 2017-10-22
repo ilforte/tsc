@@ -3,6 +3,7 @@
  */
 package it.tsc.test.dao;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -41,7 +42,7 @@ public class UserDaoTest extends BaseDaoTest {
   @Test
   public void testUserEmailDao() {
     userService.getUser("matteo", "test");
-    //assertTrue(userService.getUser("matteo", "test") == null);
+    assertTrue(userService.getUser("matteo", "test") == null);
     assertTrue(userService.getUser("matteo", "matteo@infamiglia.it") != null);
   }
 
@@ -59,7 +60,7 @@ public class UserDaoTest extends BaseDaoTest {
   public void testAdmin() {
     PortalUser user = new PortalUser();
     user.setUsername("matteo");
-    assertTrue(userService.isAdmin(user));
+    assertNotNull(userService.isAdmin(user));
   }
 
   @Test

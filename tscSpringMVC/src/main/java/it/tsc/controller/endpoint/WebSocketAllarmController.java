@@ -71,7 +71,7 @@ public class WebSocketAllarmController {
          * activate executor if not exist
          */
         ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
-        service.scheduleAtFixedRate(() -> checkAllarmOnDatabase(session), 0, 5, TimeUnit.SECONDS);
+        service.scheduleAtFixedRate(() -> checkAllarmOnDatabase(session), 0, 3, TimeUnit.SECONDS);
       }
     }
   }

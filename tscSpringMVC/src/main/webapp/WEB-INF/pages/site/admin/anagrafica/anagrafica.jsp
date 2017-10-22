@@ -56,7 +56,7 @@
 					try {
 							parsed = JSON.parse(resposeJsonObject);
 			    		} catch(e) {
-			    			toastr.error(e);
+			    			toastr.error(e,"loadAnagrafica");
 			    	}
 			        if (parsed.length >0) {
 				        viewModel.ab_codi(parsed[0].ab_codi);
