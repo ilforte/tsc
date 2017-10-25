@@ -3,8 +3,7 @@
  */
 package it.tsc.test.mvc;
 
-import static org.junit.Assert.assertTrue;
-
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,18 +32,16 @@ import com.google.gson.Gson;
 import it.tsc.config.ServiceConfig;
 import it.tsc.config.WebAppConfig;
 import it.tsc.domain.PortalUser;
-import it.tsc.domain.Response;
 import it.tsc.domain.Role;
-import it.tsc.domain.ValidationResponse;
 
 /**
  * @author astraservice
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextHierarchy({@ContextConfiguration(value = "classpath:spring-security.xml"),
+@ContextHierarchy({ @ContextConfiguration(value = "classpath:spring-security.xml"),
     @ContextConfiguration(classes = WebAppConfig.class),
-    @ContextConfiguration(classes = ServiceConfig.class)})
+    @ContextConfiguration(classes = ServiceConfig.class) })
 @WebAppConfiguration
 public class MvcRestUserTest {
   private static Logger logger = LoggerFactory.getLogger(MvcRestUserTest.class);
@@ -70,15 +67,16 @@ public class MvcRestUserTest {
   }
 
   @Test
-  @WithMockUser(roles = "ADMIN", username = "matteo")
-  public void testRemoveUser() throws Exception {
+  @WithMockUser(roles = "ADMIN", username = "admin")
+  public void testGetUser() throws Exception {
     PortalUser user = new PortalUser();
-    user.setUsername("testUser");
+    user.setUsername("admin");
     user.setRole(Role.ROLE_ADMIN.toString());
     // omit email
     ResultMatcher ok = MockMvcResultMatchers.status().isOk();
+    // perform get
     MockHttpServletRequestBuilder builder =
-        MockMvcRequestBuilders.post("/admin/userService/jsonRemoveUser");
+        MockMvcRequestBuilders.get("/user/userService/jsonGetUser");
     builder.content(gson.toJson(user));
     builder.header("Accept", "application/json");
     builder.header("Content-Type", "application/json");
@@ -86,9 +84,11 @@ public class MvcRestUserTest {
 
     MvcResult result = mvc.perform(builder).andExpect(ok).andReturn();
     String content = result.getResponse().getContentAsString();
-    ValidationResponse response = gson.fromJson(content, ValidationResponse.class);
-    assertTrue(response.getStatus().equalsIgnoreCase(Response.SUCCESS.toString()));
-    logger.debug("content {}", content);
+    logger.debug("testGetUser content {}", content);
+    logger.debug("escapeEcmaScript content {}", StringEscapeUtils.escapeEcmaScript(content));
+    // Users[] users = gson.fromJson(content, Users[].class);
+    // Users responseUser = gson.fromJson(content, Users.class);
+    // assertTrue(responseUser.getKey().getUsername().equals("admin"));
   }
 
 }

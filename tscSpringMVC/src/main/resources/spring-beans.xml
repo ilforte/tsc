@@ -20,6 +20,10 @@
 <beans:bean id="entityManagerFactory"
 	class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 	<beans:property name="persistenceUnitName" value="cassandra_pu" />
-</beans:bean>	
+</beans:bean>
+
+<beans:bean id="sharedEntityManager" class="org.springframework.orm.jpa.support.SharedEntityManagerBean">
+	<beans:property name="entityManagerFactory" ref="entityManagerFactory"/>
+</beans:bean>
 	
 </beans:beans>

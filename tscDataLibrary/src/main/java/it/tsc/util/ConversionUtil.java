@@ -18,36 +18,36 @@ import com.google.gson.JsonParser;
  */
 public class ConversionUtil {
 
-  /**
-   * 
-   */
-  public ConversionUtil() {
-    // TODO Auto-generated constructor stub
-  }
+	/**
+	 * 
+	 */
+	public ConversionUtil() {
+		// TODO Auto-generated constructor stub
+	}
 
-  /**
-   * return array of JSON object
-   * 
-   * @param rows
-   * @return
-   */
-  public static String returnJson(List<Row> rows) {
-    JsonArray array = new JsonArray();
-    for (Row row : rows) {
-      JsonObject json = (JsonObject) new JsonParser().parse(row.getString("[json]"));
-      array.add(json);
-    }
-    return array.toString();
-  }
-  
-  /**
-   * return gson converter
-   * @return
-   */
-  public static Gson getGsonConverter() {
-	    Gson gson =
-	            new GsonBuilder().excludeFieldsWithoutExposeAnnotation().setPrettyPrinting().create();
+	/**
+	 * return array of JSON object
+	 * 
+	 * @param rows
+	 * @return
+	 */
+	public static String returnJson(List<Row> rows) {
+		JsonArray array = new JsonArray();
+		for (Row row : rows) {
+			JsonObject json = (JsonObject) new JsonParser().parse(row.getString("[json]"));
+			array.add(json);
+		}
+		return array.toString();
+	}
+
+	/**
+	 * return gson converter
+	 * 
+	 * @return
+	 */
+	public static Gson getGsonConverter() {
+		Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
 		return gson;
-  }
+	}
 
 }

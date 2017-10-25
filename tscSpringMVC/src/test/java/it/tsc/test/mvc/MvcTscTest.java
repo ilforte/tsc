@@ -28,7 +28,6 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.google.gson.Gson;
 
-import it.tsc.config.ServiceConfig;
 import it.tsc.config.WebAppConfig;
 import it.tsc.domain.Allarm;
 
@@ -37,9 +36,8 @@ import it.tsc.domain.Allarm;
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextHierarchy({@ContextConfiguration(value = "classpath:spring-security.xml"),
-    @ContextConfiguration(classes = WebAppConfig.class),
-    @ContextConfiguration(classes = ServiceConfig.class)})
+@ContextHierarchy({ @ContextConfiguration(value = "classpath:spring-security.xml"),
+    @ContextConfiguration(classes = WebAppConfig.class) })
 @WebAppConfiguration
 public class MvcTscTest {
   private static Logger logger = LoggerFactory.getLogger(MvcTscTest.class);

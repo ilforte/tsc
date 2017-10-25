@@ -16,12 +16,13 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
  *
  */
 @Configuration
-@ComponentScan(basePackages = {"it.tsc.service.impl", "it.tsc.dao"})
-@ImportResource({"classpath:spring-beans.xml"})
-@PropertySource(value = {"classpath:cassandra.properties"}, ignoreResourceNotFound = false)
+@ComponentScan(basePackages = { "it.tsc.service.impl", "it.tsc.dao" })
+@ImportResource({ "classpath:spring-beans.xml" })
+@PropertySource(value = { "classpath:cassandra.properties" }, ignoreResourceNotFound = false)
 public class ServiceConfig {
   @Value("${cassandra-persistence-unit}")
   private String PERSISTENCE_UNIT;
+
   /**
    * 
    */
@@ -36,13 +37,14 @@ public class ServiceConfig {
   public static PropertySourcesPlaceholderConfigurer propertyConfigurerAbstractDao() {
     return new PropertySourcesPlaceholderConfigurer();
   }
-  
-//  @PersistenceUnit(unitName="cassandra_pu")
-//  public EntityManagerFactory entityManagerFactory() {
-//    Map<String, String> props = new HashMap<String, String>();
-//    props.put(CassandraConstants.CQL_VERSION, CassandraConstants.CQL_VERSION_3_0);
-//    EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT, props);
-//    return entityManagerFactory;  
-//  }
+
+  // @PersistenceUnit(unitName="cassandra_pu")
+  // public EntityManagerFactory entityManagerFactory() {
+  // Map<String, String> props = new HashMap<String, String>();
+  // props.put(CassandraConstants.CQL_VERSION, CassandraConstants.CQL_VERSION_3_0);
+  // EntityManagerFactory entityManagerFactory =
+  // Persistence.createEntityManagerFactory(PERSISTENCE_UNIT, props);
+  // return entityManagerFactory;
+  // }
 
 }
