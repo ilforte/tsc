@@ -21,6 +21,7 @@ import it.tsc.service.AllarmService;
 @DisallowConcurrentExecution
 public class AllarmWatcherJob implements Job {
   private static Logger logger = LoggerFactory.getLogger(AllarmWatcherJob.class);
+  @SuppressWarnings("unused")
   @Autowired
   private AllarmService allarmService;
 

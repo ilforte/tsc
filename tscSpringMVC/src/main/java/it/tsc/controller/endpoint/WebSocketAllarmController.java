@@ -6,6 +6,9 @@ package it.tsc.controller.endpoint;
 import java.util.ArrayList;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import javax.websocket.EndpointConfig;
 import javax.websocket.OnClose;
@@ -36,7 +39,7 @@ public class WebSocketAllarmController {
   // private static ScheduledExecutorService service = null;
   // queue holds the list of connected clients
   private static Queue<Session> queue = new ConcurrentLinkedQueue<Session>();
-  private static Thread publisherThread; // rate publisher thread
+  private static final ScheduledExecutorService ses = Executors.newSingleThreadScheduledExecutor();
   @Autowired
   private AllarmService allarmService;
 
@@ -57,32 +60,13 @@ public class WebSocketAllarmController {
     queue.add(session);
     logger.debug("New session opened: {}", session.getId());
     if (queue.size() != 0) {
-      publisherThread = new Thread() {
+      ses.scheduleWithFixedDelay(new Runnable() {
         @Override
         public void run() {
-          while (true) {
-            if (queue != null)
-              sendMessageToAll(allarmService.jsonGetAllarms());
-            try {
-              sleep(3000);
-            } catch (InterruptedException e) {
-            }
-          }
-        };
-      };
-      publisherThread.start();
+          sendMessageToAll(allarmService.jsonGetAllarms());
+        }
+      }, 0, 3, TimeUnit.SECONDS);
     }
-
-
-    // if (queue.size() != 0) {
-    // if (service == null) {
-    // /**
-    // * activate executor if not exist
-    // */
-    // ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
-    // service.scheduleAtFixedRate(() -> checkAllarmOnDatabase(session), 0, 3, TimeUnit.SECONDS);
-    // }
-    // }
   }
 
   @OnError
@@ -90,8 +74,8 @@ public class WebSocketAllarmController {
     System.err.println("Error on session " + session.getId());
     logger.debug("Error on session " + session.getId());
     try {
-      publisherThread.join();
-    } catch (InterruptedException e) {
+      ses.shutdown();
+    } catch (Exception e) {
       logger.error("error: {}", e);
     }
   }
@@ -115,36 +99,13 @@ public class WebSocketAllarmController {
     }
   }
 
-
-  private void checkAllarmOnDatabase(Session session) {
-    /**
-     * Open database connection and send message
-     */
-    /**
-     * broadcast message
-     */
-    // synchronized (clients) {
-    // for (Session sess : session.getOpenSessions()) {
-    // if (sess.isOpen()) {
-    // try {
-    // String result = jobResult.getResult();
-    // sess.getBasicRemote().sendText(result);
-    // logger.debug("send result: ", result);
-    // } catch (IOException ex) {
-    // logger.error(ex.getMessage());
-    // }
-    // }
-    // }
-    // }
-  }
-
   @OnClose
   public void onClose(Session session) {
     queue.remove(session);
     logger.debug("session closed:  " + session.getId());
     try {
-      publisherThread.join();
-    } catch (InterruptedException e) {
+      ses.shutdown();
+    } catch (Exception e) {
       logger.error("onClose: {}", e);
     }
   }
@@ -153,17 +114,14 @@ public class WebSocketAllarmController {
    * destroy scheduler avoiding leak
    */
   public static void destroyScheduler() {
-    // if (service != null && clients.size() == 0) {
-    // service.shutdown();
-    // }
-    if (publisherThread != null) {
+    if (!ses.isTerminated()) {
       try {
-        publisherThread.join();
-      } catch (InterruptedException e) {
+        ses.shutdown();
+      } catch (Exception e) {
         logger.error("destroyScheduler: {}", e);
       }
     }
-    if (queue != null) {
+    if (queue != null && queue.size() != 0) {
       queue.remove();
     }
   }
