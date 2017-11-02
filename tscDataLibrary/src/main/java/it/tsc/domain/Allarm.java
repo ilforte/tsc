@@ -4,7 +4,6 @@ package it.tsc.domain;
  */
 
 
-import java.time.Instant;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -15,8 +14,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import com.google.gson.annotations.Expose;
-
-import it.tsc.domain.BaseDomain;
 
 /**
  * @author astraservice POJO class for allarm
