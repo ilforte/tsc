@@ -40,7 +40,7 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
   public void handle(HttpServletRequest request, HttpServletResponse response,
       AccessDeniedException accessDeniedException) throws IOException, ServletException {
     // do some business logic, then redirect to errorPage url
-    logger.debug("request page: {}", request.getRequestURI());
+    logger.debug("handle request page: {}", request.getRequestURI());
     response.sendRedirect(errorPage);
   }
 
