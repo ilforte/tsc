@@ -13,7 +13,6 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import it.tsc.config.SchedulerConfig;
 import it.tsc.config.ServiceConfig;
-import it.tsc.test.dao.AllarmsDaoTest;
 
 /**
  * @author astraservice

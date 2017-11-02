@@ -19,8 +19,6 @@ import it.tsc.domain.PortalUser;
 public class LoginController extends BaseController {
   private static Logger logger = LoggerFactory.getLogger(LoginController.class);
 
-
-
   @RequestMapping(value = { "/", "/welcome**" }, method = RequestMethod.GET)
   public ModelAndView welcomePage() {
     ModelAndView model = new ModelAndView();
