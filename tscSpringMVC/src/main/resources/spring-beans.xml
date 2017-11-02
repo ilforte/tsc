@@ -2,10 +2,16 @@
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ws="http://jax-ws.dev.java.net/spring/core"
+    xmlns:wss="http://jax-ws.dev.java.net/spring/servlet"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
 	http://www.springframework.org/schema/context
-	http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+	http://www.springframework.org/schema/context/spring-context-2.5.xsd
+    http://jax-ws.dev.java.net/spring/core
+    http://jax-ws.java.net/spring/core.xsd
+    http://jax-ws.dev.java.net/spring/servlet
+    http://jax-ws.java.net/spring/servlet.xsd">
 	
 <beans:bean id="bcryptEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 <beans:bean id="customAuthenticationProvider"  class="it.tsc.component.CustomAuthenticationProvider"/>
@@ -22,8 +28,18 @@
 	<beans:property name="persistenceUnitName" value="cassandra_pu" />
 </beans:bean>
 
-<beans:bean id="sharedEntityManager" class="org.springframework.orm.jpa.support.SharedEntityManagerBean">
+<!-- <beans:bean id="sharedEntityManager" class="org.springframework.orm.jpa.support.SharedEntityManagerBean">
 	<beans:property name="entityManagerFactory" ref="entityManagerFactory"/>
-</beans:bean>
+</beans:bean> -->
+
+<!-- ws declaration -->
+<wss:binding url="/services/TscWebService">
+    <wss:service>
+        <ws:service bean="#allarmServiceWS"/>
+    </wss:service>
+</wss:binding>
+
+<!-- Web service methods -->
+<beans:bean id="allarmServiceWS" class="it.tsc.webservice.TscWebService" />
 	
 </beans:beans>

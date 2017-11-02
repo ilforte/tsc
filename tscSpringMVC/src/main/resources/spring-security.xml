@@ -27,6 +27,8 @@
 	        <security:intercept-url pattern="/welcome" access="permitAll" />
 	        <security:intercept-url pattern="/askNewPassword" access="permitAll" />
 	        <security:intercept-url pattern="/renewPassword" access="permitAll" />
+	        <!-- web services -->
+	        <security:intercept-url pattern="/services" access="permitAll" />
 			<!-- profiled access -->
 			<security:intercept-url pattern="/addMfaSecurityCode" access="hasRole('ROLE_SADMIN') or hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')" />
 			<security:intercept-url pattern="/checkMfaSecurityCode" access="hasRole('ROLE_SADMIN') or hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')" />
