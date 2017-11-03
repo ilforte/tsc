@@ -32,6 +32,12 @@
 	<beans:property name="entityManagerFactory" ref="entityManagerFactory"/>
 </beans:bean> -->
 
+<!-- SOAP header handler -->
+<beans:bean id="soapHandler" class="it.tsc.webservice.handler.SOAPHeaderHandler">
+    <beans:property name="username" value="testUser"/>
+    <beans:property name="password" value="testPassword"/>
+</beans:bean>
+
 <!-- ws declaration -->
 <wss:binding url="/services/TscWebService">
     <wss:service>

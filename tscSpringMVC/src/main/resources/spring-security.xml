@@ -18,6 +18,16 @@
    
    <!-- annotated methods with security -->
    <security:global-method-security pre-post-annotations="enabled"/>
+   
+   <!-- skip CRSF for web services -->
+	<security:http auto-config="true" use-expressions="true" pattern="/services/**">
+	    <security:csrf disabled="true" />
+	</security:http>
+	
+	<security:http auto-config="true" use-expressions="true" pattern="/tscSpringMVC/services/**">
+	    <security:csrf disabled="true" />
+	</security:http>
+   
     
 	<security:http auto-config="true" use-expressions="true">
 	        <!-- Interceptor urls -->
