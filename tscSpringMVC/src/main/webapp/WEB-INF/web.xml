@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-xmlns="http://java.sun.com/xml/ns/javaee" 
-xmlns:web="http://java.sun.com/xml/ns/javaee" 
-xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" 
-id="WebApp_ID" version="2.5">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
   <display-name>tscSpringMVC Archetype Created Web Application</display-name>
-  
+  <!-- WEB Servlet -->
   <servlet>
     <servlet-name>tscSpringMVC</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -26,23 +22,21 @@ id="WebApp_ID" version="2.5">
     <servlet-name>tscSpringMVC</servlet-name>
     <url-pattern>/</url-pattern>
   </servlet-mapping>
-  
-	<servlet>
-		<servlet-name>jaxws-servlet</servlet-name>
-	    <servlet-class>
+  <!-- WS Servlet -->
+  <servlet>
+    <servlet-name>jaxws-servlet</servlet-name>
+    <servlet-class>
 	       com.sun.xml.ws.transport.http.servlet.WSSpringServlet
 	    </servlet-class>
-	</servlet>
-	<servlet-mapping>
-	    <servlet-name>jaxws-servlet</servlet-name>
-	    <url-pattern>/services/TscWebService</url-pattern>
-	</servlet-mapping>
-  
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>jaxws-servlet</servlet-name>
+    <url-pattern>/services/TscWebService</url-pattern>
+  </servlet-mapping>
   <!-- app listener -->
-<!--   <listener>
+  <!--   <listener>
     <listener-class>it.tsc.listener.AppSessionListener</listener-class>
   </listener> -->
-  
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
@@ -52,7 +46,6 @@ id="WebApp_ID" version="2.5">
 			/WEB-INF/classes/spring-security.xml
 		</param-value>
   </context-param>
-
   <filter>
     <filter-name>springSecurityFilterChain</filter-name>
     <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
@@ -69,7 +62,7 @@ id="WebApp_ID" version="2.5">
     <session-timeout>30</session-timeout>
   </session-config>
   <error-page>
-      <exception-type>java.lang.Throwable</exception-type>
-      <location>/errorPage.jsp</location>
+    <exception-type>java.lang.Throwable</exception-type>
+    <location>/errorPage.jsp</location>
   </error-page>
 </web-app>
