@@ -175,7 +175,6 @@
 			</exclusions>
 		</dependency>
 
-		
 		<!-- Datastax - Cassandra -->
 		<!-- https://mvnrepository.com/artifact/com.datastax.cassandra/cassandra-driver-core -->
 		<dependency>

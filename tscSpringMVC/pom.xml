@@ -131,6 +131,7 @@
           	   <compilerVersion>1.8</compilerVersion>
 	        </configuration>
 	    </plugin>
+		
 		<plugin>
 		    <groupId>org.apache.maven.plugins</groupId>
 		    <artifactId>maven-war-plugin</artifactId>
@@ -146,6 +147,7 @@
 		      </webResources>
 		    </configuration>
 		  </plugin>
+		  
 	  </plugins>
   </build>
 </project>
