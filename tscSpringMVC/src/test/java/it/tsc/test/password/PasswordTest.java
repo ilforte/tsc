@@ -36,6 +36,8 @@ public class PasswordTest {
 
     String passwd = encoder.encode("telesoccorsoInFamiglia01$");
     System.out.println("tsc pwd: " + passwd); // print hash
+    passwd = encoder.encode("cxf");
+    System.out.println("cxf pwd: " + passwd); // print hash
   }
 
 }

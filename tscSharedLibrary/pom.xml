@@ -144,14 +144,14 @@
 		</dependency>
 		
         <!-- JAX-WS -->
-		<dependency>
+<!--  		<dependency>
 		  	<groupId>com.sun.xml.ws</groupId>
 		    <artifactId>jaxws-rt</artifactId>
 		    <version>2.3.0</version>
-		</dependency>
+		</dependency> -->
 
 	 	<!-- Library from java.net, integrate Spring with JAX-WS -->
-		<dependency>
+<!--  		<dependency>
 			<groupId>org.jvnet.jax-ws-commons.spring</groupId>
 			<artifactId>jaxws-spring</artifactId>
 			<version>1.9</version>
@@ -173,7 +173,23 @@
 	      			<artifactId>stax-ex</artifactId>
 	        	  </exclusion>
 			</exclusions>
-		</dependency>
+		</dependency> -->
+
+		<dependency>
+		    <groupId>org.apache.cxf</groupId>
+		    <artifactId>cxf-rt-frontend-jaxws</artifactId>
+		    <version>3.1.13</version>
+		  </dependency>
+		  <dependency>
+		    <groupId>org.apache.cxf</groupId>
+		    <artifactId>cxf-rt-transports-http</artifactId>
+		    <version>3.1.13</version>
+		  </dependency>
+			<dependency>
+			  <groupId>org.apache.cxf</groupId>
+			  <artifactId>cxf-rt-ws-security</artifactId>
+			  <version>3.1.13</version>
+			</dependency>
 
 		<!-- Datastax - Cassandra -->
 		<!-- https://mvnrepository.com/artifact/com.datastax.cassandra/cassandra-driver-core -->

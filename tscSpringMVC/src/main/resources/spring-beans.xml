@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <beans:beans 
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
@@ -33,13 +34,8 @@
 </beans:bean> -->
 
 <!-- ws declaration -->
-<wss:binding url="/services/TscWebService">
-    <wss:service>
-        <ws:service bean="#allarmServiceWS"/>
-    </wss:service>
-</wss:binding>
+<beans:bean id="cxf" class="org.apache.cxf.bus.spring.SpringBus" />
+<beans:bean id="myPasswordCallback" class="it.tsc.webservice.UTPasswordCallback" />
 
-<!-- Web service methods -->
-<beans:bean id="allarmServiceWS" class="it.tsc.webservice.TscWebService" />
 	
 </beans:beans>
