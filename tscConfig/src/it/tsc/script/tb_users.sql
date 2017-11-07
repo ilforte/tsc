@@ -5,6 +5,7 @@ CREATE TABLE ks_tsc.tb_users(
   role text,
   keyId text,
   base32Secret text,
+  mfaEnabled boolean,
   PRIMARY KEY (username,role)
 );
 

@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.google.gson.annotations.Expose;
 
@@ -28,10 +29,10 @@ public class Anagrafica {
 	@Column
 	@Expose
 	private String nominativo;
-	@Column
+	@Transient
 	@Expose
 	private Integer altezza;
-	@Column
+	@Transient
 	@Expose
 	private Double peso;
 

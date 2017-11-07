@@ -3,56 +3,70 @@
  */
 package it.tsc.domain;
 
-import com.datastax.driver.mapping.annotations.Column;
-import com.datastax.driver.mapping.annotations.PartitionKey;
-import com.datastax.driver.mapping.annotations.Table;
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 import com.google.gson.annotations.Expose;
+
+import it.tsc.domain.key.CompoundKey;
 
 /**
  * @author astraservice
  *
  */
-@Table(keyspace = "ks_tsc", name = "tb_groups", readConsistency = "QUORUM",
-    writeConsistency = "QUORUM", caseSensitiveKeyspace = false, caseSensitiveTable = false)
+@Entity
+@Table(name = "tb_groups", schema = "ks_tsc@cassandra_pu")
 public class Group {
+	@EmbeddedId
+	@Expose
+	private CompoundKey key = new CompoundKey();
 
-  @PartitionKey
-  @Column(name = "groupName")
-  @Expose
-  private String groupName;
+	@Column(name = "groupname")
+	@Expose
+	private String groupName;
 
-  /**
-   * 
-   */
-  public Group() {
-    super();
-  }
+	public Group(CompoundKey key, String groupName) {
+		super();
+		this.key = key;
+		this.groupName = groupName;
+	}
 
-  public Group(String groupName) {
-    super();
-    this.groupName = groupName;
-  }
+	public CompoundKey getKey() {
+		return key;
+	}
 
-  public String getGroupName() {
-    return groupName;
-  }
+	public void setKey(CompoundKey key) {
+		this.key = key;
+	}
 
-  public void setGroupName(String groupName) {
-    this.groupName = groupName;
-  }
+	public String getGroupName() {
+		return groupName;
+	}
 
-  @Override
-  public boolean equals(Object obj) {
-    if (obj instanceof Group) {
-      Group toCompare = (Group) obj;
-      return this.groupName.equals(toCompare.getGroupName());
-    }
-    return false;
-  }
+	public void setGroupName(String groupName) {
+		this.groupName = groupName;
+	}
 
-  @Override
-  public int hashCode() {
-    return groupName.hashCode();
-  }
+	/**
+	 * 
+	 */
+	public Group() {
+		super();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Group) {
+			return this.getGroupName().equals(((Group) obj).getGroupName());
+		}
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		return getGroupName().hashCode();
+	}
 
 }

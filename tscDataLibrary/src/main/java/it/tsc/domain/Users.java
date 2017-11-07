@@ -3,14 +3,13 @@
  */
 package it.tsc.domain;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -43,7 +42,7 @@ public class Users extends BaseDomain {
 
 	@EmbeddedId
 	@Expose
-	private CompoundKey key;
+	private CompoundKey key = new CompoundKey();
 	@Column
 	private String password;
 
@@ -51,7 +50,7 @@ public class Users extends BaseDomain {
 	@Expose
 	private String base32Secret;
 
-	@Column(name = "mfaEnabled")
+	@Column(name = "mfaenabled")
 	@Expose
 	private boolean mfaEnabled;
 
@@ -63,17 +62,15 @@ public class Users extends BaseDomain {
 	@Expose
 	private String keyId;
 
-	@OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
-	@JoinColumn(name = "groupName", referencedColumnName = "groupName")
-	@Expose
-	private List<Group> groups;
+	@OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
+	private Set<Group> groups = new HashSet<Group>();
 
-	public List<Group> getGroups() {
-		return groups;
+	public void setGroups(Set<Group> groups) {
+		this.groups = groups;
 	}
 
-	public void setGroups(List<Group> groups) {
-		this.groups = groups;
+	public Set<Group> getGroups() {
+		return groups;
 	}
 
 	public String getBase32Secret() {
@@ -125,21 +122,25 @@ public class Users extends BaseDomain {
 	}
 
 	public void addUsername(String username) {
-		if (this.key == null) {
-			this.key = new CompoundKey();
-			this.key.setUsername(username);
-		} else {
-			this.key.setUsername(username);
-		}
+		getNewKey();
+		this.key.setUsername(username);
 	}
 
 	public void addRole(Role role) {
+		getNewKey();
+		this.key.setRole(role.toString());
+	}
+
+	/**
+	 * create new key
+	 * 
+	 * @return
+	 */
+	private CompoundKey getNewKey() {
 		if (this.key == null) {
 			this.key = new CompoundKey();
-			this.key.setRole(role.toString());
-		} else {
-			this.key.setRole(role.toString());
 		}
+		return this.key;
 	}
 
 }

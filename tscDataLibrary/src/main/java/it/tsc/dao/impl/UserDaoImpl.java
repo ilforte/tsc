@@ -214,6 +214,10 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 
 	}
 
+	public void addUser(Users users) {
+		this.persist(users);
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 

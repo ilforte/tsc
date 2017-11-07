@@ -13,6 +13,7 @@ import it.tsc.dao.UserDao;
 import it.tsc.domain.ApplicationUser;
 import it.tsc.domain.PortalUser;
 import it.tsc.domain.Role;
+import it.tsc.domain.Users;
 import it.tsc.service.UserService;
 
 /**
@@ -76,6 +77,10 @@ public class UserServiceImpl implements UserService {
 	public boolean isAdmin(ApplicationUser requester) {
 		return requester.getAuthorities() != null && requester.getAuthorities().contains(Role.ROLE_ADMIN) ? true
 				: false;
+	}
+
+	public void addUser(Users users) {
+		userDao.addUser(users);
 	}
 
 	/*
