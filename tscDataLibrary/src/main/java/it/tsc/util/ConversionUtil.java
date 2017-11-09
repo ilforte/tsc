@@ -5,7 +5,6 @@ package it.tsc.util;
 
 import java.util.List;
 
-import com.datastax.driver.core.Row;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -13,8 +12,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 /**
- * @author astraservice
- *
+ * @author astraservice (JSON conversion utils)
  */
 public class ConversionUtil {
 
@@ -31,10 +29,10 @@ public class ConversionUtil {
 	 * @param rows
 	 * @return
 	 */
-	public static String returnJson(List<Row> rows) {
+	public static String returnJson(List<?> rows) {
 		JsonArray array = new JsonArray();
-		for (Row row : rows) {
-			JsonObject json = (JsonObject) new JsonParser().parse(row.getString("[json]"));
+		for (Object row : rows) {
+			JsonObject json = (JsonObject) new JsonParser().parse(new Gson().toJson(row));
 			array.add(json);
 		}
 		return array.toString();

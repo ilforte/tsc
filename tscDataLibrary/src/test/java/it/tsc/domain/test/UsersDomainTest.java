@@ -77,10 +77,21 @@ public class UsersDomainTest extends BaseDomainTest {
 	public void testJsonScript2() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 		Users users1 = new Users(new CompoundKey("matteo", Role.ROLE_USER), "", "", true, "", "");
 		Query query = getEntityManager().createNativeQuery(
-				"SELECT username,role,groupName from ks_tsc.tb_groups WHERE role='ROLE_USER' ALLOW FILTERING",
+				"SELECT username,role,groupName from ks_tsc.tb_groups WHERE role='ROLE_ADMIN' ALLOW FILTERING",
 				Group.class);
 		// query.setParameter("role", users1.getKey().getRole());
 		logger.debug("query: {}", ConversionUtil.getGsonConverter().toJson(query.getResultList()));
+		query.executeUpdate();
+	}
+
+	@Test
+	public void testJsonScript3() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+		Query query = getEntityManager().createNativeQuery("SELECT username,role,groupName from ks_tsc.tb_groups");
+		// query.setParameter("role", users1.getKey().getRole());
+		List result = query.getResultList();
+		for (Object object : result) {
+			logger.debug("query: {} object: {}", ConversionUtil.returnJson(result), object.getClass());
+		}
 		query.executeUpdate();
 	}
 
