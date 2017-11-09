@@ -40,8 +40,4 @@ public abstract class AbstractDao {
 		}
 	}
 
-	protected void persist(Object entity) {
-		getEntityManager().persist(entity);
-	}
-
 }

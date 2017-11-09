@@ -3,6 +3,7 @@
  */
 package it.tsc.domain.test;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,21 +14,21 @@ import javax.persistence.Persistence;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.datastax.driver.core.Cluster;
 import com.impetus.client.cassandra.common.CassandraConstants;
+import com.impetus.kundera.client.cassandra.dsdriver.DSClientFactory;
 
 /**
  * @author astraservice Class for Base Test Domain
  */
-public class BaseDomainTest {
-	private final String _PU = "cassandra_pu";
+public class BaseDomainTest extends DSClientFactory {
+	public final String PU = "cassandra_pu";
 	private EntityManager em = null;
 	protected static final Logger logger = LoggerFactory.getLogger(BaseDomainTest.class);
+	private Map<String, Object> propertyMap = new HashMap<String, Object>();
 
-	/**
-	 * 
-	 */
 	public BaseDomainTest() {
-		// TODO Auto-generated constructor stub
+		super();
 	}
 
 	/**
@@ -38,11 +39,19 @@ public class BaseDomainTest {
 	protected EntityManager getEntityManager() {
 		Map<String, String> props = new HashMap<String, String>();
 		props.put(CassandraConstants.CQL_VERSION, CassandraConstants.CQL_VERSION_3_0);
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory(_PU, props);
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory(PU, props);
 		if (em == null) {
 			em = emf.createEntityManager();
 		}
 		return this.em;
+	}
+
+	protected Cluster getCluster() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+		propertyMap.put("kundera.client.property", "persistence.xml");
+		this.setExternalProperties(propertyMap);
+		Object connection = this.createPoolOrConnection();
+		Cluster cluster = (Cluster) connection;
+		return cluster;
 	}
 
 }

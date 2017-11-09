@@ -5,8 +5,13 @@ package it.tsc.domain.key;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import com.google.gson.annotations.Expose;
+
+import it.tsc.domain.Role;
 
 /**
  * @author astraservice
@@ -14,14 +19,19 @@ import com.google.gson.annotations.Expose;
  */
 @Embeddable
 public class CompoundKey {
-	
-	@Column(name="username") 
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "username")
+	@Column(name = "username")
 	@Expose
-    private String username;
-	@Column(name="role")  
+	private String username;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "role", columnDefinition = "key.role")
+	@Column(name = "role")
 	@Expose
-    private String role;
-    
+	private String role;
+
 	public CompoundKey() {
 		super();
 	}
@@ -30,6 +40,12 @@ public class CompoundKey {
 		super();
 		this.username = username;
 		this.role = role;
+	}
+
+	public CompoundKey(String username, Role role) {
+		super();
+		this.username = username;
+		this.role = role.toString();
 	}
 
 	public String getUsername() {

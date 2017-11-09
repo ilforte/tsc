@@ -3,16 +3,11 @@
  */
 package it.tsc.domain;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.google.gson.annotations.Expose;
@@ -62,15 +57,33 @@ public class Users extends BaseDomain {
 	@Expose
 	private String keyId;
 
-	@OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
-	private Set<Group> groups = new HashSet<Group>();
+	// @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
+	// @JoinColumns({ @JoinColumn(name = "username", referencedColumnName =
+	// "username"),
+	// @JoinColumn(name = "role", referencedColumnName = "role") })
+	// private List<Group> groups = new ArrayList<Group>();
+	//
+	// public List<Group> getGroups() {
+	// return groups;
+	// }
+	//
+	// public void setGroups(List<Group> groups) {
+	// this.groups = groups;
+	// }
 
-	public void setGroups(Set<Group> groups) {
-		this.groups = groups;
+	public Users() {
+		super();
 	}
 
-	public Set<Group> getGroups() {
-		return groups;
+	public Users(CompoundKey key, String password, String base32Secret, boolean mfaEnabled, String email,
+			String keyId) {
+		super();
+		this.key = key;
+		this.password = password;
+		this.base32Secret = base32Secret;
+		this.mfaEnabled = mfaEnabled;
+		this.email = email;
+		this.keyId = keyId;
 	}
 
 	public String getBase32Secret() {
