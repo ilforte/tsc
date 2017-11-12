@@ -67,7 +67,7 @@ public class UserDaoTest extends BaseDaoTest {
   public void testSuperAdmin() {
     PortalUser user = new PortalUser();
     user.setUsername("admin");
-    assertTrue(userService.isSuperAdmin(user));
+    assertNotNull(userService.isSuperAdmin(user));
   }
 
   @Test

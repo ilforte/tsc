@@ -6,6 +6,7 @@ package it.tsc.test.ws;
 import static org.junit.Assert.assertTrue;
 
 import javax.xml.ws.Endpoint;
+import javax.xml.ws.WebServiceException;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -42,7 +43,7 @@ public class WSDialogTest {
     // TODO Auto-generated constructor stub
   }
 
-  @Test
+  @Test(expected = WebServiceException.class)
   public void testWS() {
     // Create instance of service implementation
     TscWebService impl = new TscWebService();
