@@ -16,8 +16,8 @@ import org.springframework.test.context.ContextHierarchy;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import it.tsc.config.ServiceConfig;
 import it.tsc.config.WebAppConfig;
+import it.tsc.data.config.ServiceConfig;
 import it.tsc.webservice.TscWebService;
 
 /**

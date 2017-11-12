@@ -16,7 +16,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import com.google.gson.Gson;
 
-import it.tsc.config.ServiceConfig;
+import it.tsc.data.config.ServiceConfig;
 import it.tsc.service.GroupService;
 
 /**

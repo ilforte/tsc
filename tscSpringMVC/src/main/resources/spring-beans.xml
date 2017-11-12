@@ -13,29 +13,20 @@
     http://jax-ws.java.net/spring/core.xsd
     http://jax-ws.dev.java.net/spring/servlet
     http://jax-ws.java.net/spring/servlet.xsd">
+    
+    <context:component-scan base-package="it.tsc.data.config" />
 	
-<beans:bean id="bcryptEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
-<beans:bean id="customAuthenticationProvider"  class="it.tsc.component.CustomAuthenticationProvider"/>
-<beans:bean id="authSuccessHandler"  class="it.tsc.security.handler.AuthSuccessHandler"/>
-<beans:bean id="customLogoutHandler"  class="it.tsc.security.handler.CustomLogoutHandler"/>
-   
-<beans:bean id="customAccessDeniedHandler"
-	class="it.tsc.security.handler.CustomAccessDeniedHandler">
-	<beans:property name="errorPage" value="/tscSpringMVC/403" />
-</beans:bean>
-
-<beans:bean id="entityManagerFactory"
-	class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-	<beans:property name="persistenceUnitName" value="cassandra_pu" />
-</beans:bean>
-
-<!-- <beans:bean id="sharedEntityManager" class="org.springframework.orm.jpa.support.SharedEntityManagerBean">
-	<beans:property name="entityManagerFactory" ref="entityManagerFactory"/>
-</beans:bean> -->
-
-<!-- ws declaration -->
-<beans:bean id="cxf" class="org.apache.cxf.bus.spring.SpringBus" />
-<beans:bean id="myPasswordCallback" class="it.tsc.webservice.UTPasswordCallback" />
-
+	<beans:bean id="customAuthenticationProvider"  class="it.tsc.component.CustomAuthenticationProvider"/>
+	<beans:bean id="authSuccessHandler"  class="it.tsc.security.handler.AuthSuccessHandler"/>
+	<beans:bean id="customLogoutHandler"  class="it.tsc.security.handler.CustomLogoutHandler"/>
+	   
+	<beans:bean id="customAccessDeniedHandler"
+		class="it.tsc.security.handler.CustomAccessDeniedHandler">
+		<beans:property name="errorPage" value="/tscSpringMVC/403" />
+	</beans:bean>
 	
+	<!-- ws declaration -->
+	<beans:bean id="cxf" class="org.apache.cxf.bus.spring.SpringBus" />
+	<beans:bean id="myPasswordCallback" class="it.tsc.webservice.UTPasswordCallback" />
+
 </beans:beans>

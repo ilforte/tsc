@@ -22,8 +22,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import it.tsc.config.ServiceConfig;
 import it.tsc.config.WebAppConfig;
+import it.tsc.data.config.ServiceConfig;
 
 /**
  * @author astraservice

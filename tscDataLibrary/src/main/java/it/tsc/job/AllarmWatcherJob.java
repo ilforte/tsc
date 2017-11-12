@@ -20,16 +20,15 @@ import it.tsc.service.AllarmService;
 @Service
 @DisallowConcurrentExecution
 public class AllarmWatcherJob implements Job {
-  private static Logger logger = LoggerFactory.getLogger(AllarmWatcherJob.class);
-  @SuppressWarnings("unused")
-  @Autowired
-  private AllarmService allarmService;
+	private static Logger logger = LoggerFactory.getLogger(AllarmWatcherJob.class);
+	@SuppressWarnings("unused")
+	@Autowired
+	private AllarmService allarmService;
 
-  @Override
-  public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-    logger.debug("Start job");
-    // send websocket event
-    logger.debug("End job");
-  }
+	public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
+		logger.debug("Start job");
+		// send websocket event
+		logger.debug("End job");
+	}
 
 }

@@ -27,6 +27,7 @@ import it.tsc.service.UserService;
 public class CustomAuthenticationProvider implements AuthenticationProvider {
   @Autowired
   private BCryptPasswordEncoder bcryptEncoder;
+  @Autowired
   private UserService userService;
 
   /**

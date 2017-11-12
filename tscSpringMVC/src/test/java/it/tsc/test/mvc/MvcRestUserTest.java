@@ -29,8 +29,8 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.google.gson.Gson;
 
-import it.tsc.config.ServiceConfig;
 import it.tsc.config.WebAppConfig;
+import it.tsc.data.config.ServiceConfig;
 import it.tsc.domain.PortalUser;
 import it.tsc.domain.Role;
 

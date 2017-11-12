@@ -17,8 +17,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.context.WebApplicationContext;
 
-import it.tsc.config.ServiceConfig;
 import it.tsc.config.WebAppConfig;
+import it.tsc.data.config.ServiceConfig;
 
 /**
  * @author astraservice

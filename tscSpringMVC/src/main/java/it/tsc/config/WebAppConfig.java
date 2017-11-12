@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.GsonHttpMessageConverter;
@@ -29,12 +30,14 @@ import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import it.tsc.data.config.ServiceConfig;
 import it.tsc.interceptor.PageRequestInterceptor;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = { "it.tsc.service.impl", "it.tsc.dao.impl", "it.tsc.controller",
-    "it.tsc.component", "it.tsc.webservice" })
+@ComponentScan(basePackages = { "it.tsc.data.config", "it.tsc.service.impl", "it.tsc.dao.impl",
+    "it.tsc.controller", "it.tsc.component", "it.tsc.webservice" })
+@ImportResource({ "classpath:spring-beans.xml" })
 @Import({ ServiceConfig.class })
 public class WebAppConfig extends WebMvcConfigurerAdapter {
 
