@@ -1,4 +1,5 @@
 CREATE TABLE ks_tsc.tb_users(
+  userid text,
   username text,
   password text,
   email text,

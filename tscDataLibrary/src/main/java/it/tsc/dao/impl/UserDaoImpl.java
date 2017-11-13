@@ -26,6 +26,7 @@ import it.tsc.domain.PortalUser;
 import it.tsc.domain.Role;
 import it.tsc.domain.Users;
 import it.tsc.util.ConversionUtil;
+import it.tsc.util.PortalUtil;
 import it.tsc.util.UserTransform;
 
 /**
@@ -56,12 +57,6 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 		String result = ConversionUtil.getGsonConverter().toJson(list);
 		logger.debug("jsonGetUser {}", result);
 		return result;
-		// String sql =
-		// "SELECT JSON username,role,email FROM ks_tsc.tb_users WHERE username = ?
-		// ALLOW FILTERING;";
-		// PreparedStatement preparedStmt = baseDao.prepareAndCacheStatement(sql);
-		// BoundStatement bound = preparedStmt.bind().setString("username", username);
-		// ResultSet resultSet = baseDao.getSession().execute(bound);
 	}
 
 	/*
@@ -70,20 +65,6 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 	 * @see it.tsc.dao.UserDao#getUserRole(java.lang.String)
 	 */
 	public PortalUser getUser(String username) {
-		/*
-		 * PortalUser user = null; PreparedStatement preparedStmt = getSession().
-		 * prepare("SELECT * FROM ks_tsc.tb_users WHERE username = ? ALLOW FILTERING;");
-		 * BoundStatement bound = preparedStmt.bind().setString("username", username);
-		 * ResultSet rs = getSession().execute(bound); List<String> roles = new
-		 * ArrayList<String>(); String email = ""; for (Row row : rs) { email =
-		 * row.getString("email"); roles.add(row.getString("role")); } if (roles.size()
-		 * > 0) { user = new PortalUser(username, roles, email); } return user;
-		 */
-		// MappingManager manager = baseDao.getMappingManager();
-		// PortalUserAccessor userAccessor =
-		// manager.createAccessor(PortalUserAccessor.class);
-		// Result<PortalUser> rs = userAccessor.getUser(username);
-
 		PortalUser PortalUser = null;
 
 		EntityManager entityManager = getEntityManager();
@@ -101,7 +82,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 			email = user.getEmail();
 			password = user.getPassword();
 			base32Secret = user.getBase32Secret();
-			roles.add(user.getKey().getRole());
+			roles.add(user.getRole());
 		}
 		if (roles != null && roles.size() > 0) {
 			PortalUser = new PortalUser(username, password, roles, email, base32Secret);
@@ -110,10 +91,6 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 	}
 
 	public PortalUser getUser(String username, String email) {
-		// MappingManager manager = baseDao.getMappingManager();
-		// PortalUserAccessor userAccessor =
-		// manager.createAccessor(PortalUserAccessor.class);
-		// Result<PortalUser> rs = userAccessor.getUser(username, email);
 		PortalUser PortalUser = null;
 
 		EntityManager entityManager = getEntityManager();
@@ -125,7 +102,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 
 		List<String> roles = new ArrayList<String>();
 		for (Users user : list) {
-			roles.add(user.getKey().getRole());
+			roles.add(user.getRole());
 		}
 		if (roles != null && roles.size() > 0) {
 			PortalUser = new PortalUser(username, roles, email);
@@ -144,7 +121,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 
 		UserTransform t = new UserTransform();
 		for (Users user : list) {
-			t.addUser(user.getKey().getUsername(), user.getKey().getRole(), user.getEmail());
+			t.addUser(user.getUsername(), user.getRole(), user.getEmail());
 		}
 		return t.getUsers();
 	}
@@ -168,22 +145,6 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 	 * @see it.tsc.dao.UserDao#getUserRoles(java.lang.String,java.lang.String)
 	 */
 	public List<GrantedAuthority> getUserRoles(String username) {
-		/*
-		 * List<GrantedAuthority> roles = null; PreparedStatement preparedStmt =
-		 * getSession().prepare(
-		 * "SELECT * FROM ks_tsc.tb_users WHERE username = ? AND password = ? ALLOW FILTERING;"
-		 * ); BoundStatement bound = preparedStmt.bind().setString("username",
-		 * username).setString("password", password); ResultSet rs =
-		 * getSession().execute(bound); for (Row row : rs) { if (roles == null) { roles
-		 * = new ArrayList<GrantedAuthority>(); } String role = row.getString("role");
-		 * roles.add(new SimpleGrantedAuthority(Role.valueOf(role).toString())); }
-		 * logger.debug("getUserRoles ExecutionInfo {}", rs.getExecutionInfo());
-		 */
-		// List<GrantedAuthority> roles = null;
-		// MappingManager manager = baseDao.getMappingManager();
-		// PortalUserAccessor userAccessor =
-		// manager.createAccessor(PortalUserAccessor.class);
-		// Result<PortalUser> rs = userAccessor.getUserRoles(username);
 		List<GrantedAuthority> roles = null;
 		EntityManager entityManager = getEntityManager();
 		TypedQuery<Users> query = entityManager.createNamedQuery(Users.SELECT_BY_USERNAME, Users.class);
@@ -195,7 +156,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 			if (roles == null) {
 				roles = new ArrayList<GrantedAuthority>();
 			}
-			roles.add(new SimpleGrantedAuthority(user.getKey().getRole()));
+			roles.add(new SimpleGrantedAuthority(user.getRole()));
 		}
 		return roles;
 	}
@@ -225,32 +186,11 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 	 * java.lang.String it.tsc.model.Role)
 	 */
 	public boolean addUser(String username, String password, String email, Role role) {
-		/*
-		 * PreparedStatement preparedStmt = getSession().prepare( "INSERT INTO
-		 * ks_tsc.tb_users (username, password, email,role) VALUES (:username,
-		 * :password, :email,:role) IF NOT EXISTS;");
-		 * preparedStmt.setConsistencyLevel(ConsistencyLevel.ONE); // @formatter:off
-		 * BoundStatement bound = preparedStmt.bind().setString("username", username)
-		 * .setString("password", password) .setString("email", email)
-		 * .setString("role", role.value(role)); // @formatter:on ResultSet rs =
-		 * getSession().execute(bound);
-		 */
-		// MappingManager manager = baseDao.getMappingManager();
-		// PortalUserAccessor userAccessor =
-		// manager.createAccessor(PortalUserAccessor.class);
-		// ResultSet rs =
-		// userAccessor.addUser(username, bcryptEncoder.encode(password), email,
-		// role.value(role));
-
-		String sqlString = "INSERT INTO ks_tsc.tb_users (username, password, email,role) " + "VALUES ('" + username
-				+ "','" + bcryptEncoder.encode(password) + "','" + email + "','" + role.value(role)
-				+ "') IF NOT EXISTS";
-
+		Users user = new Users(PortalUtil.generateUUID(), username, password, role, email);
 		EntityManager entityManager = getEntityManager();
-		Query query = entityManager.createNativeQuery(sqlString, Users.class);
-		query.executeUpdate();
+		entityManager.persist(user);
 		// entityManager.close();
-		logger.debug("result: {}", ConversionUtil.getGsonConverter().toJson(query));
+		logger.debug("result: {}", user);
 		// return rs.wasApplied();
 		return true;
 	}
@@ -262,24 +202,10 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 	 * @see it.tsc.dao.UserDao#removeUser(java.lang.String)
 	 */
 	public boolean removeUser(String username, Role role) {
-		/*
-		 * PreparedStatement preparedStmt = getSession().
-		 * prepare("DELETE FROM ks_tsc.tb_users WHERE username = :username;");
-		 * BoundStatement bound = preparedStmt.bind().setString("username", username);
-		 * ResultSet rs = getSession().execute(bound);
-		 * logger.debug("removeUser ExecutionInfo {}", rs.getExecutionInfo());
-		 */
-		// MappingManager manager = baseDao.getMappingManager();
-		// PortalUserAccessor userAccessor =
-		// manager.createAccessor(PortalUserAccessor.class);
-		// ResultSet rs = userAccessor.removeUser(username, role.toString());
-		Users users = new Users();
-		users.addUsername(username);
-		users.addRole(role);
-
-		EntityManager entityManager = getEntityManager();
-		entityManager.remove(users);
-		entityManager.flush();
+		String sql = "DELETE FROM ks_tsc.tb_users WHERE username='" + username + "' AND role ='" + role.toString()
+				+ "' IF EXISTS";
+		Query query = getEntityManager().createNativeQuery(sql, Users.class);
+		query.executeUpdate();
 		// entityManager.close();
 
 		// logger.debug("result: {}", rs.wasApplied());
@@ -288,23 +214,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 	}
 
 	public void updateMfaUserKey(String username, String keyId, String base32Secret, String role) {
-		/*
-		 * PreparedStatement preparedStmt = getSession().
-		 * prepare("DELETE FROM ks_tsc.tb_users WHERE username = :username;");
-		 * BoundStatement bound = preparedStmt.bind().setString("username", username);
-		 * ResultSet rs = getSession().execute(bound);
-		 * logger.debug("removeUser ExecutionInfo {}", rs.getExecutionInfo());
-		 */
-		// MappingManager manager = baseDao.getMappingManager();
-		// PortalUserAccessor userAccessor =
-		// manager.createAccessor(PortalUserAccessor.class);
-		// userAccessor.updateMfaUserKey(username, keyId, base32Secret, role);
-
-		Users users = new Users();
-		users.addUsername(username);
-		users.addRole(Role.valueOf(role));
-		users.setKeyId(keyId);
-		users.setBase32Secret(base32Secret);
+		Users users = new Users(username, role, base32Secret, keyId);
 
 		EntityManager entityManager = getEntityManager();
 		TypedQuery<Users> query = entityManager.createNamedQuery(Users.UPDATE_BY_USERNAME_ROLE, Users.class);
@@ -327,23 +237,6 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 	 * String,it.tsc.model. Role)
 	 */
 	public void updateUser(String username, String password, String email, Role role) {
-		/*
-		 * PreparedStatement preparedStmt = getSession().
-		 * prepare("UPDATE ks_tsc.tb_users SET password = :password,email = :email " +
-		 * "WHERE username = :username AND role = :role IF EXISTS;"); // @formatter:off
-		 * BoundStatement bound = preparedStmt.bind()
-		 * 
-		 * @Override public PortalUser getUser(String username, String email) { // TODO
-		 * Auto-generated method stub return null; } .setString("password", password)
-		 * .setString("email", email) .setString("role", role.value(role))
-		 * .setString("username", username); // @formatter:on ResultSet rs =
-		 * getSession().execute(bound); logger.debug("addUser ExecutionInfo {}",
-		 * rs.getExecutionInfo());
-		 */
-		// MappingManager manager = baseDao.getMappingManager();
-		// PortalUserAccessor userAccessor =
-		// manager.createAccessor(PortalUserAccessor.class);
-		// userAccessor.updateUser(username, password, email, role.value(role));
 		EntityManager entityManager = getEntityManager();
 		TypedQuery<Users> query = entityManager.createNamedQuery(Users.UPDATE_USER, Users.class);
 		query.setParameter("username", username);
@@ -352,7 +245,6 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 		query.setParameter("role", role.toString());
 		query.executeUpdate();
 		// entityManager.close();
-
 	}
 
 	/**

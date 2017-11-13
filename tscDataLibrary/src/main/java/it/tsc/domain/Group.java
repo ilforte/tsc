@@ -4,15 +4,13 @@
 package it.tsc.domain;
 
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import com.google.gson.annotations.Expose;
-
-import it.tsc.domain.key.CompoundKey;
 
 /**
  * @author astraservice
@@ -20,32 +18,41 @@ import it.tsc.domain.key.CompoundKey;
  */
 @Entity
 @Table(name = "tb_groups", schema = "ks_tsc@cassandra_pu")
-@NamedQueries(value = { @NamedQuery(name = Users.SELECT_ALL_USERS, query = "SELECT u FROM Users u"),
-		@NamedQuery(name = Group.SELECT_GROUPS, query = "SELECT g FROM Group g"),
+@NamedQueries(value = { @NamedQuery(name = Group.SELECT_GROUPS, query = "SELECT g FROM Group g"),
 		@NamedQuery(name = Group.SELECT_GROUPS_BY_KEY, query = "SELECT g FROM Group g WHERE g.key = :key") })
 public class Group {
 	public static final String SELECT_GROUPS = "select.groups";
 	public static final String SELECT_GROUPS_BY_KEY = "select.groups.by_key";
-	@EmbeddedId
+
+	@Id
+	@Column(name = "groupid")
+	private String groupid;
+
+	@Column(name = "username")
 	@Expose
-	private CompoundKey key = new CompoundKey();
+	private String username;
+
+	@Column(name = "role")
+	@Expose
+	private String role;
 
 	@Column(name = "groupname")
 	@Expose
 	private String groupName;
 
-	public Group(CompoundKey key, String groupName) {
+	/**
+	 * 
+	 */
+	public Group() {
 		super();
-		this.key = key;
+	}
+
+	public Group(String groupid, String username, String role, String groupName) {
+		super();
+		this.groupid = groupid;
+		this.username = username;
+		this.role = role;
 		this.groupName = groupName;
-	}
-
-	public CompoundKey getKey() {
-		return key;
-	}
-
-	public void setKey(CompoundKey key) {
-		this.key = key;
 	}
 
 	public String getGroupName() {
@@ -56,11 +63,28 @@ public class Group {
 		this.groupName = groupName;
 	}
 
-	/**
-	 * 
-	 */
-	public Group() {
-		super();
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	public String getGroupid() {
+		return groupid;
+	}
+
+	public void setGroupid(String groupid) {
+		this.groupid = groupid;
 	}
 
 	@Override

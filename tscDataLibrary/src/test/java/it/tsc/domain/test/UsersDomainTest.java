@@ -16,8 +16,8 @@ import org.junit.Test;
 import it.tsc.domain.Group;
 import it.tsc.domain.Role;
 import it.tsc.domain.Users;
-import it.tsc.domain.key.CompoundKey;
 import it.tsc.util.ConversionUtil;
+import it.tsc.util.PortalUtil;
 
 /**
  * @author astraservice
@@ -27,16 +27,13 @@ public class UsersDomainTest extends BaseDomainTest {
 
 	@Test
 	public void testUsers() {
-		Users users = new Users();
-		users.addRole(Role.ROLE_ADMIN);
-		users.addUsername("matteo");
-		users.setMfaEnabled(true);
+		Users users = new Users(PortalUtil.generateUUID(), "matteo", Role.ROLE_ADMIN, true);
 
-		Users users1 = new Users(new CompoundKey("matteo", Role.ROLE_USER), "", "", true, "", "");
+		Users users1 = new Users(PortalUtil.generateUUID(), "matteo", Role.ROLE_USER, true);
 
-		Group group1 = new Group(users.getKey(), "MILANO");
-		Group group2 = new Group(users.getKey(), "NAPOLI");
-		Group group3 = new Group(users1.getKey(), "MILANO");
+		Group group1 = new Group(PortalUtil.generateUUID(), users.getUsername(), users.getRole(), "MILANO");
+		Group group2 = new Group(PortalUtil.generateUUID(), users.getUsername(), users.getRole(), "NAPOLI");
+		Group group3 = new Group(PortalUtil.generateUUID(), users1.getUsername(), users1.getRole(), "NAPOLI");
 
 		Set<Group> g = new HashSet<Group>();
 
@@ -45,17 +42,6 @@ public class UsersDomainTest extends BaseDomainTest {
 		getEntityManager().persist(group3);
 		getEntityManager().persist(users);
 		getEntityManager().persist(users1);
-
-		TypedQuery<Users> query = getEntityManager().createNamedQuery(Users.SELECT_ALL_USERS, Users.class);
-		List<Users> u = query.getResultList();
-		TypedQuery<Group> query1 = getEntityManager().createNamedQuery(Group.SELECT_GROUPS, Group.class);
-		List<Group> gr = query1.getResultList();
-		logger.debug("groups size: {}", gr.size());
-		TypedQuery<Group> query2 = getEntityManager().createNamedQuery(Group.SELECT_GROUPS_BY_KEY, Group.class);
-		query2.setParameter("key", users.getKey());
-		List<Group> gr2 = query2.getResultList();
-		logger.debug("groups2 size: {}", gr2.size());
-		getEntityManager().close();
 		logger.debug("groups: {}", getEntityManager().isOpen());
 	}
 
@@ -75,7 +61,18 @@ public class UsersDomainTest extends BaseDomainTest {
 
 	@Test
 	public void testJsonScript2() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-		Users users1 = new Users(new CompoundKey("matteo", Role.ROLE_USER), "", "", true, "", "");
+		Users users1 = new Users(PortalUtil.generateUUID(), "matteo", "ROLE_USER", true);
+		Query query = getEntityManager().createNativeQuery(
+				"SELECT username,role,groupName from ks_tsc.tb_groups WHERE role='ROLE_ADMIN' ALLOW FILTERING",
+				Group.class);
+		// query.setParameter("role", users1.getKey().getRole());
+		logger.debug("query: {}", ConversionUtil.getGsonConverter().toJson(query.getResultList()));
+		query.executeUpdate();
+	}
+
+	@Test
+	public void testScript3() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+		Users users1 = new Users(PortalUtil.generateUUID(), "matteo", "ROLE_USER", true);
 		Query query = getEntityManager().createNativeQuery(
 				"SELECT username,role,groupName from ks_tsc.tb_groups WHERE role='ROLE_ADMIN' ALLOW FILTERING",
 				Group.class);
@@ -86,12 +83,19 @@ public class UsersDomainTest extends BaseDomainTest {
 
 	@Test
 	public void testJsonScript3() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-		Query query = getEntityManager().createNativeQuery("SELECT username,role,groupName from ks_tsc.tb_groups");
+		TypedQuery<Users> query = getEntityManager().createNamedQuery(Users.SELECT_ALL_USERS, Users.class);
+		List<Users> u = query.getResultList();
+		// logger.debug("groups2 size: {}", gr2.size());
+		getEntityManager().close();
+	}
+
+	@Test
+	public void testScript4() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+		Query query = getEntityManager().createNativeQuery(
+				"SELECT username,role,groupName from ks_tsc.tb_groups WHERE role='ROLE_ADMIN' ALLOW FILTERING",
+				Group.class);
 		// query.setParameter("role", users1.getKey().getRole());
-		List result = query.getResultList();
-		for (Object object : result) {
-			logger.debug("query: {} object: {}", ConversionUtil.returnJson(result), object.getClass());
-		}
+		logger.debug("query: {}", ConversionUtil.getGsonConverter().toJson(query.getResultList()));
 		query.executeUpdate();
 	}
 
