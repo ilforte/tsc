@@ -1,7 +1,7 @@
 /**
  * 
  */
-package it.tsc.data.config;
+package it.tsc.data.other.config;
 
 import java.io.IOException;
 import java.util.Properties;
