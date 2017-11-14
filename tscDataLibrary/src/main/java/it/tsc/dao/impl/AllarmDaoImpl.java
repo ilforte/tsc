@@ -14,17 +14,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
-import it.tsc.dao.AbstractDao;
 import it.tsc.dao.AllarmDao;
+import it.tsc.dao.BaseDao;
 import it.tsc.domain.Allarm;
-import it.tsc.util.ConversionUtil;
+import it.tsc.util.JsonUtil;
 
 /**
  * @author astraservice
  *
  */
 @Repository("allarmDao")
-public class AllarmDaoImpl extends AbstractDao implements AllarmDao {
+public class AllarmDaoImpl extends BaseDao implements AllarmDao {
 	@SuppressWarnings("unused")
 	private static Logger logger = LoggerFactory.getLogger(AllarmDaoImpl.class);
 
@@ -118,7 +118,7 @@ public class AllarmDaoImpl extends AbstractDao implements AllarmDao {
 		TypedQuery<Allarm> query = entityManager.createNamedQuery(Allarm.SELECT_ALL_ALLARMS, Allarm.class);
 		List<Allarm> list = query.getResultList();
 
-		String result = ConversionUtil.getGsonConverter().toJson(list);
+		String result = JsonUtil.getGsonConverter().toJson(list);
 		return result;
 
 		// String sql =

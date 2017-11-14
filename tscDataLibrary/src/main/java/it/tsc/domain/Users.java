@@ -3,12 +3,18 @@
  */
 package it.tsc.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.persistence.TypedQuery;
 
 import com.google.gson.annotations.Expose;
 
@@ -59,10 +65,8 @@ public class Users extends BaseDomain {
 	@Expose
 	private String keyId;
 
-	// @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
-	// @JoinColumns({ @JoinColumn(name = "username", columnDefinition = "username"),
-	// @JoinColumn(name = "role", columnDefinition = "role") })
-	// private List<Group> groups = new ArrayList<Group>();
+	@Transient
+	private List<Group> groups = new ArrayList<Group>();
 
 	/**
 	 * 
@@ -110,13 +114,12 @@ public class Users extends BaseDomain {
 		this.keyId = keyId;
 	}
 
-	// public List<Group> getGroups() {
-	// return groups;
-	// }
-	//
-	// public void setGroups(List<Group> groups) {
-	// this.groups = groups;
-	// }
+	public List<Group> getGroups(EntityManager entityManager) {
+		TypedQuery<Group> findQuery = entityManager.createNamedQuery(Group.SELECT_GROUPS_BY_KEY, Group.class);
+		findQuery.setParameter("key", this.getKey());
+		return findQuery.getResultList();
+		// return this.groups;
+	}
 
 	public CompoundKey getKey() {
 		return key;

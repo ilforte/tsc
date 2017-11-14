@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import org.apache.commons.lang.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +21,13 @@ import org.springframework.stereotype.Repository;
 
 import com.datastax.driver.core.Row;
 
-import it.tsc.dao.AbstractDao;
+import it.tsc.dao.BaseDao;
 import it.tsc.dao.UserDao;
 import it.tsc.domain.PortalUser;
 import it.tsc.domain.Role;
 import it.tsc.domain.Users;
 import it.tsc.domain.key.CompoundKey;
-import it.tsc.util.ConversionUtil;
+import it.tsc.util.JsonUtil;
 import it.tsc.util.UserTransform;
 
 /**
@@ -34,7 +35,7 @@ import it.tsc.util.UserTransform;
  *
  */
 @Repository("userDao")
-public class UserDaoImpl extends AbstractDao implements UserDao {
+public class UserDaoImpl extends BaseDao implements UserDao {
 	private static Logger logger = LoggerFactory.getLogger(UserDaoImpl.class);
 	@Autowired
 	private BCryptPasswordEncoder bcryptEncoder;
@@ -54,7 +55,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 		List<Users> list = query.getResultList();
 		// entityManager.close();
 
-		String result = ConversionUtil.getGsonConverter().toJson(list);
+		String result = JsonUtil.getGsonConverter().toJson(list);
 		logger.debug("jsonGetUser {}", result);
 		return result;
 	}
@@ -134,7 +135,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 		List<Users> list = query.getResultList();
 		// entityManager.close();
 
-		String result = ConversionUtil.getGsonConverter().toJson(list);
+		String result = JsonUtil.getGsonConverter().toJson(list);
 		logger.debug("jsonGetAllUsers {}", result);
 		return result;
 	}
@@ -175,10 +176,6 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 
 	}
 
-	public void addUser(Users users) {
-		getEntityManager().persist(users);
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -186,7 +183,8 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 	 * java.lang.String it.tsc.model.Role)
 	 */
 	public boolean addUser(String username, String password, String email, Role role) {
-		Users user = new Users(new CompoundKey(username, role), password, email);
+		Validate.notEmpty(password, "Password cannot be empty");
+		Users user = new Users(new CompoundKey(username, role), bcryptEncoder.encode(password), email);
 		EntityManager entityManager = getEntityManager();
 		entityManager.persist(user);
 		// entityManager.close();

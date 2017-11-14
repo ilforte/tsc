@@ -9,7 +9,6 @@ import org.springframework.security.core.GrantedAuthority;
 
 import it.tsc.domain.PortalUser;
 import it.tsc.domain.Role;
-import it.tsc.domain.Users;
 
 /**
  * @author astraservice
@@ -70,14 +69,6 @@ public interface UserDao {
 	 * @return
 	 */
 	public boolean isAdmin(Role role);
-
-	/**
-	 * add user to database
-	 * 
-	 * @param users
-	 * @return
-	 */
-	public void addUser(Users users);
 
 	/**
 	 * Add user

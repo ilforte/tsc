@@ -9,7 +9,6 @@ import org.springframework.security.core.GrantedAuthority;
 
 import it.tsc.domain.PortalUser;
 import it.tsc.domain.Role;
-import it.tsc.domain.Users;
 
 /**
  * @author astraservice
@@ -87,13 +86,6 @@ public interface UserService {
 	 * @return
 	 */
 	public boolean isSuperAdmin(PortalUser user);
-
-	/**
-	 * add new user with persist
-	 * 
-	 * @param users
-	 */
-	public void addUser(Users users);
 
 	/**
 	 * Add user

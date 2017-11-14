@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @author astraservice
  *
  */
-public class BaseDomain implements Serializable{
+public class BaseDomain implements Serializable {
 	/**
 	 * 
 	 */

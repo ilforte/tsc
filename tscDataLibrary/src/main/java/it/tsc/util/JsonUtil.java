@@ -14,12 +14,12 @@ import com.google.gson.JsonParser;
 /**
  * @author astraservice (JSON conversion utils)
  */
-public class ConversionUtil {
+public class JsonUtil {
 
 	/**
 	 * 
 	 */
-	public ConversionUtil() {
+	public JsonUtil() {
 		// TODO Auto-generated constructor stub
 	}
 

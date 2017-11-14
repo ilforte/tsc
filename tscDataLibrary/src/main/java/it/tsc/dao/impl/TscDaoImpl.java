@@ -12,18 +12,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
-import it.tsc.dao.AbstractDao;
+import it.tsc.dao.BaseDao;
 import it.tsc.dao.TscDao;
 import it.tsc.domain.Allarm;
 import it.tsc.domain.Anagrafica;
-import it.tsc.util.ConversionUtil;
+import it.tsc.util.JsonUtil;
 
 /**
  * @author astraservice
  *
  */
 @Repository("tscDao")
-public class TscDaoImpl extends AbstractDao implements TscDao {
+public class TscDaoImpl extends BaseDao implements TscDao {
 	private static Logger logger = LoggerFactory.getLogger(TscDaoImpl.class);
 
 	/**
@@ -49,7 +49,7 @@ public class TscDaoImpl extends AbstractDao implements TscDao {
 		List<Anagrafica> list = query.getResultList();
 		// entityManager.close();
 
-		String result = ConversionUtil.getGsonConverter().toJson(list);
+		String result = JsonUtil.getGsonConverter().toJson(list);
 		logger.debug("getAnagrafica {}", result);
 		return result;
 
