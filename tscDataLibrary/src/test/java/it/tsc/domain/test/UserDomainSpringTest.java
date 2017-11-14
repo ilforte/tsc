@@ -57,7 +57,10 @@ public class UserDomainSpringTest {
 		entityManager.persist(users1);
 		entityManager.persist(users2);
 		logger.debug("groups: {}", entityManager.isOpen());
-		logger.debug(JsonUtil.returnJson(users1.getGroups(entityManager)));
+		for (Group group : users1.getGroups(entityManager)) {
+			logger.debug(JsonUtil.getGsonConverter().toJson(group));
+		}
+
 	}
 
 }
