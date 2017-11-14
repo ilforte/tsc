@@ -4,13 +4,15 @@
 package it.tsc.domain;
 
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import com.google.gson.annotations.Expose;
+
+import it.tsc.domain.key.CompoundKey;
 
 /**
  * @author astraservice
@@ -24,17 +26,8 @@ public class Group {
 	public static final String SELECT_GROUPS = "select.groups";
 	public static final String SELECT_GROUPS_BY_KEY = "select.groups.by_key";
 
-	@Id
-	@Column(name = "groupid")
-	private String groupid;
-
-	@Column(name = "username")
-	@Expose
-	private String username;
-
-	@Column(name = "role")
-	@Expose
-	private String role;
+	@EmbeddedId
+	private CompoundKey key = new CompoundKey();
 
 	@Column(name = "groupname")
 	@Expose
@@ -47,12 +40,32 @@ public class Group {
 		super();
 	}
 
-	public Group(String groupid, String username, String role, String groupName) {
+	public Group(CompoundKey key, String groupName) {
 		super();
-		this.groupid = groupid;
-		this.username = username;
-		this.role = role;
+		this.key = key;
 		this.groupName = groupName;
+	}
+
+	// TODO finish implements
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Group) {
+			// return this.getGroupName().equals(((Group) obj).getGroupName());
+		}
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		return 0;
+	}
+
+	public CompoundKey getKey() {
+		return key;
+	}
+
+	public void setKey(CompoundKey key) {
+		this.key = key;
 	}
 
 	public String getGroupName() {
@@ -61,43 +74,6 @@ public class Group {
 
 	public void setGroupName(String groupName) {
 		this.groupName = groupName;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getRole() {
-		return role;
-	}
-
-	public void setRole(String role) {
-		this.role = role;
-	}
-
-	public String getGroupid() {
-		return groupid;
-	}
-
-	public void setGroupid(String groupid) {
-		this.groupid = groupid;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (obj instanceof Group) {
-			return this.getGroupName().equals(((Group) obj).getGroupName());
-		}
-		return false;
-	}
-
-	@Override
-	public int hashCode() {
-		return getGroupName().hashCode();
 	}
 
 }

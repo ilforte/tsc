@@ -3,11 +3,10 @@
  */
 package it.tsc.domain.key;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 import com.google.gson.annotations.Expose;
 
@@ -18,16 +17,16 @@ import it.tsc.domain.Role;
  *
  */
 @Embeddable
-public class CompoundKey {
+public class CompoundKey implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1053059728012977397L;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "username")
 	@Column(name = "username")
 	@Expose
 	private String username;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "role", columnDefinition = "key.role")
 	@Column(name = "role")
 	@Expose
 	private String role;

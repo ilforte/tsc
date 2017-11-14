@@ -4,13 +4,15 @@
 package it.tsc.domain;
 
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import com.google.gson.annotations.Expose;
+
+import it.tsc.domain.key.CompoundKey;
 
 /**
  * @author astraservice tb_users
@@ -18,13 +20,12 @@ import com.google.gson.annotations.Expose;
 @Entity
 @Table(name = "tb_users", schema = "ks_tsc@cassandra_pu")
 @NamedQueries(value = { @NamedQuery(name = Users.SELECT_ALL_USERS, query = "SELECT u FROM Users u"),
-		@NamedQuery(name = Users.SELECT_BY_USERNAME, query = "SELECT u FROM Users u WHERE u.username = :username"),
-		@NamedQuery(name = Users.SELECT_BY_USERNAME_ROLE, query = "SELECT u FROM Users u WHERE u.username = :username AND u.role=:role"),
-		@NamedQuery(name = Users.SELECT_BY_USERNAME_EMAIL, query = "SELECT u FROM Users u WHERE u.username = :username AND u.email=:email"),
-		@NamedQuery(name = Users.UPDATE_BY_USERNAME_ROLE, query = "UPDATE Users u SET u.keyId=:keyId,u.base32Secret=:base32Secret WHERE u.username = :username AND u.role=:role"),
-		@NamedQuery(name = Users.UPDATE_USER, query = "UPDATE Users u SET u.password=:password,u.email=:email WHERE u.username = :username AND u.role = :role") })
+		@NamedQuery(name = Users.SELECT_BY_USERNAME, query = "SELECT u FROM Users u WHERE u.key.username = :username"),
+		@NamedQuery(name = Users.SELECT_BY_USERNAME_ROLE, query = "SELECT u FROM Users u WHERE u.key.username = :username AND u.role=:role"),
+		@NamedQuery(name = Users.SELECT_BY_USERNAME_EMAIL, query = "SELECT u FROM Users u WHERE u.key.username = :username AND u.email=:email"),
+		@NamedQuery(name = Users.UPDATE_BY_USERNAME_ROLE, query = "UPDATE Users u SET u.keyId=:keyId,u.base32Secret=:base32Secret WHERE u.key.username = :username AND u.key.role=:role"),
+		@NamedQuery(name = Users.UPDATE_USER, query = "UPDATE Users u SET u.password=:password,u.email=:email WHERE u.key.username = :username AND u.key.role = :role") })
 public class Users extends BaseDomain {
-
 	/**
 	 * 
 	 */
@@ -36,17 +37,8 @@ public class Users extends BaseDomain {
 	public static final String UPDATE_BY_USERNAME_ROLE = "update.by.username.role";
 	public static final String UPDATE_USER = "update.user";
 
-	@Id
-	@Column(name = "userid")
-	private String userid;
-
-	@Column(name = "username")
-	@Expose
-	private String username;
-
-	@Column(name = "role")
-	@Expose
-	private String role;
+	@EmbeddedId
+	private CompoundKey key = new CompoundKey();
 
 	@Column
 	private String password;
@@ -80,89 +72,42 @@ public class Users extends BaseDomain {
 	}
 
 	/**
-	 * base constructor
 	 * 
-	 * @param username
-	 * @param role
-	 */
-	public Users(String username, String role) {
-		super();
-		this.username = username;
-		this.role = role;
-	}
-
-	/**
-	 * base constructor
-	 * 
-	 * @param username
-	 * @param role
-	 */
-	public Users(String username, Role role) {
-		super();
-		this.username = username;
-		this.role = role.toString();
-	}
-
-	/**
-	 * 
-	 * @param userid
-	 * @param username
-	 * @param role
+	 * @param key
 	 * @param mfaEnabled
 	 */
-	public Users(String userid, String username, String role, boolean mfaEnabled) {
+	public Users(CompoundKey key, boolean mfaEnabled) {
 		super();
-		this.userid = userid;
-		this.username = username;
-		this.role = role;
+		this.key = key;
 		this.mfaEnabled = mfaEnabled;
 	}
 
 	/**
 	 * 
-	 * @param userid
-	 * @param username
+	 * @param key
 	 * @param password
-	 * @param role
 	 * @param email
 	 */
-	public Users(String userid, String username, String password, Role role, String email) {
+	public Users(CompoundKey key, String password, String email) {
 		super();
-		this.userid = userid;
-		this.username = username;
+		this.key = key;
 		this.password = password;
-		this.role = role.toString();
 		this.email = email;
 	}
 
 	/**
 	 * 
-	 * @param username
-	 * @param role
+	 * @param key
 	 * @param base32Secret
+	 * @param mfaEnabled
 	 * @param keyId
 	 */
-	public Users(String username, String role, String base32Secret, String keyId) {
+	public Users(CompoundKey key, boolean mfaEnabled, String base32Secret, String keyId) {
 		super();
-		this.username = username;
-		this.role = role;
+		this.key = key;
 		this.base32Secret = base32Secret;
-		this.keyId = keyId;
-	}
-
-	/**
-	 * 
-	 * @param userid
-	 * @param username
-	 * @param role
-	 * @param mfaEnabled
-	 */
-	public Users(String userid, String username, Role role, boolean mfaEnabled) {
-		super();
-		this.userid = userid;
-		this.username = username;
-		this.role = role.toString();
 		this.mfaEnabled = mfaEnabled;
+		this.keyId = keyId;
 	}
 
 	// public List<Group> getGroups() {
@@ -172,6 +117,14 @@ public class Users extends BaseDomain {
 	// public void setGroups(List<Group> groups) {
 	// this.groups = groups;
 	// }
+
+	public CompoundKey getKey() {
+		return key;
+	}
+
+	public void setKey(CompoundKey key) {
+		this.key = key;
+	}
 
 	public String getBase32Secret() {
 		return base32Secret;
@@ -211,30 +164,6 @@ public class Users extends BaseDomain {
 
 	public void setMfaEnabled(boolean mfaEnabled) {
 		this.mfaEnabled = mfaEnabled;
-	}
-
-	public String getUserid() {
-		return userid;
-	}
-
-	public void setUserid(String userid) {
-		this.userid = userid;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getRole() {
-		return role;
-	}
-
-	public void setRole(String role) {
-		this.role = role;
 	}
 
 }

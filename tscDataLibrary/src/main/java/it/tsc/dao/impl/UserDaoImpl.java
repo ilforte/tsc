@@ -25,8 +25,8 @@ import it.tsc.dao.UserDao;
 import it.tsc.domain.PortalUser;
 import it.tsc.domain.Role;
 import it.tsc.domain.Users;
+import it.tsc.domain.key.CompoundKey;
 import it.tsc.util.ConversionUtil;
-import it.tsc.util.PortalUtil;
 import it.tsc.util.UserTransform;
 
 /**
@@ -82,7 +82,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 			email = user.getEmail();
 			password = user.getPassword();
 			base32Secret = user.getBase32Secret();
-			roles.add(user.getRole());
+			roles.add(user.getKey().getRole());
 		}
 		if (roles != null && roles.size() > 0) {
 			PortalUser = new PortalUser(username, password, roles, email, base32Secret);
@@ -102,7 +102,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 
 		List<String> roles = new ArrayList<String>();
 		for (Users user : list) {
-			roles.add(user.getRole());
+			roles.add(user.getKey().getRole());
 		}
 		if (roles != null && roles.size() > 0) {
 			PortalUser = new PortalUser(username, roles, email);
@@ -121,7 +121,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 
 		UserTransform t = new UserTransform();
 		for (Users user : list) {
-			t.addUser(user.getUsername(), user.getRole(), user.getEmail());
+			t.addUser(user.getKey().getUsername(), user.getKey().getRole(), user.getEmail());
 		}
 		return t.getUsers();
 	}
@@ -156,7 +156,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 			if (roles == null) {
 				roles = new ArrayList<GrantedAuthority>();
 			}
-			roles.add(new SimpleGrantedAuthority(user.getRole()));
+			roles.add(new SimpleGrantedAuthority(user.getKey().getRole()));
 		}
 		return roles;
 	}
@@ -186,7 +186,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 	 * java.lang.String it.tsc.model.Role)
 	 */
 	public boolean addUser(String username, String password, String email, Role role) {
-		Users user = new Users(PortalUtil.generateUUID(), username, password, role, email);
+		Users user = new Users(new CompoundKey(username, role), password, email);
 		EntityManager entityManager = getEntityManager();
 		entityManager.persist(user);
 		// entityManager.close();
@@ -214,8 +214,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 	}
 
 	public void updateMfaUserKey(String username, String keyId, String base32Secret, String role) {
-		Users users = new Users(username, role, base32Secret, keyId);
-
+		Users users = new Users(new CompoundKey(username, role), true, keyId, base32Secret);
 		EntityManager entityManager = getEntityManager();
 		TypedQuery<Users> query = entityManager.createNamedQuery(Users.UPDATE_BY_USERNAME_ROLE, Users.class);
 		query.setParameter("username", username);

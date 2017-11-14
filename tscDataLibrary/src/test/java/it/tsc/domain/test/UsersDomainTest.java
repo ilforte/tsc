@@ -16,8 +16,8 @@ import org.junit.Test;
 import it.tsc.domain.Group;
 import it.tsc.domain.Role;
 import it.tsc.domain.Users;
+import it.tsc.domain.key.CompoundKey;
 import it.tsc.util.ConversionUtil;
-import it.tsc.util.PortalUtil;
 
 /**
  * @author astraservice
@@ -27,21 +27,23 @@ public class UsersDomainTest extends BaseDomainTest {
 
 	@Test
 	public void testUsers() {
-		Users users = new Users(PortalUtil.generateUUID(), "matteo", Role.ROLE_ADMIN, true);
+		CompoundKey key1 = new CompoundKey("matteo", Role.ROLE_ADMIN);
+		Users users1 = new Users(key1, true);
 
-		Users users1 = new Users(PortalUtil.generateUUID(), "matteo", Role.ROLE_USER, true);
+		CompoundKey key2 = new CompoundKey("matteo", Role.ROLE_USER);
+		Users users2 = new Users(key2, true);
 
-		Group group1 = new Group(PortalUtil.generateUUID(), users.getUsername(), users.getRole(), "MILANO");
-		Group group2 = new Group(PortalUtil.generateUUID(), users.getUsername(), users.getRole(), "NAPOLI");
-		Group group3 = new Group(PortalUtil.generateUUID(), users1.getUsername(), users1.getRole(), "NAPOLI");
+		Group group1 = new Group(key1, "MILANO");
+		Group group2 = new Group(key1, "NAPOLI");
+		Group group3 = new Group(key2, "NAPOLI");
 
 		Set<Group> g = new HashSet<Group>();
 
 		getEntityManager().persist(group1);
 		getEntityManager().persist(group2);
 		getEntityManager().persist(group3);
-		getEntityManager().persist(users);
 		getEntityManager().persist(users1);
+		getEntityManager().persist(users2);
 		logger.debug("groups: {}", getEntityManager().isOpen());
 	}
 
@@ -61,7 +63,7 @@ public class UsersDomainTest extends BaseDomainTest {
 
 	@Test
 	public void testJsonScript2() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-		Users users1 = new Users(PortalUtil.generateUUID(), "matteo", "ROLE_USER", true);
+		Users users1 = new Users(new CompoundKey("matteo", Role.ROLE_ADMIN), true);
 		Query query = getEntityManager().createNativeQuery(
 				"SELECT username,role,groupName from ks_tsc.tb_groups WHERE role='ROLE_ADMIN' ALLOW FILTERING",
 				Group.class);
@@ -72,7 +74,7 @@ public class UsersDomainTest extends BaseDomainTest {
 
 	@Test
 	public void testScript3() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-		Users users1 = new Users(PortalUtil.generateUUID(), "matteo", "ROLE_USER", true);
+		Users users1 = new Users(new CompoundKey("matteo", Role.ROLE_USER), true);
 		Query query = getEntityManager().createNativeQuery(
 				"SELECT username,role,groupName from ks_tsc.tb_groups WHERE role='ROLE_ADMIN' ALLOW FILTERING",
 				Group.class);

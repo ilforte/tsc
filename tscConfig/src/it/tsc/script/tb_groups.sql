@@ -1,4 +1,3 @@
-/**
 CREATE TABLE ks_tsc.tb_groups(
   username text,
   role text,
@@ -6,14 +5,7 @@ CREATE TABLE ks_tsc.tb_groups(
   PRIMARY KEY ((username,role),groupname)
 );
 
-CREATE TABLE ks_tsc.tb_groups(
-  username text,
-  role text,
-  groupname text,
-  PRIMARY KEY (username,role,groupname)
-);
-**/
-
+/**
 CREATE TABLE ks_tsc.tb_groups(
   groupid text,
   username text,
@@ -21,6 +13,7 @@ CREATE TABLE ks_tsc.tb_groups(
   groupname text,
   PRIMARY KEY (username,role,groupname)
 );
+**/
 
 DROP TABLE IF EXISTS ks_tsc.tb_groups;
 
