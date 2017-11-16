@@ -21,6 +21,7 @@ import it.tsc.domain.Group;
 import it.tsc.domain.Role;
 import it.tsc.domain.Users;
 import it.tsc.domain.key.CompoundKey;
+import it.tsc.test.parallel.ParallelTest;
 import it.tsc.util.JsonUtil;
 
 /**
@@ -29,7 +30,7 @@ import it.tsc.util.JsonUtil;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = ServiceConfig.class, loader = AnnotationConfigContextLoader.class)
-public class UserDomainSpringTest {
+public class UserDomainSpringTest extends ParallelTest {
 	private static final Logger logger = LoggerFactory.getLogger(UserDomainSpringTest.class);
 	@Autowired
 	private EntityManager entityManager;

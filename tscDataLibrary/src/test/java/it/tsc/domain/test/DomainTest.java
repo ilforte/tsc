@@ -10,6 +10,9 @@ import java.util.List;
 import javax.persistence.TypedQuery;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import com.google.code.tempusfugit.concurrency.ConcurrentTestRunner;
 
 import it.tsc.domain.Allarm;
 import it.tsc.domain.Users;
@@ -18,6 +21,7 @@ import it.tsc.domain.Users;
  * @author astraservice
  *
  */
+@RunWith(ConcurrentTestRunner.class)
 public class DomainTest extends BaseDomainTest {
 
 	@Test
