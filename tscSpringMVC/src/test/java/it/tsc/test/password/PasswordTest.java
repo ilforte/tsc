@@ -5,11 +5,13 @@ package it.tsc.test.password;
 
 import org.junit.Test;
 
+import it.tsc.test.parallel.ParallelTest;
+
 /**
  * @author astraservice
  *
  */
-public class PasswordTest {
+public class PasswordTest extends ParallelTest {
 
   /**
    * 

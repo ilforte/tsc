@@ -30,6 +30,7 @@ import com.google.gson.Gson;
 
 import it.tsc.config.WebAppConfig;
 import it.tsc.domain.Allarm;
+import it.tsc.test.parallel.ParallelTest;
 
 /**
  * @author astraservice
@@ -39,7 +40,7 @@ import it.tsc.domain.Allarm;
 @ContextHierarchy({ @ContextConfiguration(value = "classpath:spring-security.xml"),
     @ContextConfiguration(classes = WebAppConfig.class) })
 @WebAppConfiguration
-public class MvcTscTest {
+public class MvcTscTest extends ParallelTest {
   private static Logger logger = LoggerFactory.getLogger(MvcTscTest.class);
   @Autowired
   private WebApplicationContext webApplicationContext;

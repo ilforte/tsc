@@ -19,17 +19,18 @@ import org.springframework.web.context.WebApplicationContext;
 
 import it.tsc.config.WebAppConfig;
 import it.tsc.data.config.ServiceConfig;
+import it.tsc.test.parallel.ParallelTest;
 
 /**
  * @author astraservice
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextHierarchy({@ContextConfiguration(value = "classpath:spring-security.xml"),
+@ContextHierarchy({ @ContextConfiguration(value = "classpath:spring-security.xml"),
     @ContextConfiguration(classes = WebAppConfig.class),
-    @ContextConfiguration(classes = ServiceConfig.class)})
+    @ContextConfiguration(classes = ServiceConfig.class) })
 @WebAppConfiguration
-public class MessageSourceTest {
+public class MessageSourceTest extends ParallelTest {
   private static Logger logger = LoggerFactory.getLogger(MvcRestUserTest.class);
   @Autowired
   private WebApplicationContext webApplicationContext;

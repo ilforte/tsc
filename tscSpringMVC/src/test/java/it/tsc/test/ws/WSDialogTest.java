@@ -19,6 +19,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import it.tsc.config.WebAppConfig;
 import it.tsc.data.config.ServiceConfig;
+import it.tsc.test.parallel.ParallelTest;
 import it.tsc.webservice.TscWebService;
 
 /**
@@ -30,7 +31,7 @@ import it.tsc.webservice.TscWebService;
     @ContextConfiguration(classes = WebAppConfig.class),
     @ContextConfiguration(classes = ServiceConfig.class) })
 @WebAppConfiguration
-public class WSDialogTest {
+public class WSDialogTest extends ParallelTest {
   private static Logger logger = LoggerFactory.getLogger(WSDialogTest.class);
   public static final String URI = "http://localhost:8080/tscSpringMVC/services/TscWebService";
   private static final String WS_URL =

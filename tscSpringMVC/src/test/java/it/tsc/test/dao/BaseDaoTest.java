@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import it.tsc.data.config.ServiceConfig;
+import it.tsc.test.parallel.ParallelTest;
 
 /**
  * @author astraservice
@@ -17,7 +18,7 @@ import it.tsc.data.config.ServiceConfig;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = ServiceConfig.class, loader = AnnotationConfigContextLoader.class)
-public class BaseDaoTest {
+public class BaseDaoTest extends ParallelTest {
 
   /**
    * 
@@ -25,10 +26,10 @@ public class BaseDaoTest {
   public BaseDaoTest() {
 
   }
-  
+
   @Test
   public void baseDaoTest() {
-    
+
   }
 
 }

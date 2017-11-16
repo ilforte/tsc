@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 
 import it.tsc.data.config.ServiceConfig;
 import it.tsc.service.GroupService;
+import it.tsc.test.parallel.ParallelTest;
 
 /**
  * @author astraservice
@@ -25,9 +26,9 @@ import it.tsc.service.GroupService;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @Configuration
-@ImportResource(value = {"classpath:spring-beans.xml"})
+@ImportResource(value = { "classpath:spring-beans.xml" })
 @ContextConfiguration(classes = ServiceConfig.class, loader = AnnotationConfigContextLoader.class)
-public class GroupDaoTest {
+public class GroupDaoTest extends ParallelTest {
   private static Logger logger = LoggerFactory.getLogger(GroupDaoTest.class);
   @Autowired
   private GroupService groupService;

@@ -11,12 +11,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import it.tsc.domain.PortalUser;
+import it.tsc.test.parallel.ParallelTest;
 
 /**
  * @author astraservice
  *
  */
-public class BaseValidator {
+public class BaseValidator extends ParallelTest {
   protected static Logger logger = LoggerFactory.getLogger(BaseValidator.class);
 
   /**
