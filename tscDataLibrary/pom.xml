@@ -9,19 +9,6 @@
   <dependencies>
   
      <!-- cross dependency -->
-  	<dependency>
-		<groupId>tscSpringMVC</groupId>
-		<artifactId>tscSharedLibrary</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
-		<scope>compile</scope>
-	</dependency>
-	
-     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.12</version>
-      <scope>test</scope>
-    </dependency>
     
     <!-- parallel test -->
 	<dependency>
@@ -30,6 +17,30 @@
 	  <version>1.1</version>
 	</dependency>
 	
+	<dependency>
+		<groupId>tscSpringMVC</groupId>
+		<artifactId>tscSharedLibrary</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</dependency>
+	
   </dependencies>
+  
+  <!-- BUILD -->
+  <build>
+    <finalName>tscDataLibrary</finalName>
+	<plugins>
+	    <plugin>
+	      <artifactId>maven-compiler-plugin</artifactId>
+	        <configuration>
+	          <source>1.8</source>
+	          <target>1.8</target>
+          	  <verbose>true</verbose>
+          	  <fork>true</fork>
+          	   <executable>/usr/lib/jvm/java-8-oracle/bin/javac</executable>
+          	   <compilerVersion>1.8</compilerVersion>
+	        </configuration>
+	    </plugin>
+	  </plugins>
+  </build>
   
 </project>
