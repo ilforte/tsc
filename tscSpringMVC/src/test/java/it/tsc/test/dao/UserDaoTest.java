@@ -118,7 +118,7 @@ public class UserDaoTest extends BaseDaoTest {
 
   @Test
   public void testUpdateUser() {
-    userService.updateUser("testUser", "testUser1", "testUser@tsc.it", Role.ROLE_USER);
+    userService.updateUser("testUser", "testUser", "testUser1@tsc.it", Role.ROLE_USER);
   }
 
   @Test

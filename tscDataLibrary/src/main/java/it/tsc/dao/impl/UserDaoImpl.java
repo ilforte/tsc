@@ -48,6 +48,7 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 
 	}
 
+	@Override
 	public String jsonGetUser(String username) {
 		EntityManager entityManager = getEntityManager();
 		TypedQuery<Users> query = entityManager.createNamedQuery(Users.SELECT_BY_USERNAME, Users.class);
@@ -65,6 +66,7 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 	 * 
 	 * @see it.tsc.dao.UserDao#getUserRole(java.lang.String)
 	 */
+	@Override
 	public PortalUser getUser(String username) {
 		PortalUser PortalUser = null;
 
@@ -91,6 +93,7 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 		return PortalUser;
 	}
 
+	@Override
 	public PortalUser getUser(String username, String email) {
 		PortalUser PortalUser = null;
 
@@ -111,6 +114,7 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 		return PortalUser;
 	}
 
+	@Override
 	public List<PortalUser> getAllUsers() {
 		// MappingManager manager = baseDao.getMappingManager();
 		// PortalUserAccessor userAccessor =
@@ -127,6 +131,7 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 		return t.getUsers();
 	}
 
+	@Override
 	public String jsonGetAllUsers() {
 		// String sql = "SELECT JSON username,role,email FROM ks_tsc.tb_users;";
 		// ResultSet resultSet = baseDao.getSession().execute(sql);
@@ -145,6 +150,7 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 	 * 
 	 * @see it.tsc.dao.UserDao#getUserRoles(java.lang.String,java.lang.String)
 	 */
+	@Override
 	public List<GrantedAuthority> getUserRoles(String username) {
 		List<GrantedAuthority> roles = null;
 		EntityManager entityManager = getEntityManager();
@@ -167,6 +173,7 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 	 * 
 	 * @see it.tsc.dao.UserDao#isAdmin(it.tsc.model.Role)
 	 */
+	@Override
 	public boolean isAdmin(Role role) {
 		if (role != null) {
 			return role.equals(Role.ROLE_ADMIN) || role.equals(Role.ROLE_SADMIN);
@@ -182,6 +189,7 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 	 * @see it.tsc.dao.UserDao#addUser(java.lang.String, java.lang.String,,
 	 * java.lang.String it.tsc.model.Role)
 	 */
+	@Override
 	public boolean addUser(String username, String password, String email, Role role) {
 		Validate.notEmpty(password, "Password cannot be empty");
 		Users user = new Users(new CompoundKey(username, role), bcryptEncoder.encode(password), email);
@@ -199,6 +207,7 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 	 * 
 	 * @see it.tsc.dao.UserDao#removeUser(java.lang.String)
 	 */
+	@Override
 	public boolean removeUser(String username, Role role) {
 		String sql = "DELETE FROM ks_tsc.tb_users WHERE username='" + username + "' AND role ='" + role.toString()
 				+ "' IF EXISTS";
@@ -211,6 +220,7 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 		return true;
 	}
 
+	@Override
 	public void updateMfaUserKey(String username, String keyId, String base32Secret, String role) {
 		Users users = new Users(new CompoundKey(username, role), true, keyId, base32Secret);
 		EntityManager entityManager = getEntityManager();
@@ -233,11 +243,12 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 	 * it.tsc.dao.UserDao#updateUser(java.lang.String,java.lang.String,java.lang.
 	 * String,it.tsc.model. Role)
 	 */
+	@Override
 	public void updateUser(String username, String password, String email, Role role) {
 		EntityManager entityManager = getEntityManager();
 		TypedQuery<Users> query = entityManager.createNamedQuery(Users.UPDATE_USER, Users.class);
 		query.setParameter("username", username);
-		query.setParameter("password", password);
+		query.setParameter("password", bcryptEncoder.encode(password));
 		query.setParameter("email", email);
 		query.setParameter("role", role.toString());
 		query.executeUpdate();
