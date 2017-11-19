@@ -15,6 +15,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.google.gson.Gson;
 
@@ -32,6 +33,9 @@ public class UserDaoTest extends BaseDaoTest {
   private static Logger logger = LoggerFactory.getLogger(UserDaoTest.class);
   @Autowired
   private UserService userService;
+  @Autowired
+  private BCryptPasswordEncoder bcryptEncoder;
+
   private Gson gson = new Gson();
 
   @Autowired
@@ -102,10 +106,10 @@ public class UserDaoTest extends BaseDaoTest {
     userService.removeUser("testUser", Role.ROLE_USER);
   }
 
-  // @Test
-  // public void testRemoveUserAdmin() {
-  // userService.removeUser("admin", Role.ROLE_SADMIN);
-  // }
+  @Test
+  public void testPassword() {
+    assertTrue(bcryptEncoder.matches("testUser", userService.getUser("testUser").getPassword()));
+  }
 
   @Test
   public void testRemoveUserFail() {
