@@ -33,7 +33,7 @@ import it.tsc.config.WebAppConfig;
 import it.tsc.data.config.ServiceConfig;
 import it.tsc.domain.PortalUser;
 import it.tsc.domain.Role;
-import it.tsc.test.parallel.ParallelTest;
+import it.tsc.web.parallel.WebParallelTest;
 
 /**
  * @author astraservice
@@ -44,7 +44,7 @@ import it.tsc.test.parallel.ParallelTest;
     @ContextConfiguration(classes = WebAppConfig.class),
     @ContextConfiguration(classes = ServiceConfig.class) })
 @WebAppConfiguration
-public class MvcRestUserTest extends ParallelTest {
+public class MvcRestUserTest extends WebParallelTest {
   private static Logger logger = LoggerFactory.getLogger(MvcRestUserTest.class);
   @Autowired
   private WebApplicationContext webApplicationContext;

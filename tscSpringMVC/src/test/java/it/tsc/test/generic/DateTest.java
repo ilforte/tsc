@@ -12,14 +12,14 @@ import java.util.TimeZone;
 
 import org.junit.Test;
 
-import it.tsc.test.parallel.ParallelTest;
 import it.tsc.util.TimeUtil;
+import it.tsc.web.parallel.WebParallelTest;
 
 /**
  * @author astraservice
  *
  */
-public class DateTest extends ParallelTest {
+public class DateTest extends WebParallelTest {
 
   @Test
   public void dateTest() {

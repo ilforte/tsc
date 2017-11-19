@@ -24,7 +24,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import it.tsc.config.WebAppConfig;
 import it.tsc.data.config.ServiceConfig;
-import it.tsc.test.parallel.ParallelTest;
+import it.tsc.web.parallel.WebParallelTest;
 
 /**
  * @author astraservice
@@ -35,7 +35,7 @@ import it.tsc.test.parallel.ParallelTest;
     @ContextConfiguration(classes = WebAppConfig.class),
     @ContextConfiguration(classes = ServiceConfig.class) })
 @WebAppConfiguration
-public class MvcStandardTest extends ParallelTest {
+public class MvcStandardTest extends WebParallelTest {
   private static Logger logger = LoggerFactory.getLogger(MvcStandardTest.class);
   @Autowired
   private WebApplicationContext webApplicationContext;

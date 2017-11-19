@@ -13,7 +13,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import it.tsc.data.config.ServiceConfig;
 import it.tsc.data.other.config.SchedulerConfig;
-import it.tsc.test.parallel.ParallelTest;
+import it.tsc.web.parallel.WebParallelTest;
 
 /**
  * @author astraservice
@@ -22,7 +22,7 @@ import it.tsc.test.parallel.ParallelTest;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { ServiceConfig.class, SchedulerConfig.class },
     loader = AnnotationConfigContextLoader.class)
-public class BaseSchedulerTest extends ParallelTest {
+public class BaseSchedulerTest extends WebParallelTest {
   private static Logger logger = LoggerFactory.getLogger(BaseSchedulerTest.class);
 
   /**

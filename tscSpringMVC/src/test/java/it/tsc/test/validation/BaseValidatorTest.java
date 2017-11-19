@@ -8,20 +8,17 @@ import java.util.Set;
 import javax.validation.ConstraintViolation;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.code.tempusfugit.concurrency.ConcurrentTestRunner;
-
 import it.tsc.domain.PortalUser;
-import it.tsc.test.parallel.ParallelTest;
+import it.tsc.web.parallel.WebParallelTest;
 
 /**
  * @author astraservice
  *
  */
-public class BaseValidatorTest extends ParallelTest {
+public class BaseValidatorTest extends WebParallelTest {
   protected static Logger logger = LoggerFactory.getLogger(BaseValidatorTest.class);
 
   /**

@@ -5,13 +5,13 @@ package it.tsc.test.generic;
 
 import org.junit.Test;
 
-import it.tsc.test.parallel.ParallelTest;
+import it.tsc.web.parallel.WebParallelTest;
 
 /**
  * @author astraservice
  *
  */
-public class PoJoTest extends ParallelTest {
+public class PoJoTest extends WebParallelTest {
 
   @Test
   public void testUsersGroup() {

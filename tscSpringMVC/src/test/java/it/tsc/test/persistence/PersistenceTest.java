@@ -14,13 +14,14 @@ import org.junit.Test;
 
 import com.impetus.client.cassandra.common.CassandraConstants;
 
-import it.tsc.test.parallel.ParallelTest;
+import it.tsc.web.parallel.WebParallelTest;
+
 
 /**
  * @author astraservice
  *
  */
-public class PersistenceTest extends ParallelTest {
+public class PersistenceTest extends WebParallelTest {
 
   @Test
   public void testPersistence() {
