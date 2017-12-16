@@ -96,8 +96,8 @@ $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 				    selecting:false
 				</jsp:attribute>
 			    <jsp:attribute name="fields">
-					{name: "key.username",type:"text",width:30,title:"nome"},
-			       	{name: "key.role",type:"text",width:30,title:"ruolo"},
+					{name: "username",type:"text",width:30,title:"nome"},
+			       	{name: "role",type:"text",width:30,title:"ruolo"},
 			       	{name: "email",type:"text",width: 30,title:"email"}
 			    </jsp:attribute>
 			</grid:grid>

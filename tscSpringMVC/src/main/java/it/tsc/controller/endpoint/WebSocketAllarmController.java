@@ -90,6 +90,7 @@ public class WebSocketAllarmController {
           logger.error("Closed session: " + session.getId());
           closedSessions.add(session);
         } else if (msg != null && StringUtils.isNotEmpty(msg)) {
+          logger.debug("send message: {}", msg);
           session.getBasicRemote().sendText(msg);
         }
       }

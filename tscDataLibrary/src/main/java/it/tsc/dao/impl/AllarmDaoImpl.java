@@ -41,6 +41,7 @@ public class AllarmDaoImpl extends BaseDao implements AllarmDao {
 	 * @see it.tsc.dao.AllarmDao#insertAllarmeMatricola(java.lang.String,
 	 * java.sql.Timestamp, java.lang.String, java.lang.String, java.lang.String)
 	 */
+	@Override
 	public void insertAllarmeMatricola(String matricola, String ab_codi, Instant data_arrivo, String evento,
 			String serial_uuid, String user) {
 		Allarm allarm = new Allarm();
@@ -67,6 +68,7 @@ public class AllarmDaoImpl extends BaseDao implements AllarmDao {
 	 * @see it.tsc.dao.AllarmDao#insertAllarmeTel(java.lang.String,
 	 * java.sql.Timestamp, java.lang.String, java.lang.String, java.lang.String)
 	 */
+	@Override
 	public void insertAllarmeTel(String tel, String ab_codi, Instant data_arrivo, String evento, String serial_uuid,
 			String user) {
 		Allarm allarm = new Allarm();
@@ -88,6 +90,7 @@ public class AllarmDaoImpl extends BaseDao implements AllarmDao {
 	 * 
 	 * @see it.tsc.dao.AllarmDao#removeAllarme(java.lang.String)
 	 */
+	@Override
 	public void removeAllarme(String serial_uuid) {
 		Allarm allarm = new Allarm();
 		allarm.setSerial_uuid(serial_uuid);
@@ -100,19 +103,19 @@ public class AllarmDaoImpl extends BaseDao implements AllarmDao {
 		// allarmAccessor.removeAllarme(serial_uuid);
 	}
 
+	@Override
 	public void updateAllarme(String serial_uuid, String user) {
-		Allarm allarm = new Allarm();
-		allarm.setSerial_uuid(serial_uuid);
-		allarm.setUser(user);
-
 		EntityManager entityManager = getEntityManager();
-		entityManager.merge(allarm);
-		entityManager.flush();
+		TypedQuery<Allarm> query = entityManager.createNamedQuery(Allarm.UPDATE_ALLARM, Allarm.class);
+		query.setParameter("serial_uuid", serial_uuid);
+		query.setParameter("user", user);
+		query.executeUpdate();
 		// entityManager.close();
 		// AllarmAccessor allarmAccessor = baseDao.createAccessor(AllarmAccessor.class);
 		// allarmAccessor.updateAllarme(serial_uuid, user);
 	}
 
+	@Override
 	public String jsonGetAllarms() {
 		EntityManager entityManager = getEntityManager();
 		TypedQuery<Allarm> query = entityManager.createNamedQuery(Allarm.SELECT_ALL_ALLARMS, Allarm.class);

@@ -23,18 +23,7 @@
     <url-pattern>/</url-pattern>
   </servlet-mapping>
   <!-- WS Servlet -->
-<!--   <servlet>
-    <servlet-name>jaxws-servlet</servlet-name>
-    <servlet-class>
-	       com.sun.xml.ws.transport.http.servlet.WSSpringServlet
-	    </servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>jaxws-servlet</servlet-name>
-    <url-pattern>/services/TscWebService</url-pattern>
-  </servlet-mapping> -->
-  
- <servlet>
+  <servlet>
 	 <servlet-name>cxfservlet</servlet-name>
 	 <servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
 	 <load-on-startup>1</load-on-startup>
