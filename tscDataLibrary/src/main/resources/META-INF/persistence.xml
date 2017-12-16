@@ -11,7 +11,7 @@
 			<property name="kundera.password" value="v7^bEWnuHaFXtXfv" />
 			<property name="kundera.keyspace" value="ks_tsc" />
 			<property name="kundera.dialect" value="cassandra" />
-			<property name="kundera.show.query" value="true" />
+<!-- 			<property name="kundera.show.query" value="true" /> -->
 			<property name="kundera.client.lookup.class" value="com.impetus.kundera.client.cassandra.dsdriver.DSClientFactory" />
 			<property name="kundera.annotations.scan.package" value="it.tsc.domain" />
 		</properties>

@@ -110,9 +110,7 @@ public class AllarmDaoImpl extends BaseDao implements AllarmDao {
 		query.setParameter("serial_uuid", serial_uuid);
 		query.setParameter("user", user);
 		query.executeUpdate();
-		// entityManager.close();
-		// AllarmAccessor allarmAccessor = baseDao.createAccessor(AllarmAccessor.class);
-		// allarmAccessor.updateAllarme(serial_uuid, user);
+		logger.debug("updateAllarme: {}", serial_uuid);
 	}
 
 	@Override
