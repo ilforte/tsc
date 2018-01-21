@@ -56,7 +56,6 @@ public class UserDaoTest extends BaseDaoTest {
   @Test
   public void testUserEmailDao() {
     assertTrue(userService.getUser("matteo", "matteo@infamiglia.it") != null);
-    // assertTrue(userService.getUser("matteo", "matteo@infamiglia.it") != null);
   }
 
   @Test
