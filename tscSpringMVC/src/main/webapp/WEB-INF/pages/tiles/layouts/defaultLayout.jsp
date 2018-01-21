@@ -79,7 +79,7 @@ $(document).ready(function(){
 	    			toastr.error('websocket: ' + e);
 	    	}
         	var totalSoundDuration;
-        	console.log('arr ',arr);
+
         	if(userExists(arr,'')){
         		;
         		/* sound config */
@@ -93,9 +93,11 @@ $(document).ready(function(){
         		      },
         		      onplay: function(getSoundId) {
         		          //sound playing
+        		          console.log('playing %O',getSoundId);
         		      },
         		      onend: function() {
         		          //sound play finished
+        		    	  console.log('stop playing');
         		      }
         		    });
         		sound.play();
@@ -106,8 +108,11 @@ $(document).ready(function(){
         	/**
         	* close then reopen url
         	**/
-        	toastr.info(event,"Connection closed");
             console.log("Connection closed");
+            /**
+            * Try to reconnect in 5 seconds
+        	**/
+            setTimeout(openSocket(), 5000);
         };
     }
    
@@ -116,7 +121,7 @@ $(document).ready(function(){
     }
     
     /**
-    * check id user is empty
+    * check id user is empty,null or undefined
     */
     function userExists(arr,user) {
    	  return arr.some(function(el) {

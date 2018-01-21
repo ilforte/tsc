@@ -16,6 +16,10 @@
 		<appender-ref ref="STDOUT" />
 	</logger>
 	
+    <logger name="it.tsc.controller.endpoint.AllarmGenerator" level="error" additivity="false">
+		<appender-ref ref="STDOUT" />
+	</logger>
+	
 <!-- 	<logger name="org.apache.cxf" level="debug" additivity="false">
 		<appender-ref ref="STDOUT" />
 	</logger> -->
