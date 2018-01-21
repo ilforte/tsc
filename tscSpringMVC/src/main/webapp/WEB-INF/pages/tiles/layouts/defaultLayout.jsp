@@ -79,7 +79,9 @@ $(document).ready(function(){
 	    			toastr.error('websocket: ' + e);
 	    	}
         	var totalSoundDuration;
+        	console.log('arr ',arr);
         	if(userExists(arr,'')){
+        		;
         		/* sound config */
         		var sound = new Howl({
         		      src: ["<c:url value='/resources/sound/beep-beep.mp3' />"],
@@ -117,7 +119,7 @@ $(document).ready(function(){
     */
     function userExists(arr,user) {
    	  return arr.some(function(el) {
-   	    return el.user === user;
+   	    return el.user === user || el.user === undefined || el.user === null;
    	  }); 
    	}
 

@@ -40,6 +40,7 @@ public class WebSocketAllarmController {
   // queue holds the list of connected clients
   private static Queue<Session> queue = new ConcurrentLinkedQueue<Session>();
   private static final ScheduledExecutorService ses = Executors.newSingleThreadScheduledExecutor();
+  private AllarmGenerator allarmGenerator = null;
   @Autowired
   private AllarmService allarmService;
 
@@ -57,15 +58,13 @@ public class WebSocketAllarmController {
     /**
      * Manage session
      */
-    queue.add(session);
+    if (allarmGenerator == null) {
+      allarmGenerator = new AllarmGenerator(allarmService);
+    }
+    allarmGenerator.getQueue().add(session);
     logger.debug("New session opened: {}", session.getId());
-    if (queue.size() != 0) {
-      ses.scheduleWithFixedDelay(new Runnable() {
-        @Override
-        public void run() {
-          sendMessageToAll(allarmService.jsonGetAllarms());
-        }
-      }, 0, 3, TimeUnit.SECONDS);
+    if (allarmGenerator.getQueue().size() != 0) {
+      ses.scheduleWithFixedDelay(allarmGenerator, 0, 3, TimeUnit.SECONDS);
     }
   }
 
@@ -105,7 +104,9 @@ public class WebSocketAllarmController {
     queue.remove(session);
     logger.debug("session closed:  " + session.getId());
     try {
-      ses.shutdown();
+      if (allarmGenerator != null && allarmGenerator.getQueue().size() == 0) {
+        ses.shutdown();
+      }
     } catch (Exception e) {
       logger.error("onClose: {}", e);
     }
@@ -117,6 +118,7 @@ public class WebSocketAllarmController {
   public static void destroyScheduler() {
     if (!ses.isTerminated()) {
       try {
+        logger.debug("shutdown scheduler");
         ses.shutdown();
       } catch (Exception e) {
         logger.error("destroyScheduler: {}", e);
