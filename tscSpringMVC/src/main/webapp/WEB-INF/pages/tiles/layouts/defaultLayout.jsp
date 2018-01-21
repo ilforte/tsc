@@ -106,6 +106,7 @@ $(document).ready(function(){
         	/**
         	* close then reopen url
         	**/
+        	toastr.info(event,"Connection closed");
             console.log("Connection closed");
         };
     }

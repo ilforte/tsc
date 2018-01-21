@@ -20,11 +20,11 @@ import com.google.gson.annotations.Expose;
 @Entity
 @Table(name = "tb_allarms", schema = "ks_tsc@cassandra_pu")
 @NamedQueries(value = {
-		@NamedQuery(name = Allarm.SELECT_ALL_ALLARMS, query = "SELECT a.serial_uuid,a.ab_codi,a.data_arrivo,a.evento,a.matricola FROM Allarm a"),
+		@NamedQuery(name = Allarm.SELECT_ALL_ALLARMS, query = "SELECT a.serial_uuid,a.ab_codi,a.data_arrivo,a.evento,a.matricola,a.user FROM Allarm a"),
 		@NamedQuery(name = Allarm.UPDATE_ALLARM, query = "UPDATE Allarm a SET a.user=:user WHERE a.serial_uuid=:serial_uuid") })
 public class Allarm extends BaseDomain {
 	public static final String SELECT_ALL_ALLARMS = "json.select.allarms";
-	public static final String UPDATE_ALLARM = "json.update.allarm";
+	public static final String UPDATE_ALLARM = "update.allarm";
 	/**
 	 * 
 	 */

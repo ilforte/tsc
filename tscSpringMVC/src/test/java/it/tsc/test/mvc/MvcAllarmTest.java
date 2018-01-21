@@ -75,7 +75,7 @@ public class MvcAllarmTest extends WebParallelTest {
     user.setUsername("testUser");
     user.setRole(Role.ROLE_USER.toString());
     Allarm allarm = new Allarm();
-    allarm.setSerial_uuid("2017121622:46:34.705_6760c9fc");
+    allarm.setSerial_uuid("2018012120:04:48.789_448b757b");
     allarm.setUser("testUser");
     // omit email
     ResultMatcher ok = MockMvcResultMatchers.status().isOk();
