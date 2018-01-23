@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import it.tsc.controller.endpoint.WebSocketAllarmController;
 import it.tsc.domain.PortalUser;
 
 @Controller
@@ -75,9 +74,8 @@ public class LoginController extends BaseController {
       model.addObject("msg", "msg");
     }
     if (logout != null && request.getSession() != null) {
-      // logger.debug("invalidate session");
-      // request.getSession().invalidate();
-      WebSocketAllarmController.destroyScheduler();
+      logger.debug("invalidate session");
+      request.getSession().invalidate();
     }
     logger.debug("invoke login");
     model.setViewName("login");

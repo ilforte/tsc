@@ -9,8 +9,6 @@ import javax.servlet.http.HttpSessionListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import it.tsc.controller.endpoint.WebSocketAllarmController;
-
 /**
  * @author astraservice Manage app session listener
  */
@@ -32,7 +30,6 @@ public class AppSessionListener implements HttpSessionListener {
   @Override
   public void sessionDestroyed(HttpSessionEvent sessionEvent) {
     logger.debug("session destroyed: {}", sessionEvent);
-    WebSocketAllarmController.destroyScheduler();
     sessionEvent.getSession().invalidate();
   }
 

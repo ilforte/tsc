@@ -30,15 +30,16 @@ import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import it.tsc.data.config.SchedulerConfig;
 import it.tsc.data.config.ServiceConfig;
 import it.tsc.interceptor.PageRequestInterceptor;
 
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = { "it.tsc.data.config", "it.tsc.service.impl", "it.tsc.dao.impl",
-    "it.tsc.controller", "it.tsc.component", "it.tsc.webservice" })
+    "it.tsc.controller", "it.tsc.component", "it.tsc.webservice", "it.tsc.job" })
 @ImportResource({ "classpath:spring-beans.xml" })
-@Import({ ServiceConfig.class })
+@Import({ ServiceConfig.class, SchedulerConfig.class })
 public class WebAppConfig extends WebMvcConfigurerAdapter {
 
   public WebAppConfig() {

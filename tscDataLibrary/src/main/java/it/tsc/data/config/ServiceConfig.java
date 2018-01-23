@@ -3,9 +3,12 @@
  */
 package it.tsc.data.config;
 
+import javax.annotation.PreDestroy;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -24,6 +27,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @ComponentScan(basePackages = { "it.tsc.service", "it.tsc.dao" })
 @PropertySource(value = { "classpath:cassandra.properties" }, ignoreResourceNotFound = false)
 public class ServiceConfig {
+	private static Logger logger = LoggerFactory.getLogger(ServiceConfig.class);
 	@Value("${cassandra-persistence-unit}")
 	private String PERSISTENCE_UNIT;
 
@@ -69,6 +73,11 @@ public class ServiceConfig {
 			throw new RuntimeException("entityManagerFactory cannot be null");
 		}
 		return entityManager;
+	}
+
+	@PreDestroy
+	public void cleanUp() throws Exception {
+		logger.debug("Spring Container is destroy! Customer clean up");
 	}
 
 }

@@ -133,6 +133,7 @@ public class UserDaoTest extends BaseDaoTest {
   @Test
   public void jsonGestUser() {
     userService.jsonGetUser("admin");
+    logger.info("user admin {}", userService.jsonGetUser("admin"));
   }
 
   @Test

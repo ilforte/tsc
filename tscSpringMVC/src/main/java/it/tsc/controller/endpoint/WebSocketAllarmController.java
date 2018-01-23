@@ -3,12 +3,11 @@
  */
 package it.tsc.controller.endpoint;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 import javax.websocket.EndpointConfig;
 import javax.websocket.OnClose;
@@ -17,7 +16,7 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +24,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.web.socket.server.standard.SpringConfigurator;
 
-import it.tsc.service.AllarmService;
+import it.tsc.job.AllarmNotifier;
+import it.tsc.job.AllarmServiceJob;
 
 /**
  * @author astraservice
@@ -34,15 +34,17 @@ import it.tsc.service.AllarmService;
 @Controller
 @ServerEndpoint(value = "/user/allarmEndpoint", configurator = SpringConfigurator.class)
 @Service
-public class WebSocketAllarmController {
+public class WebSocketAllarmController implements AllarmNotifier {
   private static Logger logger = LoggerFactory.getLogger(WebSocketAllarmController.class);
   // private static ScheduledExecutorService service = null;
   // queue holds the list of connected clients
   private static Queue<Session> queue = new ConcurrentLinkedQueue<Session>();
-  private static final ScheduledExecutorService ses = Executors.newSingleThreadScheduledExecutor();
-  private AllarmGenerator allarmGenerator = null;
+  // private static final ScheduledExecutorService ses =
+  // Executors.newSingleThreadScheduledExecutor();
   @Autowired
-  private AllarmService allarmService;
+  private AllarmServiceJob allarmServiceJob;
+  @Autowired
+  private Map<String, Object> jobDataMap;
 
   /**
    * 
@@ -51,81 +53,60 @@ public class WebSocketAllarmController {
 
   }
 
-
-
   @OnOpen
   public void onOpenSession(Session session, EndpointConfig config) {
     /**
      * Manage session
      */
-    if (allarmGenerator == null) {
-      allarmGenerator = new AllarmGenerator(allarmService);
-    }
-    allarmGenerator.getQueue().add(session);
-    logger.debug("New session opened: {}", session.getId());
-    if (allarmGenerator.getQueue().size() != 0) {
-      ses.scheduleWithFixedDelay(allarmGenerator, 0, 3, TimeUnit.SECONDS);
+    Validate.notNull(allarmServiceJob, "allarmServiceJob cannot be null");
+    Validate.notNull(jobDataMap, "jobDataMap cannot be null");
+
+    /**
+     * set Job data map
+     */
+    queue.add(session);
+    if (jobDataMap.get("allarmNotifier") == null) {
+      jobDataMap.put("allarmNotifier", this);
+      jobDataMap.put("queue", queue);
     }
   }
 
   @OnError
   public void error(Session session, Throwable t) {
     System.err.println("Error on session " + session.getId());
-    logger.debug("Error on session " + session.getId());
-    try {
-      ses.shutdown();
-    } catch (Exception e) {
-      logger.error("error: {}", e);
-    }
-  }
-
-
-  private static void sendMessageToAll(String msg) {
-    try {
-      /* Send the new rate to all open WebSocket sessions */
-      ArrayList<Session> closedSessions = new ArrayList<>();
-      for (Session session : queue) {
-        if (!session.isOpen()) {
-          logger.error("Closed session: " + session.getId());
-          closedSessions.add(session);
-        } else if (msg != null && StringUtils.isNotEmpty(msg)) {
-          // logger.debug("send message: {}", msg);
-          session.getBasicRemote().sendText(msg);
-        }
-      }
-      queue.removeAll(closedSessions);
-    } catch (Throwable e) {
-      e.printStackTrace();
-    }
+    queue.remove(session);
+    logger.debug("Error on session: {} Throwable: {}", session.getId(), t);
   }
 
   @OnClose
   public void onClose(Session session) {
     queue.remove(session);
     logger.debug("session closed:  " + session.getId());
-    try {
-      if (allarmGenerator != null && allarmGenerator.getQueue().size() == 0) {
-        ses.shutdown();
-      }
-    } catch (Exception e) {
-      logger.error("onClose: {}", e);
-    }
   }
 
+
+
+  @Override
   /**
-   * destroy scheduler avoiding leak
+   * fired allarms
    */
-  public static void destroyScheduler() {
-    if (!ses.isTerminated()) {
-      try {
-        logger.debug("shutdown scheduler");
-        ses.shutdown();
-      } catch (Exception e) {
-        logger.error("destroyScheduler: {}", e);
+  public void onAllarmReceived(String message) {
+    ArrayList<Session> closedSessions = new ArrayList<>();
+    for (Session session : queue) {
+      if (!session.isOpen()) {
+        logger.error("Closed session: " + session.getId());
+        closedSessions.add(session);
+      } else {
+        // logger.debug("send message: {}", msg);
+        try {
+          session.getBasicRemote().sendText(message);
+        } catch (IOException e) {
+          logger.error("onAllarmReceived Exception: {}", e);
+        }
       }
     }
-    if (queue != null && queue.size() != 0) {
-      queue.remove();
+    if (closedSessions.size() != 0) {
+      queue.removeAll(closedSessions);
     }
   }
 }

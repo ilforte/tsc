@@ -44,6 +44,7 @@ public class Users extends BaseDomain {
 	public static final String UPDATE_USER = "update.user";
 
 	@EmbeddedId
+	@Expose
 	private CompoundKey key = new CompoundKey();
 
 	@Column

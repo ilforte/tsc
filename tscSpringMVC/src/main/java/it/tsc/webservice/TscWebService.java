@@ -48,9 +48,11 @@ public class TscWebService {
     MessageContext mctx = wsContext.getMessageContext();
 
     // get detail from request headers
-    Map http_headers = (Map) mctx.get(MessageContext.HTTP_REQUEST_HEADERS);
-    List userList = (List) http_headers.get("Username");
-    List passList = (List) http_headers.get("Password");
+    Map<?, ?> http_headers = (Map<?, ?>) mctx.get(MessageContext.HTTP_REQUEST_HEADERS);
+    @SuppressWarnings("unused")
+    List<?> userList = (List<?>) http_headers.get("Username");
+    @SuppressWarnings("unused")
+    List<?> passList = (List<?>) http_headers.get("Password");
 
     if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
       logger.debug("username or password cannot be null");
