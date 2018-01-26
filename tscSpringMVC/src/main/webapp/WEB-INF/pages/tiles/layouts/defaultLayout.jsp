@@ -157,6 +157,10 @@ $(document).ready(function(){
 	$(document).ready(function(){
 		openSocket();
 	});
+	
+	$( window ).unload(function() {
+		closeSocket();
+	});
 </script>
 
 <body>

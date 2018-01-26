@@ -12,6 +12,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import javax.websocket.EndpointConfig;
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
+import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
@@ -84,6 +85,11 @@ public class WebSocketAllarmController implements AllarmNotifier {
     logger.debug("session closed:  " + session.getId());
   }
 
+  @OnMessage
+  private void onAllarmReceived(Session session) {
+    // TODO Auto-generated method stub
+
+  }
 
 
   @Override
