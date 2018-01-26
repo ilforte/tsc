@@ -14,8 +14,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import it.tsc.data.config.SchedulerConfig;
 import it.tsc.data.config.ServiceConfig;
+import it.tsc.data.exclude.config.SchedulerConfig;
 import it.tsc.job.AllarmServiceJob;
 import it.tsc.web.parallel.WebParallelTest;
 
