@@ -41,6 +41,8 @@ public class PasswordTest extends WebParallelTest {
     System.out.println("tsc pwd: " + passwd); // print hash
     passwd = encoder.encode("cxf");
     System.out.println("cxf pwd: " + passwd); // print hash
+    String europeAssistance = encoder.encode("europeAssistance");
+    System.out.println("europeAssistance: " + europeAssistance); // print hash
   }
 
 }
