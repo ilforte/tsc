@@ -97,7 +97,8 @@ public class RestUserServiceController extends RestBaseController {
       res.setStatus(Response.FAILURE.toString());
     } else {
       if (userService.addUser(portalUser.getUsername(), portalUser.getPassword(),
-          portalUser.getEmail(), Role.valueOf(portalUser.getRole())) == true) {
+          portalUser.getEmail(), Role.valueOf(portalUser.getRole()),
+          portalUser.isMfaenabled()) == true) {
         res.setStatus(Response.SUCCESS.toString());
         logger.debug("no errors");
       } else {

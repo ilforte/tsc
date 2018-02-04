@@ -5,6 +5,8 @@ import java.security.Principal;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
@@ -18,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.j256.twofactorauth.TimeBasedOneTimePasswordUtil;
 
+import it.tsc.domain.PortalUser;
 import it.tsc.domain.Role;
 
 @Controller
@@ -140,7 +143,9 @@ public class AppController extends BaseController {
     /**
      * check if mfa is valid
      */
-    String base32Secret = getBase32Secret(user);
+    PortalUser userAttrs = getUserInfo(user);
+    String base32Secret = userAttrs.getBase32Secret();
+    boolean mfaEnabled = userAttrs.isMfaenabled();
 
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     logger.debug("auth: {}", auth.getAuthorities().toString());
@@ -151,24 +156,38 @@ public class AppController extends BaseController {
       model.addObject("error", "MFA code raising exception");
       logger.error(e.getMessage());
     }
-    if (mfaCodeValid) {
-      setMfaAuthenticated(request, "true");
-      if (getUserRole() != null
-          && (getUserRole().equals(Role.ROLE_ADMIN) || getUserRole().equals(Role.ROLE_SADMIN))) {
-        logger.debug("auth admin step");
-        model.setViewName("redirect:/" + ACTION_ADMIN);
-      } else if (getUserRole() != null && getUserRole().equals(Role.ROLE_USER)) {
-        model.setViewName("redirect:/" + ACTION_USER);
-        logger.debug("auth user step");
-      } else {
-        throw new IllegalArgumentException("Unexpected user role");
-      }
+    /**
+     * skip validation if MFA is not enabled
+     */
+    if (mfaCodeValid || mfaEnabled == false) {
+      redirectToWorkingPage(request, model);
     } else {
       model.addObject("error", "MFA invalid doesn't check with code");
       setMfaAuthenticated(request, "false");
       model.setViewName(ACTION_CHECK_MFA);
     }
     return model;
+  }
+
+  /**
+   * redirect to working page
+   * 
+   * @param userAttrs
+   * @param request
+   * @param model
+   */
+  private void redirectToWorkingPage(HttpServletRequest request, ModelAndView model) {
+    setMfaAuthenticated(request, "true");
+    if (getUserRole() != null
+        && (getUserRole().equals(Role.ROLE_ADMIN) || getUserRole().equals(Role.ROLE_SADMIN))) {
+      logger.debug("auth admin step");
+      model.setViewName("redirect:/" + ACTION_ADMIN);
+    } else if (getUserRole() != null && getUserRole().equals(Role.ROLE_USER)) {
+      model.setViewName("redirect:/" + ACTION_USER);
+      logger.debug("auth user step");
+    } else {
+      throw new IllegalArgumentException("Unexpected user role");
+    }
   }
 
   /**
@@ -208,18 +227,18 @@ public class AppController extends BaseController {
   }
 
   /**
-   * retrieve Base32Secret from db
+   * retrieve user information with Base32Secret from db
    * 
    * @param user
    * @return
    */
-  private String getBase32Secret(Principal user) {
-    String base32Secret = null;
+  private PortalUser getUserInfo(Principal user) {
+    PortalUser portalUser = null;
     if (user != null) {
-      base32Secret = getUserService().getUser(user.getName()).getBase32Secret();
-      logger.debug("base32Secret {}", base32Secret);
+      portalUser = getUserService().getUser(user.getName());
+      Validate.notNull(portalUser, "portalUser cannot be null");
     }
-    return base32Secret;
+    return portalUser;
   }
 
   /**
@@ -234,11 +253,12 @@ public class AppController extends BaseController {
       HttpServletRequest request, Principal user) {
     model.addObject("action", viewName);
 
-    if (isMfaAuthenticated(request)) {
+    PortalUser userAttrs = getUserInfo(user);
+    if (isMfaAuthenticated(request, userAttrs.isMfaenabled())) {
       model.setViewName(viewName);
-    } else if (!isMfaAuthenticated(request)) {
-      String base32Secret = getBase32Secret(user);
-      if (base32Secret == null || "".equals(base32Secret.trim())) {
+    } else if (!isMfaAuthenticated(request, userAttrs.isMfaenabled())) {
+      String base32Secret = userAttrs.getBase32Secret();
+      if (StringUtils.isEmpty(base32Secret)) {
         /**
          * insert QR code
          */
@@ -254,11 +274,16 @@ public class AppController extends BaseController {
          */
         request.getSession().setAttribute("isMfaAuthenticated", false);
         model.setViewName(ACTION_INSERT_MFA);
-      } else {
+      } else if (userAttrs.isMfaenabled()) {
         /**
          * check authentication
          */
         model.setViewName(ACTION_CHECK_MFA);
+      } else if (!userAttrs.isMfaenabled()) {
+        /**
+         * skip authentication if mfaEnabled == false
+         */
+        redirectToWorkingPage(request, model);
       }
     }
     return model;

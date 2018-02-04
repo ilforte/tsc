@@ -93,11 +93,12 @@ public class Users extends BaseDomain {
 	 * @param password
 	 * @param email
 	 */
-	public Users(CompoundKey key, String password, String email) {
+	public Users(CompoundKey key, String password, String email, boolean mfaEnabled) {
 		super();
 		this.key = key;
 		this.password = password;
 		this.email = email;
+		this.mfaEnabled = mfaEnabled;
 	}
 
 	/**

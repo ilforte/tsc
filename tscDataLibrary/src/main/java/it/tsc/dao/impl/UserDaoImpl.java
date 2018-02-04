@@ -81,14 +81,16 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 		String email = "";
 		String password = "";
 		String base32Secret = "";
+		boolean mfaEnabled = true;
 		for (Users user : list) {
 			email = user.getEmail();
 			password = user.getPassword();
 			base32Secret = user.getBase32Secret();
+			mfaEnabled = user.isMfaEnabled();
 			roles.add(user.getKey().getRole());
 		}
 		if (roles != null && roles.size() > 0) {
-			PortalUser = new PortalUser(username, password, roles, email, base32Secret);
+			PortalUser = new PortalUser(username, password, roles, email, base32Secret, mfaEnabled);
 		}
 		return PortalUser;
 	}
@@ -190,9 +192,9 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 	 * java.lang.String it.tsc.model.Role)
 	 */
 	@Override
-	public boolean addUser(String username, String password, String email, Role role) {
+	public boolean addUser(String username, String password, String email, Role role, boolean mfaEnabled) {
 		Validate.notEmpty(password, "Password cannot be empty");
-		Users user = new Users(new CompoundKey(username, role), bcryptEncoder.encode(password), email);
+		Users user = new Users(new CompoundKey(username, role), bcryptEncoder.encode(password), email, mfaEnabled);
 		EntityManager entityManager = getEntityManager();
 		entityManager.persist(user);
 		// entityManager.close();

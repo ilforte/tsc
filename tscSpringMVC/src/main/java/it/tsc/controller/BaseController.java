@@ -89,12 +89,18 @@ public class BaseController {
   }
 
   /**
-   * check if authenticated
+   * check if authenticated add parameter mfaEnabled
    * 
    * @param request
    * @return
    */
-  protected boolean isMfaAuthenticated(HttpServletRequest request) {
+  protected boolean isMfaAuthenticated(HttpServletRequest request, boolean mfaEnabled) {
+    if (!mfaEnabled) {
+      /**
+       * user skip MFA authentication
+       */
+      return true;
+    }
     if (request.getSession().getAttribute("isMfaAuthenticated") == null) {
       return false;
     } else {

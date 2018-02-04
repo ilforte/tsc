@@ -91,13 +91,13 @@ public class UserDaoTest extends BaseDaoTest {
 
   @Test
   public void testAddUser() {
-    userService.addUser("testUser", "testUser", "testUser@tsc.it", Role.ROLE_USER);
+    userService.addUser("testUser", "testUser", "testUser@tsc.it", Role.ROLE_USER, false);
     assertTrue(bcryptEncoder.matches("testUser", userService.getUser("testUser").getPassword()));
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testAddUserWithoutPassword() {
-    userService.addUser("testUser", "", "testUser@tsc.it", Role.ROLE_USER);
+    userService.addUser("testUser", "", "testUser@tsc.it", Role.ROLE_USER, false);
   }
 
   @Test

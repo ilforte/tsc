@@ -78,9 +78,10 @@ public interface UserDao {
 	 * @param password
 	 * @param email
 	 * @param role
+	 * @param mfaEnabled
 	 * @return
 	 */
-	public boolean addUser(String username, String password, String email, Role role);
+	public boolean addUser(String username, String password, String email, Role role, boolean mfaEnabled);
 
 	/**
 	 * Remove user

@@ -21,148 +21,166 @@ import com.google.gson.annotations.Expose;
 /**
  * @author astraservice POJO TSC User
  */
-@Table(keyspace = "ks_tsc", name = "tb_users", readConsistency = "QUORUM",
-    writeConsistency = "QUORUM", caseSensitiveKeyspace = false, caseSensitiveTable = false)
+@Table(keyspace = "ks_tsc", name = "tb_users", readConsistency = "QUORUM", writeConsistency = "QUORUM", caseSensitiveKeyspace = false, caseSensitiveTable = false)
 public class PortalUser {
-  @NotBlank(groups = { PortalUserRemove.class, PortalUserRenewPassword.class })
-  @Expose
-  @PartitionKey(0)
-  @Column(name = "username")
-  private String username;
+	@NotBlank(groups = { PortalUserRemove.class, PortalUserRenewPassword.class })
+	@Expose
+	@PartitionKey(0)
+	@Column(name = "username")
+	private String username;
 
-  @NotBlank(groups = { PortalUserRemove.class })
-  @Expose
-  @PartitionKey(1)
-  @Column(name = "role")
-  private String role;
+	@NotBlank(groups = { PortalUserRemove.class })
+	@Expose
+	@PartitionKey(1)
+	@Column(name = "role")
+	private String role;
 
-  @Transient
-  @Expose
-  private List<String> roles;
+	@Transient
+	@Expose
+	private List<String> roles;
 
-  @NotBlank(groups = { PortalUserInsert.class, PortalUserRenewPassword.class })
-  @Email
-  @Expose
-  @Column(name = "email")
-  private String email;
+	@NotBlank(groups = { PortalUserInsert.class, PortalUserRenewPassword.class })
+	@Email
+	@Expose
+	@Column(name = "email")
+	private String email;
 
-  @NotBlank(groups = PortalUserInsert.class)
-  @Expose
-  @Column(name = "password")
-  private String password;
+	@NotBlank(groups = PortalUserInsert.class)
+	@Expose
+	@Column(name = "password")
+	private String password;
 
-  @Column(name = "base32Secret")
-  private String base32Secret;
+	@Column(name = "base32Secret")
+	private String base32Secret;
 
-  /**
-   * 
-   */
-  public PortalUser() {
+	/**
+	 * default ask MFA
+	 */
+	@Column(name = "mfaenabled")
+	private boolean mfaEnabled = true;
 
-  }
+	/**
+	 * 
+	 */
+	public PortalUser() {
 
-  public PortalUser(ApplicationUser user) {
-    super();
-    if (user != null) {
-      this.username = user.getUsername();
-      this.email = user.getEmail();
-      roles = new ArrayList<String>();
-      for (GrantedAuthority ga : user.getAuthorities()) {
-        roles.add(ga.getAuthority());
-      }
-    }
-  }
+	}
 
-  public PortalUser(String username, List<String> roles, String email) {
-    super();
-    this.username = username;
-    this.roles = roles;
-    this.email = email;
-  }
+	public PortalUser(ApplicationUser user) {
+		super();
+		if (user != null) {
+			this.username = user.getUsername();
+			this.email = user.getEmail();
+			roles = new ArrayList<String>();
+			for (GrantedAuthority ga : user.getAuthorities()) {
+				roles.add(ga.getAuthority());
+			}
+		}
+	}
 
-  public PortalUser(String username, String password, List<String> roles, String email,
-      String base32Secret) {
-    super();
-    this.username = username;
-    this.roles = roles;
-    this.email = email;
-    this.password = password;
-    this.base32Secret = base32Secret;
-  }
+	public PortalUser(String username, List<String> roles, String email) {
+		super();
+		this.username = username;
+		this.roles = roles;
+		this.email = email;
+	}
 
-  /**
-   * 
-   * @author astraservice
-   *
-   */
-  public interface PortalUserInsertValidator {
+	public PortalUser(String username, String password, List<String> roles, String email, String base32Secret,
+			boolean mfaEnabled) {
+		super();
+		this.username = username;
+		this.roles = roles;
+		this.email = email;
+		this.password = password;
+		this.base32Secret = base32Secret;
+		this.mfaEnabled = mfaEnabled;
+	}
 
-  }
+	/**
+	 * 
+	 * @author astraservice
+	 *
+	 */
+	public interface PortalUserInsertValidator {
 
-  /**
-   * 
-   * @author astraservice
-   *
-   */
-  // @formatter:off
-    public interface PortalUserRemove extends Default {}
-    public interface PortalUserInsert extends PortalUserRemove {}
-    public interface PortalUserRenewPassword extends Default {}
-  // @formatter:on
+	}
 
+	/**
+	 * 
+	 * @author astraservice
+	 *
+	 */
+	// @formatter:off
+	public interface PortalUserRemove extends Default {
+	}
 
-  public interface Draft extends Default {
-  }
+	public interface PortalUserInsert extends PortalUserRemove {
+	}
 
-  public interface Printing extends Draft {
-  }
+	public interface PortalUserRenewPassword extends Default {
+	}
+	// @formatter:on
 
-  public String getUsername() {
-    return username;
-  }
+	public interface Draft extends Default {
+	}
 
-  public void setUsername(String username) {
-    this.username = username;
-  }
+	public interface Printing extends Draft {
+	}
 
-  public List<String> getRoles() {
-    return roles;
-  }
+	public String getUsername() {
+		return username;
+	}
 
-  public void setRoles(List<String> roles) {
-    this.roles = roles;
-  }
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
-  public String getEmail() {
-    return email;
-  }
+	public List<String> getRoles() {
+		return roles;
+	}
 
-  public void setEmail(String email) {
-    this.email = email;
-  }
+	public void setRoles(List<String> roles) {
+		this.roles = roles;
+	}
 
-  public String getRole() {
-    return role;
-  }
+	public String getEmail() {
+		return email;
+	}
 
-  public void setRole(String role) {
-    this.role = role;
-  }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-  public String getPassword() {
-    return password;
-  }
+	public String getRole() {
+		return role;
+	}
 
-  public void setPassword(String password) {
-    this.password = password;
-  }
+	public void setRole(String role) {
+		this.role = role;
+	}
 
-  public String getBase32Secret() {
-    return base32Secret;
-  }
+	public String getPassword() {
+		return password;
+	}
 
-  public void setBase32Secret(String base32Secret) {
-    this.base32Secret = base32Secret;
-  }
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getBase32Secret() {
+		return base32Secret;
+	}
+
+	public void setBase32Secret(String base32Secret) {
+		this.base32Secret = base32Secret;
+	}
+
+	public boolean isMfaenabled() {
+		return mfaEnabled;
+	}
+
+	public void setMfaenabled(boolean mfaEnabled) {
+		this.mfaEnabled = mfaEnabled;
+	}
 
 }
