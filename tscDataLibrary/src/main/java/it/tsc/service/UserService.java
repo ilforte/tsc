@@ -117,8 +117,9 @@ public interface UserService {
 	 * @param password
 	 * @param email
 	 * @param role
+	 * @param mfaEnabled
 	 */
-	public void updateUser(String username, String password, String email, Role role);
+	public void updateUser(String username, String password, String email, Role role, boolean mfaEnabled);
 
 	/**
 	 * insert MFA key updating user

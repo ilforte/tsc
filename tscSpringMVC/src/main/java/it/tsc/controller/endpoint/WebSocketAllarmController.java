@@ -12,6 +12,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSessionEvent;
 import javax.websocket.EndpointConfig;
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
@@ -37,7 +38,7 @@ import it.tsc.service.AllarmService;
 @Service
 public class WebSocketAllarmController {
   private static Logger logger = LoggerFactory.getLogger(WebSocketAllarmController.class);
-  private static ScheduledExecutorService service = null;
+  private ScheduledExecutorService service = null;
   private static Set<Session> clients = Collections.synchronizedSet(new HashSet<Session>());
 
   @Autowired
@@ -70,7 +71,7 @@ public class WebSocketAllarmController {
         /**
          * activate executor if not exist
          */
-        ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
+        this.service = Executors.newSingleThreadScheduledExecutor();
         service.scheduleAtFixedRate(() -> checkAllarmOnDatabase(session), 0, 3, TimeUnit.SECONDS);
       }
     }
@@ -125,11 +126,11 @@ public class WebSocketAllarmController {
   /**
    * destroy scheduler avoiding leak
    */
-  public static void destroyScheduler() {
+  public void destroyScheduler(HttpSessionEvent sessionEvent) {
     logger.debug("Invoking destroyScheduler");
     // if (service != null && clients.size() == 0) {
-    if (service != null) {
-      service.shutdown();
-    }
+    // if (this.service != null && (clients == null || clients.size() == 0)) {
+    // this.service.shutdown();
+    // }
   }
 }

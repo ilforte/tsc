@@ -113,8 +113,8 @@ public class UserServiceImpl implements UserService {
 	 * it.tsc.model.Role, it.tsc.model.User)
 	 */
 	@Override
-	public void updateUser(String username, String password, String email, Role role) {
-		userDao.updateUser(username, password, email, role);
+	public void updateUser(String username, String password, String email, Role role, boolean mfaEnabled) {
+		userDao.updateUser(username, password, email, role, mfaEnabled);
 	}
 
 	@Override

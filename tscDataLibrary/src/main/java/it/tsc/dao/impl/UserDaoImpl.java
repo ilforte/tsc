@@ -246,13 +246,14 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 	 * String,it.tsc.model. Role)
 	 */
 	@Override
-	public void updateUser(String username, String password, String email, Role role) {
+	public void updateUser(String username, String password, String email, Role role, boolean mfaEnabled) {
 		EntityManager entityManager = getEntityManager();
 		TypedQuery<Users> query = entityManager.createNamedQuery(Users.UPDATE_USER, Users.class);
 		query.setParameter("username", username);
 		query.setParameter("password", bcryptEncoder.encode(password));
 		query.setParameter("email", email);
 		query.setParameter("role", role.toString());
+		query.setParameter("mfaEnabled", mfaEnabled);
 		query.executeUpdate();
 		// entityManager.close();
 	}

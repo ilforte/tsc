@@ -32,7 +32,8 @@ public class AppSessionListener implements HttpSessionListener {
   @Override
   public void sessionDestroyed(HttpSessionEvent sessionEvent) {
     logger.debug("session destroyed: {}", sessionEvent);
-    WebSocketAllarmController.destroyScheduler();
+    WebSocketAllarmController weController = new WebSocketAllarmController();
+    weController.destroyScheduler(sessionEvent);
     sessionEvent.getSession().invalidate();
   }
 
