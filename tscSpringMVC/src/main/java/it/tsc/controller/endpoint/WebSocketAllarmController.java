@@ -12,7 +12,6 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.HttpSessionEvent;
 import javax.websocket.EndpointConfig;
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
@@ -121,16 +120,5 @@ public class WebSocketAllarmController {
         }
       }
     }
-  }
-
-  /**
-   * destroy scheduler avoiding leak
-   */
-  public void destroyScheduler(HttpSessionEvent sessionEvent) {
-    logger.debug("Invoking destroyScheduler");
-    // if (service != null && clients.size() == 0) {
-    // if (this.service != null && (clients == null || clients.size() == 0)) {
-    // this.service.shutdown();
-    // }
   }
 }

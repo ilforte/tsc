@@ -3,18 +3,18 @@
  */
 package it.tsc.listener;
 
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import it.tsc.controller.endpoint.WebSocketAllarmController;
-
 /**
  * @author astraservice Manage app session listener
  */
-public class AppSessionListener implements HttpSessionListener {
+public class AppSessionListener implements HttpSessionListener, ServletContextListener {
   private static Logger logger = LoggerFactory.getLogger(AppSessionListener.class);
 
   /**
@@ -32,9 +32,16 @@ public class AppSessionListener implements HttpSessionListener {
   @Override
   public void sessionDestroyed(HttpSessionEvent sessionEvent) {
     logger.debug("session destroyed: {}", sessionEvent);
-    WebSocketAllarmController weController = new WebSocketAllarmController();
-    weController.destroyScheduler(sessionEvent);
-    sessionEvent.getSession().invalidate();
+  }
+
+  @Override
+  public void contextInitialized(ServletContextEvent servletContextEvent) {
+    logger.debug("contextInitialized: {}", servletContextEvent);
+  }
+
+  @Override
+  public void contextDestroyed(ServletContextEvent servletContextEvent) {
+    logger.debug("contextDestroyed: {}", servletContextEvent);
   }
 
 }

@@ -1,9 +1,9 @@
 CREATE TABLE ks_tsc.tb_anagrafica(
+  PRIMARY KEY (ab_codi),
   ab_codi text,
   nominativo text,
   centrale text,
-  sesso text,
-  PRIMARY KEY (ab_codi)
+  sesso text
 );
 
 DROP TABLE IF EXISTS ks_tsc.tb_anagrafica;

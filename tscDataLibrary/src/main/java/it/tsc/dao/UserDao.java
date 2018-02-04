@@ -101,7 +101,7 @@ public interface UserDao {
 	 * @param email
 	 * @param role
 	 */
-	public void updateUser(String username, String password, String email, Role role);
+	public void updateUser(String username, String password, String email, Role role, boolean mfaEnabled);
 
 	/**
 	 * insert MFA key updating user
