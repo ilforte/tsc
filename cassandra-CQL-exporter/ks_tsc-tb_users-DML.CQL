@@ -1,2 +1,2 @@
-INSERT INTO ks_tsc.tb_users (username,role,base32secret,email,keyid,mfaenabled,password) VALUES ('matteo','ROLE_ADMIN',NULL,NULL,NULL,true,NULL) IF NOT EXISTS;
-INSERT INTO ks_tsc.tb_users (username,role,base32secret,email,keyid,mfaenabled,password) VALUES ('matteo','ROLE_USER',NULL,NULL,NULL,true,NULL) IF NOT EXISTS;
+INSERT INTO ks_tsc.tb_users (username,role,base32secret,email,keyid,mfaenabled,password) VALUES ('matteo','ROLE_ADMIN',NULL,'matteo.freddi@infamiglia.it',NULL,false,'$2a$10$hHBe6M5abq9Jokv.Qt74nO7jffGJYchdYXDLGPeALKkjVcssmp7He') IF NOT EXISTS;
+INSERT INTO ks_tsc.tb_users (username,role,base32secret,email,keyid,mfaenabled,password) VALUES ('admin','ROLE_SADMIN','DR6FTMRWTSRGV52F','admin@infamiglia.it','admin@teleassistenzainfamiglia.it',false,'$2a$10$0hfDFZ/MroZz62ttl762guvdeFnc1iXwL6fm1603Et4LzXY6qxYHO') IF NOT EXISTS;
